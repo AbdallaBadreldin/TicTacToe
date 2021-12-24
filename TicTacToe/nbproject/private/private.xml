@@ -2,8 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
+        <group/>
+=======
         <group>
-            <file>file:/D:/iTi-Intake%2042/JavaSE/Final%20Project/TicTacToe/src/tictactoe/MainSceneController.java</file>
+            <file>file:/C:/Users/Radwa/Desktop/Java%20Project/TicTacToe%20(1)/TicTacToe/TicTacToe/src/models/GameSession.java</file>
+            <file>file:/C:/Users/Radwa/Desktop/Java%20Project/TicTacToe%20(1)/TicTacToe/TicTacToe/src/tictactoe/MainGridPaneController.java</file>
+            <file>file:/C:/Users/Radwa/Desktop/Java%20Project/TicTacToe%20(1)/TicTacToe/TicTacToe/src/models/PlayerMove.java</file>
         </group>
+>>>>>>> 56c183017899677d53ef9ac31bcd84aba27cda60
     </open-files>
 </project-private>
