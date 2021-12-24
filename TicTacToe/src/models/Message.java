@@ -1,9 +1,11 @@
-package pojo;
+package models;
+
+import java.io.Serializable;
 
 /**
  * @author Abdo
  */
-public class Message {
+public class Message implements Serializable{
     
     private String message;
     private String username;
