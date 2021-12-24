@@ -58,6 +58,11 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
+<<<<<<< HEAD
 /gameServer/nbproject/private/
 /gameServer/dist/
 /gameServer/build/
+=======
+/TicTacToe/dist/
+/TicTacToe/build/
+>>>>>>> div
