@@ -8,8 +8,7 @@
 *.jar
 *.war
 *.ear
-TicTacToe/nbproject/private/private.xml
-TicTacToe/nbproject/private/private.properties
+private.xml 
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
@@ -60,6 +59,16 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
+<<<<<<< HEAD
+<<<<<<< HEAD
+/gameServer/nbproject/private/
+/gameServer/dist/
+/gameServer/build/
+=======
+/TicTacToe/dist/
+/TicTacToe/build/
+>>>>>>> div
+=======
 
 /TicTacToe/dist/
 /TicTacToe/build/
@@ -68,3 +77,4 @@ crashlytics-build.properties
 /gameServer/dist/
 /gameServer/build/
 
+>>>>>>> 56c183017899677d53ef9ac31bcd84aba27cda60
