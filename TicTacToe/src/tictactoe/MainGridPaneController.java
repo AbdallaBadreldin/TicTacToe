@@ -81,57 +81,12 @@ public class MainGridPaneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*
-         labels = new ArrayList<>(Arrays.asList(label1,label2,label3,label4,label5,label6,label7,label8,label9));
-         labels.forEach(label->{
-             setupLabel(label);
-             label.setFocusTraversable(false);
-             label.setPrefSize(90, 90);
-             label.setAlignment(Pos.CENTER);
-             label.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-         });
-
-        labels=new Label[]{label1,label2,label3,label4,label5,label6,label7,label8,label9};
-        for(int i=0;i<labels.length;i++)
-        {
-            labels[i]=new Label();
-            labels[i].setFocusTraversable(false);
-            
-           
-        }*/
-
-    }
-
-
-    /*
-    public void  setupLabel(Label label)
-    {
-        label.setOnMouseClicked(mouseEvent->{
-         //setPlayerSymbol(label);
-         
-     });
         
+
     }
-    
-    
-    public void setPlayerSymbol(Label label){
-        if(label.getText()=="") {
-            if(playerTurn)
-            { label.setText("X");
-              label.setTextFill(Color.GREEN);
-              playerTurn=false;
-            }
-            else
-            {
-                label.setText("O");
-              label.setTextFill(Color.RED);
-              playerTurn =true;
-            }
-   
-        }  
-        
-    }
-     */
+
+
+
     @FXML
     private void handleLabels(MouseEvent mouseEvent) {
         ((Label) mouseEvent.getSource()).setDisable(true);
