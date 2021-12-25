@@ -22,8 +22,6 @@ public class TicTacToe extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
         stage.initStyle(StageStyle.UNDECORATED);
-        //Parent root = FXMLLoader.load(getClass().getResource("MainGridPane.fxml"));
-        //GameClient.makeAMove();
 
         Scene scene = new Scene(root);
         
