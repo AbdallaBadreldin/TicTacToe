@@ -308,12 +308,12 @@ public class MainGridPaneController implements Initializable {
     private void dialogHandle() {
         Dialog dialog = new Dialog();
         DialogPane dialogPane = dialog.getDialogPane();
-        dialog.setHeight(100);
-        dialog.setWidth(100);
-
-        dialog.setContentText("Yaaaaay you are winner\n"
-                + "Do you want to play again");
-
+        dialog.setHeight(200);
+        dialog.setWidth(200);
+        dialog.setGraphic(new ImageView(this.getClass().
+           getResource("/Gallary/congrats.gif").toString()));
+        dialog.setContentText("Do you want to play again");
+        
         ButtonType rematchButtonType = new ButtonType("Rematch", ButtonBar.ButtonData.OK_DONE);
         ButtonType exitButtonType = new ButtonType("Exit", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(rematchButtonType, exitButtonType);

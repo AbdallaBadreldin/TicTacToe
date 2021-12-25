@@ -26,7 +26,8 @@ public class Player implements Serializable {
     private ImageView myImage;
     private boolean isInGame;
 
-    public Player(String userName, String password, int status, String gender, int win, int lose, int draw, int totalScore, int totalMatches, ImageView myImage, boolean isInGame) {
+    public Player(String userName, String password, int status, String gender,
+            int win, int lose, int draw, int totalScore, int totalMatches, ImageView myImage, boolean isInGame) {
         this.userName = userName;
         this.password = password;
         this.status = status;
