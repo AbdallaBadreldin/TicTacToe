@@ -20,7 +20,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -37,6 +40,8 @@ import models.PlayerMove;
  * @author Radwa
  */
 public class MainGridPaneController implements Initializable {
+    @FXML
+    private BorderPane mainPane;
 
     @FXML
     private Label label1;
@@ -56,10 +61,41 @@ public class MainGridPaneController implements Initializable {
     private Label label8;
     @FXML
     private Label label9;
-
     @FXML
     private Pane gamePane;
-
+    @FXML
+    private GridPane GridPane;
+    @FXML
+    private ImageView playerOneImageView;
+    @FXML
+    private Label playerOneNameLbl;
+    @FXML
+    private Label playerOneScoreLbl;
+    @FXML
+    private Label playerTwoScoreLbl;
+    @FXML
+    private ImageView playerTwoImageView;
+    @FXML
+    private Label playerTwoNameLbl;
+    @FXML
+    private Pane grid00;
+    @FXML
+    private Pane grid01;
+    @FXML
+    private Pane grid02;
+    @FXML
+    private Pane grid10;
+    @FXML
+    private Pane grid11;
+    @FXML
+    private Pane grid12;
+    @FXML
+    private Pane grid20;
+    @FXML
+    private Pane grid21;
+    @FXML
+    private Pane grid22;
+    
     GameSession gameSession = new GameSession();
     Label label = new Label();
 
@@ -70,19 +106,18 @@ public class MainGridPaneController implements Initializable {
     private boolean isXSymbol = true;
 
     private boolean winner = false;
-
     @FXML
-    private GridPane GridPane;
+    private Button backBtn;
+  
 
-    @FXML
     public void handelGridPane(MouseEvent event) {
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-
+        playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
+        playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
     }
 
 
@@ -105,8 +140,7 @@ public class MainGridPaneController implements Initializable {
         x2 = (bound2.getMinX() + bound2.getMaxX()) / 2;
         y2 = (bound2.getMinY() + bound2.getMaxY()) / 2;
         Line line = new Line(x1, y1, x2, y2);
-        gamePane.getChildren().add(line);
-
+        mainPane.getChildren().add(line);
     }
 
     private String returnSymbol() {
@@ -293,7 +327,6 @@ public class MainGridPaneController implements Initializable {
     }
 
     private void checkState() {
-
         checkRows();
         checkColumns();
         checkDiagonal();
@@ -313,41 +346,32 @@ public class MainGridPaneController implements Initializable {
         }
     }
 
-    @FXML
-    private void handelGrid00(MouseEvent event) {
 
+    @FXML
+    private void playerOneImageClicked(MouseEvent event) {
+        /* TODO:
+        show dialog to view the player data from the server 
+        
+        
+        */
+    }
+    @FXML
+    private void playerTwoImageClicked(MouseEvent event) {
+         /* TODO:
+        show dialog to view the player data from the server 
+        
+        
+        */
     }
 
     @FXML
-    private void handleGrid10(MouseEvent event) {
-    }
-
-    @FXML
-    private void handelGrid20(MouseEvent event) {
-    }
-
-    @FXML
-    private void handelGrid01(MouseEvent event) {
-    }
-
-    @FXML
-    private void handelGrid11(MouseEvent event) {
-    }
-
-    @FXML
-    private void handelGrid21(MouseEvent event) {
-    }
-
-    @FXML
-    private void handelGrid02(MouseEvent event) {
-    }
-
-    @FXML
-    private void handelGrid12(MouseEvent event) {
-    }
-
-    @FXML
-    private void handelGrid22(MouseEvent event) {
+    private void backBtnAction(ActionEvent event) {
+        /* TODO:
+        Handle Back button
+        1- show alert ----> If you press ok you are going to lose 
+        2- press OK then he loses (Forfeit)
+        3- press CANCEL then back to the game (DO NOTHING)
+        */
     }
 
 }

@@ -5,7 +5,6 @@
  */
 package tictactoe;
 
-import client.GameClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,12 +22,7 @@ public class TicTacToe extends Application {
     public void start(Stage stage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
-        stage.initStyle(StageStyle.UNDECORATED);
-        //Parent root = FXMLLoader.load(getClass().getResource("MainGridPane.fxml"));
-        //GameClient.makeAMove();
-
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.show();
     }
