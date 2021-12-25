@@ -6,7 +6,6 @@
 package models;
 
 import java.io.Serializable;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -24,10 +23,11 @@ public class Player implements Serializable {
     private int draw;
     private int totalScore;
     private int totalMatches;
-    private int image;
+    private ImageView myImage;
     private boolean isInGame;
 
-    public Player(String userName, String password, int status, String gender, int win, int lose, int draw, int totalScore, int totalMatches, ImageView myImage, boolean isInGame) {
+    public Player(String userName, String password, int status, String gender,
+            int win, int lose, int draw, int totalScore, int totalMatches, ImageView myImage, boolean isInGame) {
         this.userName = userName;
         this.password = password;
         this.status = status;
@@ -39,7 +39,6 @@ public class Player implements Serializable {
         this.totalMatches = totalMatches;
         this.myImage = myImage;
         this.isInGame = isInGame;
-        myImage.setImage(new Image(""));
     }
 
 
