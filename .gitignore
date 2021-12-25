@@ -59,6 +59,7 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 <<<<<<< HEAD
+<<<<<<< HEAD
 /gameServer/nbproject/private/
 /gameServer/dist/
 /gameServer/build/
@@ -66,3 +67,13 @@ crashlytics-build.properties
 /TicTacToe/dist/
 /TicTacToe/build/
 >>>>>>> div
+=======
+
+/TicTacToe/dist/
+/TicTacToe/build/
+
+/gameServer/nbproject/private/
+/gameServer/dist/
+/gameServer/build/
+
+>>>>>>> 56c183017899677d53ef9ac31bcd84aba27cda60

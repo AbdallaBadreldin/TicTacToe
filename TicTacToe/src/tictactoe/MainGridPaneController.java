@@ -8,9 +8,17 @@ package tictactoe;
 import java.net.URL;
 
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -19,6 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 import models.GameSession;
 import models.PlayerMove;
 
@@ -52,6 +61,7 @@ public class MainGridPaneController implements Initializable {
     private Pane gamePane;
     
     GameSession gameSession = new GameSession();
+    Label label=new Label();
     
      private boolean playerTurn=true;
     
@@ -61,18 +71,13 @@ public class MainGridPaneController implements Initializable {
      
      private boolean winner = false;
      
-      //private boolean isGameEnd=false;
-      //private int XOCounter=0;
-     
-     //Label[] labels=new Label[3*3] ;
-       //ArrayList<Label> labels;
-     
+      
     @FXML
     private GridPane GridPane;
   
   @FXML
     public void handelGridPane(MouseEvent event) {
-       // Label labelClicked = (Label) event.getSource();   
+         
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -103,10 +108,11 @@ public class MainGridPaneController implements Initializable {
     {
         label.setOnMouseClicked(mouseEvent->{
          //setPlayerSymbol(label);
-         //checkIfGameIsEnd();
+         
      });
         
     }
+    
     
     public void setPlayerSymbol(Label label){
         if(label.getText()=="") {
@@ -128,10 +134,12 @@ public class MainGridPaneController implements Initializable {
     */
     
     @FXML 
-    private void handleLabels(MouseEvent mouseEvent)  {
+    private void handleLabels(MouseEvent mouseEvent)  {  
+        ((Label) mouseEvent.getSource()).setDisable(true);
         gameSession.addMove(returnMove((Label) mouseEvent.getSource()));
         ((Label) mouseEvent.getSource()).setText(returnSymbol());
         checkState();
+        
     }
     
     private void drawLine(Label b1, Label b2) {
@@ -149,16 +157,13 @@ public class MainGridPaneController implements Initializable {
 
     private String returnSymbol() {
         String symbol;
-        
-            if (isXSymbol == true) {
+          if (isXSymbol == true) {
             symbol = "X";
         } else {
             symbol = "O";
         }
-        
-        isXSymbol = !isXSymbol;
-        return symbol;
-        
+          isXSymbol = !isXSymbol;
+          return symbol;   
     }
 
     private PlayerMove returnMove(Label label) {
@@ -190,6 +195,7 @@ public class MainGridPaneController implements Initializable {
                 &&!label1.getText().equals("")) {
             
             drawLine(label1, label3);
+             
             if(label1.getText().equals("X")) {
                 firstWinner=true; 
             }else {
@@ -200,6 +206,7 @@ public class MainGridPaneController implements Initializable {
                 && label4.getText().equals(label6.getText())
                 && !label4.getText().equals("")) {
             drawLine(label4, label6);
+            
             if (label4.getText().equals("X")) {
                 firstWinner = true;
                 
@@ -212,6 +219,7 @@ public class MainGridPaneController implements Initializable {
                 && label7.getText().equals(label9.getText())
                 && !label9.getText().equals("")) {
             drawLine(label7, label9);
+             
             if (label9.getText().equals("X")) {
                 System.out.println("x is winning");
                 firstWinner = true;
@@ -230,6 +238,7 @@ public class MainGridPaneController implements Initializable {
                 &&!label1.getText().equals("")) {
             
             drawLine(label1, label7);
+            
             if(label1.getText().equals("X")) {
                 firstWinner=true; 
             }else {
@@ -240,6 +249,7 @@ public class MainGridPaneController implements Initializable {
                 && label2.getText().equals(label8.getText())
                 && !label2.getText().equals("")) {
             drawLine(label2, label8);
+            
             if (label2.getText().equals("X")) {
                 firstWinner = true;
                 
@@ -252,6 +262,7 @@ public class MainGridPaneController implements Initializable {
                 && label3.getText().equals(label9.getText())
                 && !label3.getText().equals("")) {
             drawLine(label3, label9);
+            
             if (label3.getText().equals("X")) {
                 System.out.println("x is winning");
                 firstWinner = true;
@@ -270,6 +281,7 @@ public class MainGridPaneController implements Initializable {
                 && !label1.getText().equals("")) {
             
             drawLine(label1, label9);
+             
             if(label1.getText().equals("X")) {
                 firstWinner=true; 
             }else {
@@ -280,6 +292,7 @@ public class MainGridPaneController implements Initializable {
                 && label3.getText().equals(label7.getText())
                 && !label3.getText().equals("")) {
             drawLine(label3, label7);
+             
             if (label3.getText().equals("X")) {
                 firstWinner = true;
                 
@@ -302,21 +315,48 @@ public class MainGridPaneController implements Initializable {
                 && !label8.getText().equals("")
                 && !label9.getText().equals("");
     }
-    
+      private void dialogHandle() {
+             Dialog dialog = new Dialog();
+            DialogPane dialogPane = dialog.getDialogPane();
+            dialog.setHeight(100);
+            dialog.setWidth(100);
+            dialog.setContentText("");
+            dialog.setContentText("Yaaaaay you are winner\n"
+                    + "Do you want to play again");
+
+            ButtonType okButtonType = new ButtonType("Rematch", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButtonType = new ButtonType("Exit", ButtonBar.ButtonData.CANCEL_CLOSE);
+            dialog.getDialogPane().getButtonTypes().addAll(okButtonType, cancelButtonType);
+            dialogPane.lookupButton(cancelButtonType).setVisible(true);
+            
+            Button okButton = (Button) dialog.getDialogPane().lookupButton(okButtonType);
+            okButton.setAlignment(Pos.CENTER);
+             Button cancelButton = (Button) dialog.getDialogPane().lookupButton(cancelButtonType);
+            okButton.setAlignment(Pos.CENTER);
+            dialog.showAndWait();
+            }
     private void checkState() {
+       
         checkRows();
         checkColumns();
         checkDiagonal();
         if (firstWinner) {
+            dialogHandle();
+            gamePane.setDisable(true);
             System.out.println("X is win");
         } else if (secondWinner) {
+            dialogHandle();
             System.out.println("O is win");
+            gamePane.setDisable(true);
         } else {
             if ((isFullGrid())) {
+                gamePane.setDisable(true);
                 System.out.println("It's a Draw");
             }
         }
     }
+  
+    
     
     
 
