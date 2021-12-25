@@ -12,7 +12,9 @@ import java.util.List;
  */
 
 public class Subject {
-	
+	private final int ONLINE =1;
+        private final int OFF_ONLINE =2;
+        private final int BUSY =3;
    private List<Observer> observers = new ArrayList<Observer>();
    private int state;
 
@@ -25,7 +27,7 @@ public class Subject {
       notifyAllObservers();
    }
 
-   public void attach(Observer observer){
+   public void addObserver(Observer observer){
       observers.add(observer);		
    }
 
