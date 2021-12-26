@@ -12,15 +12,30 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import database.DatabaseAccess;
+import helper.ConnectionHandler;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Button;
 
 /**
  *
  * @author Bossm
  */
 public class FXMLDocumentController implements Initializable {
+     DataInputStream dis;
+    PrintStream ps;
+    String msg;
+     ServerSocket serverSocket;
     
     @FXML
     private Label label;
+    @FXML
+    private Button button;
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -34,3 +49,4 @@ public class FXMLDocumentController implements Initializable {
     }    
     
 }
+ 
