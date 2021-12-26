@@ -28,10 +28,10 @@ import javafx.scene.text.Text;
  * @author Bossm
  */
 public class FXMLDocumentController implements Initializable {
-     DataInputStream dis;
+    DataInputStream dis;
     PrintStream ps;
     String msg;
-     ServerSocket serverSocket;
+    ServerSocket serverSocket;
   
     @FXML
     private Button stop;
@@ -48,7 +48,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        // DatabaseAccess.setUpConnection();
-       startServer();
+       //startServer();
     }    
     public void startServer(){
       try {
