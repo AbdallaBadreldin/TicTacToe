@@ -21,6 +21,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -31,17 +32,18 @@ public class FXMLDocumentController implements Initializable {
     PrintStream ps;
     String msg;
      ServerSocket serverSocket;
+  
+    @FXML
+    private Button stop;
+    @FXML
+    private Button start;
+    @FXML
+    private Text online;
+    @FXML
+    private Text current;
+    @FXML
+    private Text total;
     
-    @FXML
-    private Label label;
-    @FXML
-    private Button button;
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -62,7 +64,16 @@ public class FXMLDocumentController implements Initializable {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+    }
+
+    @FXML
+    private void stopServer(ActionEvent event) {
+    }
+
+    @FXML
+    private void startServer(ActionEvent event) {
+    }
+      
     
 }
  
