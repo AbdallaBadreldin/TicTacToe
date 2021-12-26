@@ -46,6 +46,23 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DatabaseAccess.setUpConnection();
+       // DatabaseAccess.setUpConnection();
+       startServer();
+    }    
+    public void startServer(){
+      try {
+            System.out.println("got into try connection");
+            serverSocket = new ServerSocket(3333);
+            Socket s = serverSocket.accept();
+            
+            System.out.println("accepted Connection");
+              new ConnectionHandler(s);
+            // TODO
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
     
 }
