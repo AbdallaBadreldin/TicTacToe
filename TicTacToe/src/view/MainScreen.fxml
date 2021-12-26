@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane prefHeight="787.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+<BorderPane prefHeight="562.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
    <center>
       <AnchorPane fx:id="mainPane" prefHeight="589.0" prefWidth="475.0" BorderPane.alignment="CENTER">
          <children>
@@ -26,7 +25,7 @@
    <right>
       <VBox alignment="BOTTOM_RIGHT" prefHeight="589.0" prefWidth="142.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="recordingsBtn" alignment="BOTTOM_RIGHT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#recordingsBtnAction" prefHeight="30.0" prefWidth="100.0" text="Recordings" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+            <Button fx:id="recordingsBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#recordingsBtnAction" prefHeight="30.0" prefWidth="100.0" text="Recordings" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
                <VBox.margin>
                   <Insets bottom="15.0" right="15.0" />
                </VBox.margin>
