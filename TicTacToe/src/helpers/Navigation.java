@@ -22,7 +22,7 @@ public class Navigation {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    
+
 
     public void navigateToPlayerVsAI(ActionEvent event) throws IOException {
 
@@ -50,6 +50,8 @@ public class Navigation {
         stage.setScene(scene);
         stage.show();
     }
+
+     
 public void navigateToRecordings(ActionEvent event) throws IOException {
 
         root = FXMLLoader.load(getClass().getResource("/view/RecordingsScreen.fxml"));

@@ -19,14 +19,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 
-import javafx.scene.layout.BorderPane;
-
 /**
  * FXML Controller class
  *
  * @author Mahmoud
  */
 public class MainScreenController implements Initializable {
+    
+ 
   
     @FXML
     private Button exitBtn;
@@ -40,9 +40,6 @@ public class MainScreenController implements Initializable {
     private Button playerOnlineBtn;
     @FXML
     private Button recordingsBtn;
-    
-    @FXML
-    private BorderPane mainPane;
     
     Navigation navigator;;
 
@@ -76,7 +73,6 @@ public class MainScreenController implements Initializable {
         navigator = new Navigation();
         try {
             navigator.navigateToPlayerVsPlayer(event);
-            
         } catch (IOException ex) {
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,6 +95,5 @@ public class MainScreenController implements Initializable {
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+     
 }
