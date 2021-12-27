@@ -29,7 +29,7 @@ public class ConnectionHandler extends Thread {
 
     public ConnectionHandler(Socket cs) throws ClassNotFoundException {
         try {
-            ois =new ObjectInputStream(cs.getInputStream());
+            ois = new ObjectInputStream(cs.getInputStream());
             Object obj = ois.readObject();
             
             System.out.println("so we have inputstream here");

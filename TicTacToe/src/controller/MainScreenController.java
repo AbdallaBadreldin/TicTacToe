@@ -5,6 +5,7 @@
  */
 package controller;
 
+import client.GameClient;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import models.GameRequest;
 
 /**
  * FXML Controller class
@@ -61,11 +63,15 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void playerVsAIBtnAction(ActionEvent event) {
+         GameClient client ;
         try {
-            navigator.navigateToPlayerVsAI(event);
+            client = GameClient.getInstactance("127.0 0.1", 3333);
+            client.sendRequest(new String("My text"));
+            client.sendRequest(new Integer(233));
         } catch (IOException ex) {
-            Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameRequest.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     @FXML
