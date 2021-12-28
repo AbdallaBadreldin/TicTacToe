@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/models/GameRequest.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/helpers/Navigation.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/controller/MainScreenController.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/client/GameClient.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/controller/RecordesScreenController.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/constants/Constants.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="76.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available records ">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="24.0" fitWidth="28.0" layoutX="30.0" layoutY="33.0" onMouseClicked="#onBackImageClick">
+         <image>
+            <Image url="@../Gallary/back_btn.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="exitImgViwe" fitHeight="32.0" fitWidth="35.0" layoutX="544.0" layoutY="17.0" onMouseClicked="#onExitImageClick">
+         <image>
+            <Image url="@../Gallary/exit_btn.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

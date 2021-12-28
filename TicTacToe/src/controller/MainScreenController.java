@@ -28,8 +28,6 @@ import models.GameRequest;
  */
 public class MainScreenController implements Initializable {
     
- 
-  
     @FXML
     private Button exitBtn;
     @FXML
@@ -63,13 +61,10 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void playerVsAIBtnAction(ActionEvent event) {
-         GameClient client ;
         try {
-            client = GameClient.getInstactance("127.0 0.1", 3333);
-            client.sendRequest(new String("My text"));
-            client.sendRequest(new Integer(233));
+            navigator.navigateToPlayerVsAI(event);
         } catch (IOException ex) {
-            Logger.getLogger(GameRequest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
