@@ -5,6 +5,7 @@
  */
 package tictactoe;
 
+import controller.SplashScrennController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,9 +18,10 @@ import javafx.stage.StageStyle;
  * @author Mahmoud
  */
 public class TicTacToe extends Application {
-    
+   
     @Override
     public void start(Stage stage) throws Exception {
+        new SplashScrennController().startScreen();
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainGridPaneController">
    <center>
@@ -32,47 +32,74 @@
                <children>
                   <Pane fx:id="grid00" prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="label1" alignment="CENTER" layoutX="4.0" layoutY="8.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label1" alignment="CENTER" layoutX="4.0" layoutY="8.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                   <Pane fx:id="grid01" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <Label fx:id="label2" alignment="CENTER" layoutX="5.0" layoutY="5.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label2" alignment="CENTER" layoutX="5.0" layoutY="5.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                   <Pane fx:id="grid02" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                      <children>
-                        <Label fx:id="label3" alignment="CENTER" layoutX="6.0" layoutY="4.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label3" alignment="CENTER" layoutX="6.0" layoutY="4.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                   <Pane fx:id="grid10" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                        <Label fx:id="label4" alignment="CENTER" layoutX="4.0" layoutY="3.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label4" alignment="CENTER" layoutX="4.0" layoutY="3.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                   <Pane fx:id="grid11" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label fx:id="label5" alignment="CENTER" layoutX="6.0" layoutY="4.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label5" alignment="CENTER" layoutX="6.0" layoutY="4.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                   <Pane fx:id="grid12" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <children>
-                        <Label fx:id="label6" alignment="CENTER" layoutX="6.0" layoutY="3.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label6" alignment="CENTER" layoutX="6.0" layoutY="3.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                   <Pane fx:id="grid20" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
-                        <Label fx:id="label7" alignment="CENTER" layoutX="3.0" layoutY="9.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label7" alignment="CENTER" layoutX="3.0" layoutY="9.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                   <Pane fx:id="grid21" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label fx:id="label8" alignment="CENTER" layoutX="5.0" layoutY="9.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label8" alignment="CENTER" layoutX="5.0" layoutY="9.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                   <Pane fx:id="grid22" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <children>
-                        <Label fx:id="label9" alignment="CENTER" layoutX="6.0" layoutY="5.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0" />
+                        <Label fx:id="label9" alignment="CENTER" layoutX="6.0" layoutY="5.0" onMouseClicked="#handleLabels" prefHeight="122.0" prefWidth="191.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                </children>
@@ -121,9 +148,9 @@
          <center>
             <HBox alignment="CENTER" maxWidth="481.0" prefHeight="316.0" prefWidth="481.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="playerOneScoreLbl" text="1" />
+                  <Label fx:id="playerOneScoreLbl" />
                   <Label text="-" />
-                  <Label fx:id="playerTwoScoreLbl" alignment="CENTER" text="1" textAlignment="CENTER" />
+                  <Label fx:id="playerTwoScoreLbl" alignment="CENTER" textAlignment="CENTER" />
                </children>
             </HBox>
          </center>

@@ -18,12 +18,29 @@ import javafx.stage.Stage;
  * @author Mahmoud
  */
 public class Navigation {
-    
+
     private Stage stage;
     private Scene scene;
     private Parent root;
 
+    public void navigateToMainScreen(ActionEvent event) throws IOException {
 
+        root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void navigateToMainScreen(Stage stage) throws IOException {
+
+        root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+        this.stage = stage;
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
     public void navigateToPlayerVsAI(ActionEvent event) throws IOException {
 
         root = FXMLLoader.load(getClass().getResource("/view/PlayerVsAIScreen.fxml"));
@@ -32,7 +49,7 @@ public class Navigation {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public void navigateToPlayerOnline(ActionEvent event) throws IOException {
 
         root = FXMLLoader.load(getClass().getResource("/view/OnlineScreen.fxml"));
@@ -41,8 +58,8 @@ public class Navigation {
         stage.setScene(scene);
         stage.show();
     }
-    
-     public void navigateToPlayerVsPlayer(ActionEvent event) throws IOException {
+
+    public void navigateToPlayerVsPlayer(ActionEvent event) throws IOException {
 
         root = FXMLLoader.load(getClass().getResource("/view/MainGridPane.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -51,8 +68,7 @@ public class Navigation {
         stage.show();
     }
 
-     
-public void navigateToRecordings(ActionEvent event) throws IOException {
+    public void navigateToRecordings(ActionEvent event) throws IOException {
 
         root = FXMLLoader.load(getClass().getResource("/view/RecordingsScreen.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
