@@ -31,10 +31,18 @@ public class Navigation {
         stage.setScene(scene);
         stage.show();
     }
-    
-    public void navigateToMainScreen(Stage stage) throws IOException {
+      public void navigateToDialog(ActionEvent event ) throws IOException {
 
-        root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/view/Dialog.fxml"));
+        this.stage = stage;
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void navigateToMainGridPane(ActionEvent event ) throws IOException {
+
+        root = FXMLLoader.load(getClass().getResource("/view/MainGridPane.fxml"));
         this.stage = stage;
         scene = new Scene(root);
         stage.setScene(scene);
@@ -42,6 +50,7 @@ public class Navigation {
     }
     
     public void navigateToPlayerVsAI(ActionEvent event) throws IOException {
+   
 
         root = FXMLLoader.load(getClass().getResource("/view/PlayerVsAIScreen.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

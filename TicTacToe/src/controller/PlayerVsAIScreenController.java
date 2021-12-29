@@ -5,10 +5,9 @@
  */
 package controller;
 
-import helpers.Navigation;
-import java.awt.TextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,28 +16,19 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import models.GameSession;
 import models.PlayerMove;
 
@@ -47,34 +37,12 @@ import models.PlayerMove;
  *
  * @author Radwa
  */
-public class MainGridPaneController implements Initializable {
+public class PlayerVsAIScreenController implements Initializable {
 
-    private boolean isGameActive = true;
     @FXML
     private BorderPane mainPane;
-
     @FXML
-    private Label label1;
-    @FXML
-    private Label label2;
-    @FXML
-    private Label label3;
-    @FXML
-    private Label label4;
-    @FXML
-    private Label label5;
-    @FXML
-    private Label label6;
-    @FXML
-    private Label label7;
-    @FXML
-    private Label label8;
-    @FXML
-    private Label label9;
-    @FXML
-    private Pane gamePane;
-    @FXML
-    private GridPane GridPane;
+    private Button backBtn;
     @FXML
     private ImageView playerOneImageView;
     @FXML
@@ -88,83 +56,65 @@ public class MainGridPaneController implements Initializable {
     @FXML
     private Label playerTwoNameLbl;
     @FXML
+    private Pane gamePane;
+    @FXML
+    private GridPane GridPane;
+    @FXML
     private Pane grid00;
+    @FXML
+    private Label label1;
     @FXML
     private Pane grid01;
     @FXML
+    private Label label2;
+    @FXML
     private Pane grid02;
+    @FXML
+    private Label label3;
     @FXML
     private Pane grid10;
     @FXML
+    private Label label4;
+    @FXML
     private Pane grid11;
+    @FXML
+    private Label label5;
     @FXML
     private Pane grid12;
     @FXML
+    private Label label6;
+    @FXML
     private Pane grid20;
+    @FXML
+    private Label label7;
     @FXML
     private Pane grid21;
     @FXML
-    private Pane grid22;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    private Stage dialogStage;
-    private Line line;
-
-    Navigation navigator = new Navigation();
-    GameSession gameSession = new GameSession();
-    DialogController dialog = new DialogController();
-    Label label = new Label();
-    int playerOneScore = 0;
-    int playerTwoScore = 0;
-    private boolean playerTurn = true;
-    private boolean firstWinner = false;
-    private boolean secondWinner = false;
-    private boolean isXSymbol = true;
-    private boolean winner;
+    private Label label8;
     @FXML
-    private Button backBtn;
+    private Pane grid22;
+    @FXML
+    private Label label9;
+    GameSession gameSession = new GameSession();
 
+    private int computerMove;
+    private boolean playerTurn = true;
+    private boolean isXSymbol = true;
+
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
-        playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
+        // TODO
     }
 
     @FXML
-    private void handleLabels(MouseEvent mouseEvent) {
-
-        ((Label) mouseEvent.getSource()).setDisable(true);
-        gameSession.addMove(returnMove((Label) mouseEvent.getSource()));
-        ((Label) mouseEvent.getSource()).setText(returnSymbol());
-        checkState();
-
-    }
-
-    private void removeLine() {
-        mainPane.getChildren().remove(line);
-
-    }
-
-    private void reMatch() {
-        isGameActive = !isGameActive;
-        //System.out.println("controller.MainGridPaneController.reMatch()");
-        gamePane.setDisable(isGameActive);
-        label1.setText("");
-        label2.setText("");
-        label3.setText("");
-        label4.setText("");
-        label5.setText("");
-        label6.setText("");
-        label7.setText("");
-        label8.setText("");
-        label9.setText("");
-        removeLine();
-        winner = false;
-        //gamePane.getChildren().clear();
-        //removeLine();
-        //if(winner){checkState();}
-
+    private void handleLabels(MouseEvent event) {
+        ((Label) event.getSource()).setDisable(true);
+        gameSession.addMove(returnMove((Label) event.getSource()));
+        ((Label) event.getSource()).setText(returnSymbol());
+        // checkState();
     }
 
     private void drawLine(Label b1, Label b2) {
@@ -175,7 +125,7 @@ public class MainGridPaneController implements Initializable {
         y1 = (bound1.getMinY() + bound1.getMaxY()) / 2;
         x2 = (bound2.getMinX() + bound2.getMaxX()) / 2;
         y2 = (bound2.getMinY() + bound2.getMaxY()) / 2;
-        line = new Line(x1, y1, x2, y2);
+        Line line = new Line(x1, y1, x2, y2);
         mainPane.getChildren().add(line);
     }
 
@@ -214,13 +164,13 @@ public class MainGridPaneController implements Initializable {
         return move;
     }
 
-    private void checkRows() {
+    /*  private void checkRows() {
         if (label1.getText().equals(label2.getText())
                 && label2.getText().equals(label3.getText())
                 && !label1.getText().equals("")) {
 
             drawLine(label1, label3);
-            //dialogHandle();
+            dialogHandle();
 
             if (label1.getText().equals("X")) {
                 firstWinner = true;
@@ -232,7 +182,7 @@ public class MainGridPaneController implements Initializable {
                 && label4.getText().equals(label6.getText())
                 && !label4.getText().equals("")) {
             drawLine(label4, label6);
-            //dialogHandle();
+            dialogHandle();
 
             if (label4.getText().equals("X")) {
                 firstWinner = true;
@@ -246,7 +196,7 @@ public class MainGridPaneController implements Initializable {
                 && label7.getText().equals(label9.getText())
                 && !label9.getText().equals("")) {
             drawLine(label7, label9);
-            //dialogHandle();
+            dialogHandle();
 
             if (label9.getText().equals("X")) {
                 System.out.println("x is winning");
@@ -266,7 +216,7 @@ public class MainGridPaneController implements Initializable {
                 && !label1.getText().equals("")) {
 
             drawLine(label1, label7);
-            //dialogHandle();
+            dialogHandle();
 
             if (label1.getText().equals("X")) {
                 firstWinner = true;
@@ -278,7 +228,7 @@ public class MainGridPaneController implements Initializable {
                 && label2.getText().equals(label8.getText())
                 && !label2.getText().equals("")) {
             drawLine(label2, label8);
-            //dialogHandle();
+            dialogHandle();
 
             if (label2.getText().equals("X")) {
                 firstWinner = true;
@@ -291,7 +241,7 @@ public class MainGridPaneController implements Initializable {
                 && label3.getText().equals(label9.getText())
                 && !label3.getText().equals("")) {
             drawLine(label3, label9);
-            //dialogHandle();
+            dialogHandle();
 
             if (label3.getText().equals("X")) {
                 System.out.println("x is winning");
@@ -323,7 +273,7 @@ public class MainGridPaneController implements Initializable {
                 && label3.getText().equals(label7.getText())
                 && !label3.getText().equals("")) {
             drawLine(label3, label7);
-            //dialogHandle();
+            dialogHandle();
 
             if (label3.getText().equals("X")) {
                 firstWinner = true;
@@ -335,7 +285,7 @@ public class MainGridPaneController implements Initializable {
             winner = true;
         }
     }
-
+     */
     private boolean isFullGrid() {
         return !label1.getText().equals("")
                 && !label2.getText().equals("")
@@ -349,130 +299,97 @@ public class MainGridPaneController implements Initializable {
     }
 
     /* private void dialogHandle() {
-
-        StackPane root = new StackPane();
-        Stage dialogStage = new Stage();
-
-        Image image = new Image("/Gallary/congrats.gif", 150, 150, false, true, true);
-        ImageView imageView = new ImageView(image);
-         root.getChildren().add(imageView);
-        Button btn = new Button();
-        btn.setText("Rematch");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
+        Dialog dialog = new Dialog();
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialog.setGraphic(new ImageView(this.getClass().
+          getResource("/Gallary/congrats.gif").toString()));
+        dialog.setContentText("Do you want to play again");
+        
+       ButtonType rematchButtonType = new ButtonType("Rematch", ButtonBar.ButtonData.OTHER);
+        ButtonType exitButtonType = new ButtonType("Exit", ButtonBar.ButtonData.OTHER);
+        dialog.getDialogPane().getButtonTypes().addAll(rematchButtonType, exitButtonType);
+        dialogPane.lookupButton(exitButtonType).setVisible(true);
+        
+        Button rematchButton = (Button) dialog.getDialogPane().lookupButton(rematchButtonType);
+        rematchButton.setAlignment(Pos.CENTER);
+        Button exitButton = (Button) dialog.getDialogPane().lookupButton(exitButtonType);
+        exitButton.setAlignment(Pos.CENTER);
+        rematchButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialogStage.close();
-
-                reMatch();
+                System.out.println("mahoud");
+               reMatch();
+                
             }
         });
-        root.getChildren().addAll( btn);
-
-        Scene scene = new Scene(root, 500,500);
-        dialogStage.setScene(scene);
-        dialogStage.show();
-
-    }*/
-    private void checkState() {
-        checkRows();
-        checkColumns();
-        checkDiagonal();
-        if (firstWinner) {
-            playerOneScore++;
-            playerOneScoreLbl.setText("" + playerOneScore);
-            playerTwoScoreLbl.setText("" + playerTwoScore);
-            isGameActive = !isGameActive;
-            //navigator.navigateToDialog(event);
-
-            //dialogHandle();
-            //gamePane.setDisable(true);
-            //System.out.println("X is win");
-        } else if (secondWinner) {
-            playerTwoScore++;
-            playerTwoScoreLbl.setText("" + playerTwoScore);
-            playerOneScoreLbl.setText("" + playerOneScore);
-            isGameActive = !isGameActive;
-
-            //dialogHandle();
-            //System.out.println("O is win");
-            //gamePane.setDisable(true);
-        } else {
-            if ((isFullGrid())) {
-                gamePane.setDisable(true);
-                System.out.println("It's a Draw");
-                isGameActive = !isGameActive;
-            }
-        }
-    }
-
-    @FXML
-    private void playerOneImageClicked(MouseEvent event) {
-        /* TODO:
-        show dialog to view the player data from the server 
-        
-        
-         */
-    }
-
-    @FXML
-    private void playerTwoImageClicked(MouseEvent event) {
-        /* TODO:
-        show dialog to view the player data from the server 
-        
-        
-         */
-    }
-
-    @FXML
-    private void backBtnAction(ActionEvent event) {
-         Stage dialogStage = new Stage();
-
-        VBox vb = new VBox();
-        vb.setPadding(new Insets(10, 50, 50, 50));
-        vb.setSpacing(10);
-
-        Label lb = new Label("Do you want to exit game!");
-        lb.setFont(Font.font("Amble CN", FontWeight.BOLD, 24));
-        lb.setAlignment(Pos.CENTER);
-        vb.getChildren().add(lb);
-
-        Button forfeitBtn = new Button();
-        forfeitBtn.setText("Forfeit");
-        vb.getChildren().add(forfeitBtn);
-        forfeitBtn.setOnAction(new EventHandler<ActionEvent>() {
-
+       
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+            
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    //stage.close();
-                    //stage.hide();
-                    //mainPane.setVisible(false);
                     
-                    navigator.navigateToMainScreen(event);
+                      navigator.navigateToMainScreen(event);
                 } catch (IOException ex) {
                     Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-
-        Button cancelBtn = new Button();
-        cancelBtn.setText("Cancel");
-        vb.getChildren().add(cancelBtn);
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialogStage.close();
-            }
-        });
-
-        Scene scene = new Scene(vb);
-        dialogStage.setScene(scene);
-        dialogStage.show();
+        
+   
+        dialog.showAndWait();
     }
- 
 
+    private void checkState() {
+        checkRows();
+        checkColumns();
+        checkDiagonal();
+        if (firstWinner) {
+             playerOneScore++;
+            playerOneScoreLbl.setText(""+playerOneScore);
+            playerTwoScoreLbl.setText(""+playerTwoScore);
+            //dialogHandle();
+            //gamePane.setDisable(true);
+            //System.out.println("X is win");
+           
+        } else if (secondWinner) {
+             playerTwoScore++;
+            playerTwoScoreLbl.setText(""+playerTwoScore);
+            playerOneScoreLbl.setText(""+playerOneScore);
+            //dialogHandle();
+            //System.out.println("O is win");
+           
+            //gamePane.setDisable(true);
+        } else {
+            if ((isFullGrid())) {
+                gamePane.setDisable(true);
+                System.out.println("It's a Draw");
+            }
+        }
+    }*/
+    private void computerTurn() {
+        Random rand = new Random();
+        playerTurn = false;
+        while (true) {
+            computerMove = rand.nextInt(9);
+        }
+        //returnSymbol();
+        
+        
+
+    }
+
+    @FXML
+    private void backBtnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void playerOneImageClicked(MouseEvent event) {
+    }
+
+    @FXML
+    private void playerTwoImageClicked(MouseEvent event) {
+    }
 
 
 }

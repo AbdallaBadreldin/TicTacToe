@@ -27,6 +27,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import tictactoe.TicTacToe;
@@ -61,7 +62,7 @@ public class SplashScrennController extends Thread implements Initializable, Run
 
     public void run() {
         try {
-            thread.sleep(13000);
+            thread.sleep(6000);
 
             Platform.runLater(() -> {
 
@@ -80,6 +81,7 @@ public class SplashScrennController extends Thread implements Initializable, Run
 
         try {
             start();
+            stage.initStyle(StageStyle.UNDECORATED);
             Parent root = FXMLLoader.load(getClass().getResource("/view/SplashScreen.fxml"));
             scene = new Scene(root);
             stage.setScene(scene);
