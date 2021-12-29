@@ -1,25 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import client.GameClient;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import helpers.Navigation;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import models.GameRequest;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -27,10 +21,7 @@ import models.GameRequest;
  * @author Mahmoud
  */
 public class MainScreenController implements Initializable {
-    
-    @FXML
-    private Button exitBtn;
-    @FXML
+
     private ImageView mainImageView;
     @FXML
     private Button playerVsAIBtn;
@@ -38,22 +29,22 @@ public class MainScreenController implements Initializable {
     private Button playerVsPlayerBtn;
     @FXML
     private Button playerOnlineBtn;
+
+    private final Navigation navigator = new Navigation();
     @FXML
-    private Button recordingsBtn;
-    
-    Navigation navigator;;
+    private AnchorPane mainPane;
+    @FXML
+    private ImageView recImage;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        mainImageView.setImage(new Image("/resources/tic-tac-toe.png"));
-        Navigation navigator= new Navigation();
-        
-    }    
+        //mainImageView.setImage(new Image("/resources/tic-tac-toe.png"));
 
-    @FXML
+    }
+
     private void exitBtnAction(ActionEvent event) {
         Platform.exit();
         System.exit(0);
@@ -61,19 +52,14 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void playerVsAIBtnAction(ActionEvent event) {
-        try {
-            navigator.navigateToPlayerVsAI(event);
-        } catch (IOException ex) {
-            Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        System.out.println("this screen is not available yet");
+
     }
 
     @FXML
     private void playerVsPlayerBtnAction(ActionEvent event) {
-        navigator = new Navigation();
         try {
-            navigator.navigateToPlayerVsPlayer(event);
+            navigator.navigateTo(event, Navigation.MAIN_GRID_PAIN);
         } catch (IOException ex) {
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,19 +68,19 @@ public class MainScreenController implements Initializable {
     @FXML
     private void playerOnlineBtnAction(ActionEvent event) {
         try {
-            navigator.navigateToPlayerOnline(event);
+            navigator.navigateTo(event, Navigation.IP_OF_SERVER);
         } catch (IOException ex) {
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void recordingsBtnAction(ActionEvent event) {
+    private void onRecClick(MouseEvent event) {
         try {
-            navigator.navigateToRecordings(event);
+            navigator.navigateTo(event, Navigation.RECORDERS_SCREEN);
         } catch (IOException ex) {
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
+
 }

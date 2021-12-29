@@ -6,11 +6,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.List;
 import models.GameRequest;
 import models.Message;
 import models.OnlinePlayers;
-import models.Player;
 import models.PlayerMove;
 
 /**
@@ -49,7 +47,7 @@ public class GameClient {
      * @param request
      * @throws IOException
      */
-    public void sendGameRequest(GameRequest request) throws IOException {
+    public void sendRequest(GameRequest request) throws IOException {
         System.out.println("method started.");
         output.writeObject(request);
         System.out.println("req sent.");
@@ -62,7 +60,7 @@ public class GameClient {
      * @param msg
      * @throws IOException
      */
-    public void sendMessageRequest(Message msg) throws IOException {
+    public void sendRequest(Message msg) throws IOException {
         output.writeObject(msg);
         output.flush();
     }
@@ -72,7 +70,7 @@ public class GameClient {
      * @param move
      * @throws IOException
      */
-    public void makeAMove(PlayerMove move) throws IOException {
+    public void sendRequest(PlayerMove move) throws IOException {
         output.writeObject(move);
         output.flush();
     }

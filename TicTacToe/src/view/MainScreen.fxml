@@ -1,36 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="562.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
-   <center>
-      <AnchorPane fx:id="mainPane" prefHeight="589.0" prefWidth="475.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox alignment="CENTER" layoutX="120.0" layoutY="1.0" prefHeight="569.0" prefWidth="458.0" spacing="50.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="10.0">
-               <children>
-                  <ImageView fx:id="mainImageView" fitHeight="230.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="playerVsAIBtn" mnemonicParsing="false" onAction="#playerVsAIBtnAction" prefHeight="42.0" prefWidth="300.0" text="Player Vs AI" textAlignment="CENTER" />
-                  <Button fx:id="playerVsPlayerBtn" mnemonicParsing="false" onAction="#playerVsPlayerBtnAction" prefHeight="42.0" prefWidth="300.0" text="Player Vs Player" textAlignment="CENTER" />
-                  <Button fx:id="playerOnlineBtn" mnemonicParsing="false" onAction="#playerOnlineBtnAction" prefHeight="42.0" prefWidth="300.0" text="Playing Online" textAlignment="CENTER" />
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-   </center>
-   <right>
-      <VBox alignment="BOTTOM_RIGHT" prefHeight="589.0" prefWidth="142.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="recordingsBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#recordingsBtnAction" prefHeight="30.0" prefWidth="100.0" text="Recordings" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
-               <VBox.margin>
-                  <Insets bottom="15.0" right="15.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-   </right>
-</BorderPane>
+<AnchorPane fx:id="mainPane" maxHeight="600.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+   <children>
+      <Button fx:id="playerVsAIBtn" layoutX="350.0" layoutY="400.0" mnemonicParsing="false" onAction="#playerVsAIBtnAction" prefHeight="42.0" prefWidth="300.0" text="Player Vs AI" textAlignment="CENTER" />
+      <Button fx:id="playerVsPlayerBtn" layoutX="350.0" layoutY="462.0" mnemonicParsing="false" onAction="#playerVsPlayerBtnAction" prefHeight="42.0" prefWidth="300.0" text="Player Vs Player" textAlignment="CENTER" />
+      <Button fx:id="playerOnlineBtn" layoutX="350.0" layoutY="528.0" mnemonicParsing="false" onAction="#playerOnlineBtnAction" prefHeight="42.0" prefWidth="300.0" text="Playing Online" textAlignment="CENTER" />
+      <ImageView fitHeight="289.0" fitWidth="351.0" layoutX="325.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Gallary/main.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="recImage" fitHeight="63.0" fitWidth="68.0" layoutX="907.0" layoutY="507.0" onMouseClicked="#onRecClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Gallary/rec_image.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

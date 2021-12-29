@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package helpers;
 
 import java.io.IOException;
@@ -11,51 +6,51 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- *
  * @author Mahmoud
  */
 public class Navigation {
+
+    public final static String PLAYER_VS_AI = "/view/PlayerVsAIScreen.fxml";
+    public final static String PLAYER_ONLINE = "/view/OnlineScreen.fxml";
+    public final static String MAIN_GRID_PAIN = "/view/MainGridPane.fxml";
+    public final static String RECORDERS_SCREEN = "/view/RecordesScreen.fmxl";
+    public final static String MAIN_SCREEN = "/view/MainScreen.fxml";
+    public final static String IP_OF_SERVER = "/view/IPOfServer.fxml";
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    public void navigateToPlayerVsAI(ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(getClass().getResource("/view/PlayerVsAIScreen.fxml"));
+    public void navigateTo(ActionEvent event, String destination) throws IOException {
+        root = FXMLLoader.load(getClass().getResource(destination));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-
-    public void navigateToPlayerOnline(ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(getClass().getResource("/view/OnlineScreen.fxml"));
+    
+    public void navigateTo(MouseEvent event, String destination) throws IOException {
+        root = FXMLLoader.load(getClass().getResource(destination));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+    
+    public void navigateToMainScreen(ActionEvent event) throws IOException {
+        navigateTo(event, MAIN_SCREEN);
+    }
 
-    public void navigateToPlayerVsPlayer(ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(getClass().getResource("/view/MainGridPane.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    public void navigateToMainScreen(Stage stage) throws IOException {
+        root = FXMLLoader.load(getClass().getResource(MAIN_SCREEN));
+        this.stage = stage;
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void navigateToRecordings(ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(getClass().getResource("/view/RecordingsScreen.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 }

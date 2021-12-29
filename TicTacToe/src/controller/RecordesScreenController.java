@@ -5,9 +5,13 @@
  */
 package controller;
 
+import helpers.Navigation;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -16,6 +20,13 @@ import javafx.fxml.Initializable;
  */
 public class RecordesScreenController implements Initializable {
 
+    @FXML
+    private ImageView backImg;
+    @FXML
+    private ImageView exitImg;
+    
+    
+
     /**
      * Initializes the controller class.
      */
@@ -23,5 +34,13 @@ public class RecordesScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void onBackImageClick(MouseEvent event) {
+    }
+
+    @FXML
+    private void onExitImageClick(MouseEvent event) {
+    }
     
 }
