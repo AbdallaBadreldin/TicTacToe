@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import helpers.Navigation;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -25,7 +24,7 @@ public class RecordesScreenController implements Initializable {
     @FXML
     private ImageView exitImg;
     
-    
+    private final Navigation nav = new Navigation();
 
     /**
      * Initializes the controller class.
@@ -37,10 +36,17 @@ public class RecordesScreenController implements Initializable {
 
     @FXML
     private void onBackImageClick(MouseEvent event) {
+        try {
+            nav.navigateTo(event, Navigation.MAIN_SCREEN);
+        } catch (IOException ex) {
+            ex.getMessage();
+            Logger.getLogger(RecordesScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void onExitImageClick(MouseEvent event) {
     }
+
     
 }

@@ -76,9 +76,11 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void onRecClick(MouseEvent event) {
+        System.out.println("clicked.");
         try {
             navigator.navigateTo(event, Navigation.RECORDERS_SCREEN);
         } catch (IOException ex) {
+            ex.getMessage();
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

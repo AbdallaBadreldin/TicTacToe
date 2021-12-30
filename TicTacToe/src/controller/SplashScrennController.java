@@ -11,10 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -33,9 +33,6 @@ public class SplashScrennController extends Thread implements Initializable, Run
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image image = new Image("/Gallary/main.gif", 200, 200, false, true, true);
-        ImageView imageView = new ImageView(image);
-        splashScreen.getChildren().add(imageView);
 
     }
 
@@ -46,14 +43,8 @@ public class SplashScrennController extends Thread implements Initializable, Run
 
     public void run() {
         try {
-            thread.sleep(13000);
-
-            Platform.runLater(() -> {
-
-                stage.close();
-
-            });
-
+            thread.sleep(6000);
+            Platform.runLater(stage::close);
         } catch (InterruptedException ex) {
             Logger.getLogger(SplashScrennController.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -62,9 +53,9 @@ public class SplashScrennController extends Thread implements Initializable, Run
     }
 
     public void startScreen() {
-
         try {
             start();
+            stage.initStyle(StageStyle.UNDECORATED);
             Parent root = FXMLLoader.load(getClass().getResource("/view/SplashScreen.fxml"));
             scene = new Scene(root);
             stage.setScene(scene);

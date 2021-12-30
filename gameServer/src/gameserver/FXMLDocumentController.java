@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import database.DatabaseAccess;
+import static gameserver.GameServer.serverSocket;
 import helper.ConnectionHandler;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -28,11 +29,7 @@ import javafx.scene.text.Text;
  * @author Bossm
  */
 public class FXMLDocumentController implements Initializable {
-    DataInputStream dis;
-    PrintStream ps;
-    String msg;
-    ServerSocket serverSocket;
-  
+  Socket socket;
     @FXML
     private Button stop;
     @FXML
@@ -47,30 +44,24 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       // DatabaseAccess.setUpConnection();
-       //startServer();
+      
+          // DatabaseAccess.setUpConnection();
+          //startServer();
+        try {
+          socket= serverSocket.accept();
+      } catch (IOException ex) {
+          Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }    
-    public void startServer(){
-      try {
-            System.out.println("got into try connection");
-            serverSocket = new ServerSocket(3333);
-            Socket s = serverSocket.accept();
-            System.out.println("accepted Connection");
-            new ConnectionHandler(s);
-            // TODO
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+    
     @FXML
     private void stopServer(ActionEvent event) {
+    //    serverSocket.close();
     }
 
     @FXML
     private void startServer(ActionEvent event) {
+    // startServer();   
     }
       
     

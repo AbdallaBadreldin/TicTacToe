@@ -17,7 +17,7 @@ public class Navigation {
     public final static String PLAYER_VS_AI = "/view/PlayerVsAIScreen.fxml";
     public final static String PLAYER_ONLINE = "/view/OnlineScreen.fxml";
     public final static String MAIN_GRID_PAIN = "/view/MainGridPane.fxml";
-    public final static String RECORDERS_SCREEN = "/view/RecordesScreen.fmxl";
+    public final static String RECORDERS_SCREEN = "/view/RecordesScreen.fxml";
     public final static String MAIN_SCREEN = "/view/MainScreen.fxml";
     public final static String IP_OF_SERVER = "/view/IPOfServer.fxml";
 
@@ -41,16 +41,12 @@ public class Navigation {
         stage.show();
     }
     
-    public void navigateToMainScreen(ActionEvent event) throws IOException {
-        navigateTo(event, MAIN_SCREEN);
-    }
-
-    public void navigateToMainScreen(Stage stage) throws IOException {
-        root = FXMLLoader.load(getClass().getResource(MAIN_SCREEN));
+    public void navigateTo(Stage stage, String destination) throws IOException {
+        root = FXMLLoader.load(getClass().getResource(destination));
         this.stage = stage;
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-
+    
 }
