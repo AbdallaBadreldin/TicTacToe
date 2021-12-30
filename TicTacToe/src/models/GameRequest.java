@@ -9,6 +9,7 @@ public class GameRequest implements Serializable{
     private String sender;
     private String reciver;
 
+    
     public GameRequest() {
     }
      

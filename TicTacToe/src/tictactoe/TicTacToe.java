@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe;
 
 import controller.SplashScrennController;
@@ -11,20 +6,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
- *
  * @author Mahmoud
  */
 public class TicTacToe extends Application {
-   
+
     @Override
     public void start(Stage stage) throws Exception {
         new SplashScrennController().startScreen();
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaxWidth(1000);
+        stage.setMaxHeight(600);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(600);
         stage.show();
     }
 
@@ -34,5 +31,5 @@ public class TicTacToe extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
