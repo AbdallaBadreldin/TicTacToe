@@ -43,7 +43,7 @@ public class IPOfServerController implements Initializable {
 
     @FXML
     private void onConnectBtnClick(MouseEvent event) {
-        String ip = "10.178.240.132";
+        String ip = "127.0.0.1";
         int port = 3333;
         try {
             GameClient gameClient = GameClient.getInstactance(ip, port);
