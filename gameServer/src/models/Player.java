@@ -17,39 +17,25 @@ public class Player implements Serializable {
     private String userName;
     private String password;
     private int status;
-    private String gender;
     private int win;
     private int lose;
     private int draw;
     private int totalScore;
     private int totalMatches;
-    private ImageView myImage;
-    private boolean isInGame;
 
-    public Player(String userName, String password, int status, String gender, int win, int lose, int draw, int totalScore, int totalMatches, ImageView myImage, boolean isInGame) {
+    public Player(String userName, String password, int status, int win, int lose, int draw, int totalScore, int totalMatches) {
         this.userName = userName;
         this.password = password;
         this.status = status;
-        this.gender = gender;
         this.win = win;
         this.lose = lose;
         this.draw = draw;
         this.totalScore = totalScore;
         this.totalMatches = totalMatches;
-        this.myImage = myImage;
-        this.isInGame = isInGame;
-    }
 
+    }
 
     public Player() {
-    }
-    
-    public ImageView getMyImage() {
-        return myImage;
-    }
-
-    public void setMyImage(ImageView myImage) {
-        this.myImage = myImage;
     }
 
     public String getUserName() {
@@ -74,14 +60,6 @@ public class Player implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public int getWin() {
@@ -123,12 +101,5 @@ public class Player implements Serializable {
     public void setTotalMatches(int totalMatches) {
         this.totalMatches = totalMatches;
     }
-    
-    public boolean isIsInGame() {
-        return isInGame;
-    }
 
-    public void setIsInGame(boolean isInGame) {
-        this.isInGame = isInGame;
-    }
 }

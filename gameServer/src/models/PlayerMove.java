@@ -5,11 +5,13 @@
  */
 package models;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Radwa
  */
-public class PlayerMove {
+public class PlayerMove implements Serializable{
 
     private int x;
     private int y;

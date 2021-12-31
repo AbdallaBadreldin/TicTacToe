@@ -22,26 +22,15 @@ import socket.SocketHandler;
  * @author Bossm
  */
 public class GameServer extends Application {
-    public static volatile ServerSocket serverSocket;
-    public Socket mySocket;
+    
+    
+    public void init(){
+       
+    }
     
     @Override
     public void start(Stage stage) throws Exception {
-        serverSocket = new ServerSocket(3333);
-        new Thread (new Runnable() {
-            @Override
-            public void run() {
-            while (true) {
-                try {
-                    mySocket = serverSocket.accept();
-                    new SocketHandler(mySocket);
-                } catch (IOException ex) {
-                    Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-            }
-        }).start();
+            
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));  
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -53,7 +42,14 @@ public class GameServer extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+       /* try {
+            
+            serverSocket = new ServerSocket(3333);
+        } catch (IOException ex) {
+            Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
         launch(args);
     }
+  //  public static ServerSocket getServerSocket(){return serverSocket;}
     
 }

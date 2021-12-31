@@ -13,7 +13,7 @@ import java.util.Vector;
  * @author Bossm
  */
 public abstract class Clients {
-    protected static Vector<Clients> clientsVector = new Vector<Clients>();
+    protected static Vector<Clients> playersConnected = new Vector<Clients>();
     protected Socket clientSocket;
     protected String toekn;
     protected String username;
@@ -25,10 +25,10 @@ public abstract class Clients {
     public abstract void update();
    
    public Clients getClient (int ID){
-   return clientsVector.get(ID);
+   return playersConnected.get(ID);
    }
    public void addClient (Clients client){
-    clientsVector.add(client);
+    playersConnected.add(client);
    }
      public int getState() {
         return 0;
