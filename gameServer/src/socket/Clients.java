@@ -14,29 +14,24 @@ import java.util.Vector;
  */
 public abstract class Clients {
     protected static Vector<Clients> playersConnected = new Vector<Clients>();
+    protected static Vector<Clients> gamesOnline = new Vector<Clients>();
+    
+    //protected static Vector<Clients> playersConnected = new Vector<Clients>();
     protected Socket clientSocket;
     protected String toekn;
     protected String username;
     
-    private final int ONLINE = 1;
-    private final int OFF_ONLINE = 2;
-    private final int BUSY = 3;
-    
     public abstract void update();
-   
+   public abstract void updateUI();
    public Clients getClient (int ID){
    return playersConnected.get(ID);
    }
    public void addClient (Clients client){
     playersConnected.add(client);
    }
-     public int getState() {
-        return 0;
-       // return state;
-    }
+   public void removeClientByID(int ID){
+   playersConnected.remove(ID);
+   }
+ 
 
-    public void setState(int state) {
-        //this.state = state;
-       // notifyAllObservers();
-    }
 }

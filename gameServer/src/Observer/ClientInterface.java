@@ -5,6 +5,7 @@
  */
 package Observer;
 
+import gameserver.FXMLDocumentController;
 import java.net.Socket;
 import socket.Clients;
 
@@ -25,4 +26,10 @@ public class ClientInterface extends Clients{
      // System.out.println( "Binary String: " + Integer.toBinaryString( subject.getState() ) ); 
    
    }
+
+    @Override
+    public void updateUI() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   //FXMLDocumentController.updateTotalPlayers(5);
+    }
 }
