@@ -12,12 +12,12 @@ package models;
 public class GameSession {
 
     private int counter;
-    
-    Player playerOne;
-    Player playerTwo;
-    PlayerMove[] playersMoves;
-    boolean isPlayerOneTurn;
+    private Player playerOne;
+    private Player playerTwo;
+    private PlayerMove[] playersMoves;
+    private boolean isPlayerOneTurn;
 
+        
     public GameSession() {
         playersMoves = new PlayerMove[9];
         counter = 0;
