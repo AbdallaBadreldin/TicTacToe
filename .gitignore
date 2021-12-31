@@ -19,26 +19,7 @@ hs_err_pid*
 
 ## Directory-based project format:
 .idea/
-# if you remove the above rule, at least ignore the following:
 
-# User-specific stuff:
-# .idea/workspace.xml
-# .idea/tasks.xml
-# .idea/dictionaries
-
-# Sensitive or high-churn files:
-# .idea/dataSources.ids
-# .idea/dataSources.xml
-# .idea/sqlDataSources.xml
-# .idea/dynamic.xml
-# .idea/uiDesigner.xml
-
-# Gradle:
-# .idea/gradle.xml
-# .idea/libraries
-
-# Mongo Explorer plugin:
-# .idea/mongoSettings.xml
 
 ## File-based project format:
 *.ipr
@@ -59,22 +40,11 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
-<<<<<<< HEAD
-<<<<<<< HEAD
-/gameServer/nbproject/private/
-/gameServer/dist/
-/gameServer/build/
-=======
-/TicTacToe/dist/
-/TicTacToe/build/
->>>>>>> div
-=======
-
-/TicTacToe/dist/
-/TicTacToe/build/
 
 /gameServer/nbproject/private/
 /gameServer/dist/
 /gameServer/build/
 
->>>>>>> 56c183017899677d53ef9ac31bcd84aba27cda60
+/TicTacToe/nbproject/private/
+/TicTacToe/dist/
+/TicTacToe/build/

@@ -1,5 +1,7 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -96,13 +98,16 @@ public class MainGridPaneController implements Initializable {
     private Pane grid22;
     private Stage stage;
     private Scene scene;
-    private Parent root;
+    @FXML
+    private StackPane root;
     private Stage dialogStage;
     private Line line;
 
-    Navigation navigator = new Navigation();
+    private final Navigation navigator = new Navigation();
     GameSession gameSession = new GameSession();
-    DialogController dialog = new DialogController();
+
+    @FXML
+    JFXDialog newDialog;
     Label label = new Label();
     int playerOneScore = 0;
     int playerTwoScore = 0;
@@ -112,12 +117,30 @@ public class MainGridPaneController implements Initializable {
     private boolean isXSymbol = true;
     private boolean winner;
     @FXML
-    private Button backBtn;
+    private ImageView exitImage;
+    @FXML
+    private ImageView backImage;
+    @FXML
+    private JFXButton LeaveBtn;
+    @FXML
+    private JFXButton cancelBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
+        newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
+        newDialog.setDialogContainer(root);
+        LeaveBtn.setOnAction((event) -> {
+            try {
+                navigator.navigateTo(event, Navigation.MAIN_SCREEN);
+                newDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        cancelBtn.setOnAction((e) -> newDialog.close());
+
     }
 
     @FXML
@@ -126,6 +149,7 @@ public class MainGridPaneController implements Initializable {
 
     @FXML
     private void onBackClick(MouseEvent event) {
+        newDialog.show();
     }
 
     @FXML
@@ -139,7 +163,6 @@ public class MainGridPaneController implements Initializable {
 
     private void removeLine() {
         mainPane.getChildren().remove(line);
-
     }
 
     private void reMatch() {
@@ -418,54 +441,6 @@ public class MainGridPaneController implements Initializable {
         
         
          */
-    }
-
-    @FXML
-    private void backBtnAction(ActionEvent event) {
-        Stage dialogStage = new Stage();
-
-        VBox vb = new VBox();
-        vb.setPadding(new Insets(10, 50, 50, 50));
-        vb.setSpacing(10);
-
-        Label lb = new Label("Do you want to exit game!");
-        lb.setFont(Font.font("Amble CN", FontWeight.BOLD, 24));
-        lb.setAlignment(Pos.CENTER);
-        vb.getChildren().add(lb);
-
-        Button forfeitBtn = new Button();
-        forfeitBtn.setText("Forfeit");
-        vb.getChildren().add(forfeitBtn);
-        forfeitBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    //stage.close();
-                    //stage.hide();
-                    //mainPane.setVisible(false);
-
-                    navigator.navigateTo(event, Navigation.MAIN_SCREEN);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-
-        Button cancelBtn = new Button();
-        cancelBtn.setText("Cancel");
-        vb.getChildren().add(cancelBtn);
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialogStage.close();
-            }
-        });
-
-        Scene scene = new Scene(vb);
-        dialogStage.setScene(scene);
-        dialogStage.show();
     }
 
 }
