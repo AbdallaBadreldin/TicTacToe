@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainGridPaneController">
+<BorderPane fx:id="mainPane" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainGridPaneController">
    <center>
       <Pane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>
@@ -87,10 +86,10 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </bottom>
    <top>
-      <BorderPane prefHeight="366.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <top>
             <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
@@ -103,23 +102,29 @@
             </HBox>
          </top>
          <left>
-            <VBox alignment="CENTER" prefHeight="187.0" prefWidth="327.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="playerOneImageView" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#playerOneImageClicked" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="playerOneNameLbl" alignment="CENTER" prefHeight="30.0" prefWidth="101.0" text="Player 1" textAlignment="CENTER" />
                </children>
+               <BorderPane.margin>
+                  <Insets left="40.0" />
+               </BorderPane.margin>
             </VBox>
          </left>
          <right>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="327.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="playerTwoImageView" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#playerTwoImageClicked" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="playerTwoNameLbl" alignment="CENTER" prefHeight="30.0" prefWidth="101.0" text="Player 2" textAlignment="CENTER" />
                </children>
+               <BorderPane.margin>
+                  <Insets right="40.0" />
+               </BorderPane.margin>
             </VBox>
          </right>
          <center>
-            <HBox alignment="CENTER" maxWidth="481.0" prefHeight="316.0" prefWidth="481.0" spacing="15.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" maxWidth="100.0" prefHeight="200.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="playerOneScoreLbl" text="1" />
                   <Label text="-" />

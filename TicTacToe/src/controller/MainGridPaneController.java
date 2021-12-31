@@ -109,11 +109,7 @@ public class MainGridPaneController implements Initializable {
     @FXML
     private Button backBtn;
   
-
-    public void handelGridPane(MouseEvent event) {
-
-    }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
