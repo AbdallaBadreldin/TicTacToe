@@ -35,4 +35,8 @@ public class GameSession {
     public void setPlayersMoves(PlayerMove[] playersMoves) {
         this.playersMoves = playersMoves;
     }
+
+    public int getCounter() {
+        return counter;
+    }
 }
