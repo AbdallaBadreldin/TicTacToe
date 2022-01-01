@@ -1,8 +1,11 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -96,13 +99,16 @@ public class MainGridPaneController implements Initializable {
     private Pane grid22;
     private Stage stage;
     private Scene scene;
-    private Parent root;
+    @FXML
+    private StackPane root;
     private Stage dialogStage;
     private Line line;
 
-    Navigation navigator = new Navigation();
+    private final Navigation navigator = new Navigation();
     GameSession gameSession = new GameSession();
-    DialogController dialog = new DialogController();
+
+    @FXML
+    JFXDialog newDialog;
     Label label = new Label();
     int playerOneScore = 0;
     int playerTwoScore = 0;
@@ -111,13 +117,54 @@ public class MainGridPaneController implements Initializable {
     private boolean secondWinner = false;
     private boolean isXSymbol = true;
     private boolean winner;
+    private String symbol;
+    private boolean isAIMode = false;
+    Label[] labelArr = new Label[9];
+
+    boolean isGameEnded;
+    boolean isPlayerTurn = true;
+    boolean isPcTurn = false;
+    int XOCounter = 0;
+
     @FXML
-    private Button backBtn;
+    private ImageView exitImage;
+    @FXML
+    private ImageView backImage;
+    @FXML
+    private JFXButton LeaveBtn;
+    @FXML
+    private JFXButton cancelBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
+        newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
+        newDialog.setDialogContainer(root);
+        LeaveBtn.setOnAction((event) -> {
+            try {
+                navigator.navigateTo(event, Navigation.MAIN_SCREEN);
+                newDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        cancelBtn.setOnAction((e) -> newDialog.close());
+        addLabelArray();
+
+    }
+
+    private void addLabelArray() {
+        labelArr[0] = label1;
+        labelArr[1] = label2;
+        labelArr[2] = label3;
+        labelArr[3] = label4;
+        labelArr[4] = label5;
+        labelArr[5] = label6;
+        labelArr[6] = label7;
+        labelArr[7] = label8;
+        labelArr[8] = label9;
+
     }
 
     @FXML
@@ -126,20 +173,55 @@ public class MainGridPaneController implements Initializable {
 
     @FXML
     private void onBackClick(MouseEvent event) {
+        newDialog.show();
     }
+    Random random = new Random();
+    int randomNumber;
 
     @FXML
     private void handleLabels(MouseEvent mouseEvent) {
         ((Label) mouseEvent.getSource()).setDisable(true);
-        gameSession.addMove(returnMove((Label) mouseEvent.getSource()));
-        ((Label) mouseEvent.getSource()).setText(returnSymbol());
+
+        if (!isAIMode) {
+            gameSession.addMove(returnMove((Label) mouseEvent.getSource()));
+            //playersMoves[counter++] = returnMove((Label) mouseEvent.getSource());
+            ((Label) mouseEvent.getSource()).setText(returnSymbol());
+
+        } else {
+            Label clickedButton = (Label) mouseEvent.getSource();
+            if (isGameEnded == false && clickedButton.getText().equals("")) {
+                XOCounter++;
+                isPlayerTurn = true;
+
+                clickedButton.setText("X");
+
+                if (isGameEnded == false) {
+
+                    XOCounter++;
+                    isPlayerTurn = false;
+
+                    for (int i = 0; i < 9; i++) {
+                        randomNumber = random.nextInt(9);
+                        if (labelArr[randomNumber].getText().equals("")) {
+
+                            labelArr[randomNumber].setText("O");
+                            labelArr[randomNumber].setDisable(true);
+
+                            break;
+                        }
+                    }
+
+                }
+
+            }
+
+        }
         checkState();
 
     }
 
     private void removeLine() {
         mainPane.getChildren().remove(line);
-
     }
 
     private void reMatch() {
@@ -176,7 +258,7 @@ public class MainGridPaneController implements Initializable {
     }
 
     private String returnSymbol() {
-        String symbol;
+        //  String symbol;
         if (isXSymbol == true) {
             symbol = "X";
         } else {
@@ -192,19 +274,19 @@ public class MainGridPaneController implements Initializable {
             move = new PlayerMove(0, 0, isXSymbol);
         } else if (label == label2) {
             move = new PlayerMove(0, 1, isXSymbol);
-        } else if (label == label2) {
-            move = new PlayerMove(0, 2, isXSymbol);
         } else if (label == label3) {
-            move = new PlayerMove(1, 0, isXSymbol);
+            move = new PlayerMove(0, 2, isXSymbol);
         } else if (label == label4) {
-            move = new PlayerMove(1, 1, isXSymbol);
+            move = new PlayerMove(1, 0, isXSymbol);
         } else if (label == label5) {
-            move = new PlayerMove(1, 2, isXSymbol);
+            move = new PlayerMove(1, 1, isXSymbol);
         } else if (label == label6) {
-            move = new PlayerMove(2, 0, isXSymbol);
+            move = new PlayerMove(1, 2, isXSymbol);
         } else if (label == label7) {
-            move = new PlayerMove(2, 1, isXSymbol);
+            move = new PlayerMove(2, 0, isXSymbol);
         } else if (label == label8) {
+            move = new PlayerMove(2, 1, isXSymbol);
+        } else if (label == label9) {
             move = new PlayerMove(2, 2, isXSymbol);
         }
         return move;
@@ -466,6 +548,29 @@ public class MainGridPaneController implements Initializable {
         Scene scene = new Scene(vb);
         dialogStage.setScene(scene);
         dialogStage.show();
+    }
+
+    public void setPlayerOneName(String name) {
+        playerOneNameLbl.setText(name);
+
+    }
+
+    public void setPlayerTwoName(String name) {
+        playerTwoNameLbl.setText(name);
+
+    }
+
+    public void setPlayerOneImage(String imgURL) {
+        playerOneImageView.setImage(new Image(imgURL));
+
+    }
+
+    public void setPlayerTwoImage(String imgURL) {
+        playerTwoImageView.setImage(new Image(imgURL));
+    }
+
+    public void setIsAIMode(boolean isAIMode) {
+        this.isAIMode = isAIMode;
     }
 
 }

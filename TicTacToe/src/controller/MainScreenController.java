@@ -52,7 +52,11 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void playerVsAIBtnAction(ActionEvent event) {
-        System.out.println("this screen is not available yet");
+        try {
+            navigator.navigateTo(event, Navigation.PLAYER_VS_AI);
+        } catch (IOException ex) {
+            Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
