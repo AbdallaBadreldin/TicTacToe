@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Observer;
+package rooms;
 
 /**
  *
  * @author Bossm
  */
-public class LoginInterface {
+public class game {
     
 }

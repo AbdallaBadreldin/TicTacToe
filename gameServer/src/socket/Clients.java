@@ -7,24 +7,29 @@ package socket;
 
 import java.net.Socket;
 import java.util.Vector;
+import models.Message;
 
 /**
  *
  * @author Bossm
  */
-public abstract class Clients {
-    protected static Vector<Clients> playersConnected = new Vector<Clients>();
-    protected static Vector<Clients> gamesOnline = new Vector<Clients>();
-    
+public interface Clients {
+    //  protected static Vector<Clients> playersConnected = new Vector<Clients>();
+    // protected static Vector<Clients> gamesOnline = new Vector<Clients>();
+
     //protected static Vector<Clients> playersConnected = new Vector<Clients>();
-    protected Socket clientSocket;
-    protected String toekn;
-    protected String username;
-    
-    public abstract void update();
-   public abstract void updateUI();
-   public Clients getClient (int ID){
-   return playersConnected.get(ID);
+    // protected Socket clientSocket;
+    // protected String toekn;
+    // protected String username;
+    public abstract void Clients(SocketHandler clientConnectionData);
+
+    public abstract void update(Message m);
+
+    public abstract void updateUI();
+    // public Clients getClient (int ID){
+    /*
+       
+       return playersConnected.get(ID);
    }
    public void addClient (Clients client){
     playersConnected.add(client);
@@ -32,6 +37,6 @@ public abstract class Clients {
    public void removeClientByID(int ID){
    playersConnected.remove(ID);
    }
- 
+     */
 
 }

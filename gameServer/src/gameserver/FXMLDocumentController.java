@@ -24,7 +24,8 @@ import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import socket.SocketHandler;
-import static socket.SocketHandler.closeAllStreams;
+import static socket.SocketHandler.closeStream;
+//import static socket.SocketHandler.closeAllStreams;
 
 /**
  *
@@ -43,9 +44,10 @@ public class FXMLDocumentController implements Initializable, Runnable {
     @FXML
     private Text total;
 
-    public volatile ServerSocket serverSocket;
-    Thread serverListenerThread;
+    public static volatile ServerSocket serverSocket;
+    public static Thread serverListenerThread;
 
+    static int totalPlayers = 5;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -62,11 +64,12 @@ public class FXMLDocumentController implements Initializable, Runnable {
 
     @FXML
     private void stopServer(ActionEvent event) {
-        updateTotalPlayers(5);
+       
         if (!serverSocket.isClosed()) {
             try {
-                closeAllStreams();
-                serverSocket.close();
+               // closeAllStreams();
+               closeStream(); 
+               serverSocket.close();
                 serverListenerThread.suspend();
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +83,6 @@ public class FXMLDocumentController implements Initializable, Runnable {
        
         if (serverSocket.isClosed()) {
             try {
-               
                 serverSocket = new ServerSocket(3333);
                 serverListenerThread.resume();
             } catch (IOException ex) {
@@ -92,6 +94,7 @@ public class FXMLDocumentController implements Initializable, Runnable {
 
     public void run() {
         while (true) {
+            
             try {
                 Socket mySocket = serverSocket.accept();
                 new SocketHandler(mySocket);
@@ -102,8 +105,11 @@ public class FXMLDocumentController implements Initializable, Runnable {
         }
     }
 
-    public void updateTotalPlayers(int i) {
-        total.setText(String.valueOf(i));
+    public static void setTotalPlayers(int i){
+    totalPlayers=i;
+    }
+    public void updateTotalPlayers( ) {
+        total.setText(String.valueOf(totalPlayers));
  //FXMLDocumentController.updateTotalPlayers(5);
     }
 

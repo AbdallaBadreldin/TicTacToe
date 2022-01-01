@@ -5,7 +5,7 @@
  */
 package socket;
 
-import Observer.LoginInterface;
+//import Observer.LoginInterface;
 import gameserver.FXMLDocumentController;
 //import static gameserver.GameServer.serverSocket;
 import java.io.DataInputStream;
@@ -16,13 +16,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.GameRequest;
 import models.Message;
 import models.Player;
 import models.PlayerMove;
-import static socket.Clients.clientsSocket;
+//import static socket.Clients.clientsSocket;
 //import gameserver.FXMLDocumentController;
 
 /**
@@ -38,11 +39,13 @@ public class SocketHandler implements Runnable {
     private Thread runningServer;
     
     
-    private static List<Socket> publicConnectionsSockets  = new ArrayList<Socket>();
-    private static List<Thread> publicConnectionsThreads  = new ArrayList<Thread>();
-    private static List<ObjectOutputStream> publicConnectionsOOS  = new ArrayList<ObjectOutputStream>();
-    private static List<ObjectInputStream> publicConnectionsOIS  = new ArrayList<ObjectInputStream>();
+   // private static List<Socket> publicConnectionsSockets  = new ArrayList<Socket>();
+   // private static List<Thread> publicConnectionsThreads  = new ArrayList<Thread>();
+    //private static List<ObjectOutputStream> publicConnectionsOOS  = new ArrayList<ObjectOutputStream>();
+    //private static List<ObjectInputStream> publicConnectionsOIS  = new ArrayList<ObjectInputStream>();
+    private static List<SocketHandler> handlers  = new ArrayList<SocketHandler>();
    
+    protected static Vector<Socket> clientsSocket = new Vector<>();
     private static List<Clients> RunningGames = new ArrayList<Clients>();
     
     public SocketHandler(Socket socket) {
@@ -51,34 +54,20 @@ public class SocketHandler implements Runnable {
            runningServer = new Thread(this,"SocketHandler");
             this.socket = socket;
             this.socket.setSoTimeout(1000);
+            this.socket.setKeepAlive(true);
             oos = new ObjectOutputStream(socket.getOutputStream());  //wedon't wait data objects only
             ois = new ObjectInputStream(socket.getInputStream());
             System.out.println("got input stream");
-           
-            addSocketHandlerAttributes(socket,oos,ois,runningServer);
+         
+           // addSocketHandlerAttributes(socket,oos,ois,runningServer);
        //   FXMLDocumentController.updateTotalPlayers(5);
+         handlers.add(this);
             runningServer.start();
         } catch (IOException ex) {
             Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    //don't know which better
-    public static void addSocketHandlerAttributes(Socket socket , ObjectOutputStream oos, ObjectInputStream ois, Thread runningServer){
-   
-        publicConnectionsSockets.add(socket);
-    publicConnectionsOOS.add(oos);
-    publicConnectionsOIS.add(ois);
-    publicConnectionsThreads.add(runningServer);          
-    }
-   //not used
-     public static void killAllService(Socket socket , ObjectOutputStream oos, ObjectInputStream ois, Thread runningServer){
-    publicConnectionsSockets.add(socket);
-   // publicConnectionsOOS.add(oos);
-   // publicConnectionsOIS.add(ois);
-    publicConnectionsThreads.add(runningServer);          
-    }
-    
     
     public void run() {
         while (true) {
@@ -88,8 +77,8 @@ public class SocketHandler implements Runnable {
                 System.out.println("is timed out ?");
                 if(socket.isClosed()){
                    
-                         System.out.println("got the id: "+publicConnectionsSockets.indexOf(socket)+ "  ... and going to remove it");
-                    closeStreamByID(publicConnectionsSockets.indexOf(socket));
+      //                   System.out.println("got the id: "+publicConnectionsSockets.indexOf(socket)+ "  ... and going to remove it");
+        //            closeStreamByID(publicConnectionsSockets.indexOf(socket));
                             
                 }
                 
@@ -99,119 +88,54 @@ public class SocketHandler implements Runnable {
                 if (receivedObject instanceof GameRequest) {
                     GameRequest game = (GameRequest) receivedObject;
                     System.out.println("Recieveid game request");
-        
+        //host and join rotuine
                 }
                 if (receivedObject instanceof PlayerMove) {
                     PlayerMove game = (PlayerMove) receivedObject;
                     System.out.println("Recieveid player move");
+                    //handle player move routines inside game room
                 }
                 if (receivedObject instanceof Message) {
                     Message game = (Message) receivedObject;
-                    //sendMessageToAll(game);  
+                   // sendMessageToAllClients(game);
+                   //notify all logged in people
                     System.out.println("Recieveid Message");
                 }
                 if (receivedObject instanceof Player) {
                     Player game = (Player) receivedObject;
                     //sendMessageToAll(str);  
+                    //just for test or maybe for further usage
                     System.out.println("Recieveid Player data");
                 } else {
-                    //print error object is worng 
+                    //print error object is worng seems milicious data or attack
                 }
                 //sendMessageToAll(str);     /let's check what object we have
             } catch (IOException ex) {
                 // Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("any catch ?");
             } catch (ClassNotFoundException ex) {
+                System.out.println("any catch 2 ?");
                // Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-   public void sendMessageToAll(Message msg) {
-        for (Socket soc : clientsSocket) {
-            try {
-                publicConnectionsOOS.get(publicConnectionsSockets.indexOf(soc)).writeObject((Object)msg);
-            } catch (IOException ex) {
-                Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
-           //this user is disconnected
-            }
+    public ObjectOutputStream getClientOOS(){
+    return oos;
     }
-   }
-
-/*  
-    public void addSocketHandler (SocketHandler observer) {
-        publicConnections.add(observer);
-    }
-*/
-    public void notifyAllObservers() {
-        //    for (Clients observer : connectedobservers) {
-        //       observer.update();
-       
-    }
-
-    private void checkConnectionType() {
-
-    }
-
-
-    
-    public void closeStream(){
+    public static void closeStream(){
         try {
-            ois.close();
-            oos.close();
-            socket.close();
-            runningServer.stop();
+            for(int i = 0 ; i<handlers.size();i++){
+            handlers.get(i).ois.close();
+            handlers.get(i).oos.close();
+            handlers.get(i).socket.close();
+            handlers.get(i).runningServer.stop();
+            }
         } catch (IOException ex) {
             Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     
     }
-    
-    public static void closeAllStreams(){
-       
-   for(int i=0 ; i < publicConnectionsSockets.size() ; i++){
-  
-       try {
-           System.out.println("called close for loop"+i+"size"+publicConnectionsSockets.size());
-           
-         
-             publicConnectionsSockets.get(i).close();
-           publicConnectionsOIS.get(i).close();
-    
-           publicConnectionsSockets.get(i).getOutputStream().close();
-           publicConnectionsSockets.get(i).getInputStream().close();
-           publicConnectionsSockets.get(i).close();  
-           publicConnectionsThreads.get(i).stop();
-       } catch (IOException ex) {
-           Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
-       }
-   }
-   publicConnectionsSockets.clear();
- }      
-     public void closeStreamByID(int ID){
-       
-       try {
-           System.out.println("called close for ID"+ID+"size"+publicConnectionsSockets.size());
-        
-             publicConnectionsOOS.get(ID).close();
-           publicConnectionsOIS.get(ID).close();
-           publicConnectionsSockets.get(ID).close(); 
-           
-       } catch (IOException ex) {
-           Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
-       }
-           publicConnectionsOOS.remove(ID);
-           publicConnectionsOIS.remove(ID);
-       
-           publicConnectionsSockets.remove(ID); 
-           System.out.println("before remove thread");
-           publicConnectionsThreads.remove(ID);
-           System.out.println("after remove thread");
-            System.out.println("before stop method ");
-           runningServer.stop();
-           System.out.println("after stop method");
-     }
-  
-       
      
 
 }

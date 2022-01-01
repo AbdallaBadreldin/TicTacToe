@@ -16,22 +16,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import socket.SocketHandler;
+import static socket.SocketHandler.closeStream;
 
 /**
  *
  * @author Bossm
  */
 public class GameServer extends Application {
-    
-    
-    public void init(){
-       
+
+    public void init() {
+
     }
-    
+
     @Override
     public void start(Stage stage) throws Exception {
-            
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));  
+
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Server");
@@ -42,7 +42,7 @@ public class GameServer extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       /* try {
+        /* try {
             
             serverSocket = new ServerSocket(3333);
         } catch (IOException ex) {
@@ -50,6 +50,16 @@ public class GameServer extends Application {
         }*/
         launch(args);
     }
-  //  public static ServerSocket getServerSocket(){return serverSocket;}
-    
+    //  public static ServerSocket getServerSocket(){return serverSocket;}
+
+    @Override
+    public void stop() {
+        try {
+            closeStream();
+            FXMLDocumentController.serverSocket.close();
+            FXMLDocumentController.serverListenerThread.stop();
+        } catch (IOException ex) {
+            Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
