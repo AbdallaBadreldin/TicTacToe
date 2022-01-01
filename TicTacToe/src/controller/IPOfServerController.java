@@ -13,9 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import models.GameRequest;
-import models.OnlinePlayers;
-import models.Player;
 import models.PlayerMove;
 
 /**
@@ -46,7 +43,7 @@ public class IPOfServerController implements Initializable {
 
     @FXML
     private void onConnectBtnClick(MouseEvent event) {
-        String ip = "10.178.240.132";
+        String ip = "127.0.0.1";
         int port = 3333;
         try {
             GameClient gameClient = GameClient.getInstactance(ip, port);

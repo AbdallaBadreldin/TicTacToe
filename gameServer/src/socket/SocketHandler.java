@@ -22,48 +22,84 @@ import models.GameRequest;
 import models.Message;
 import models.Player;
 import models.PlayerMove;
+import static socket.Clients.clientsSocket;
 //import gameserver.FXMLDocumentController;
 
 /**
  *
  * @author Bossm
  */
-public class SocketHandler extends Thread {
+public class SocketHandler implements Runnable {
 
     private Socket socket;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
     private Object receivedObject;
-    private static List<SocketHandler> publicConnections = new ArrayList<SocketHandler>();
+    private Thread runningServer;
     
-    private static List<LoginInterface> RunningGames = new ArrayList<LoginInterface>();
+    
+    private static List<Socket> publicConnectionsSockets  = new ArrayList<Socket>();
+    private static List<Thread> publicConnectionsThreads  = new ArrayList<Thread>();
+    private static List<ObjectOutputStream> publicConnectionsOOS  = new ArrayList<ObjectOutputStream>();
+    private static List<ObjectInputStream> publicConnectionsOIS  = new ArrayList<ObjectInputStream>();
+   
+    private static List<Clients> RunningGames = new ArrayList<Clients>();
     
     public SocketHandler(Socket socket) {
         try {
-           
+            
+           runningServer = new Thread(this,"SocketHandler");
             this.socket = socket;
+            this.socket.setSoTimeout(1000);
             oos = new ObjectOutputStream(socket.getOutputStream());  //wedon't wait data objects only
             ois = new ObjectInputStream(socket.getInputStream());
-
-            addSocketHandler(this);
-          
-            start();
+            System.out.println("got input stream");
+           
+            addSocketHandlerAttributes(socket,oos,ois,runningServer);
+       //   FXMLDocumentController.updateTotalPlayers(5);
+            runningServer.start();
         } catch (IOException ex) {
             Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-
+    //don't know which better
+    public static void addSocketHandlerAttributes(Socket socket , ObjectOutputStream oos, ObjectInputStream ois, Thread runningServer){
+   
+        publicConnectionsSockets.add(socket);
+    publicConnectionsOOS.add(oos);
+    publicConnectionsOIS.add(ois);
+    publicConnectionsThreads.add(runningServer);          
+    }
+   //not used
+     public static void killAllService(Socket socket , ObjectOutputStream oos, ObjectInputStream ois, Thread runningServer){
+    publicConnectionsSockets.add(socket);
+   // publicConnectionsOOS.add(oos);
+   // publicConnectionsOIS.add(ois);
+    publicConnectionsThreads.add(runningServer);          
+    }
+    
+    
     public void run() {
         while (true) {
             try {
+                
                 receivedObject = ois.readObject();
-
+                System.out.println("is timed out ?");
+                if(socket.isClosed()){
+                   
+                         System.out.println("got the id: "+publicConnectionsSockets.indexOf(socket)+ "  ... and going to remove it");
+                    closeStreamByID(publicConnectionsSockets.indexOf(socket));
+                            
+                }
+                
+              //  System.out.println("hey object equal what ??");
+               // System.out.println(receivedObject);
+                //System.out.println(receivedObject.toString());
                 if (receivedObject instanceof GameRequest) {
                     GameRequest game = (GameRequest) receivedObject;
                     System.out.println("Recieveid game request");
-                    
-                 
+        
                 }
                 if (receivedObject instanceof PlayerMove) {
                     PlayerMove game = (PlayerMove) receivedObject;
@@ -71,7 +107,7 @@ public class SocketHandler extends Thread {
                 }
                 if (receivedObject instanceof Message) {
                     Message game = (Message) receivedObject;
-                    sendMessageToAll(game);  
+                    //sendMessageToAll(game);  
                     System.out.println("Recieveid Message");
                 }
                 if (receivedObject instanceof Player) {
@@ -85,15 +121,15 @@ public class SocketHandler extends Thread {
             } catch (IOException ex) {
                 // Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
    public void sendMessageToAll(Message msg) {
-        for (SocketHandler ch : publicConnections) {
+        for (Socket soc : clientsSocket) {
             try {
-                ch.oos.writeObject((Object)msg);
+                publicConnectionsOOS.get(publicConnectionsSockets.indexOf(soc)).writeObject((Object)msg);
             } catch (IOException ex) {
                 Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
            //this user is disconnected
@@ -101,55 +137,81 @@ public class SocketHandler extends Thread {
     }
    }
 
-  
+/*  
     public void addSocketHandler (SocketHandler observer) {
         publicConnections.add(observer);
     }
-
+*/
     public void notifyAllObservers() {
         //    for (Clients observer : connectedobservers) {
         //       observer.update();
+       
     }
 
     private void checkConnectionType() {
 
     }
 
-    public int getTotalPlayers(){
-   
-        return publicConnections.size();
-    }
-    
-    public void closeInputStream() throws IOException{ois.close();}
-    
-    public void closeOutputStream() throws IOException{oos.close();}
-    
-    public void closeSocket() throws IOException{socket.close();}
-    
-    
+
     
     public void closeStream(){
         try {
-            closeOutputStream();
-            closeInputStream();
-            closeSocket();
-            stop();
+            ois.close();
+            oos.close();
+            socket.close();
+            runningServer.stop();
         } catch (IOException ex) {
             Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     
     }
     
-    public void closeStreams(){
+    public static void closeAllStreams(){
        
-   for(int i=0 ; i < publicConnections.size() ; i++){
-    publicConnections.get(i).closeStream();
-   
-   }
+   for(int i=0 ; i < publicConnectionsSockets.size() ; i++){
   
-   
-   
-   
-    }      
+       try {
+           System.out.println("called close for loop"+i+"size"+publicConnectionsSockets.size());
+           
+         
+             publicConnectionsSockets.get(i).close();
+           publicConnectionsOIS.get(i).close();
+    
+           publicConnectionsSockets.get(i).getOutputStream().close();
+           publicConnectionsSockets.get(i).getInputStream().close();
+           publicConnectionsSockets.get(i).close();  
+           publicConnectionsThreads.get(i).stop();
+       } catch (IOException ex) {
+           Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
+       }
+   }
+   publicConnectionsSockets.clear();
+ }      
+     public void closeStreamByID(int ID){
+       
+       try {
+           System.out.println("called close for ID"+ID+"size"+publicConnectionsSockets.size());
+        
+             publicConnectionsOOS.get(ID).close();
+           publicConnectionsOIS.get(ID).close();
+           publicConnectionsSockets.get(ID).close(); 
+           
+       } catch (IOException ex) {
+           Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
+       }
+           publicConnectionsOOS.remove(ID);
+           publicConnectionsOIS.remove(ID);
+       
+           publicConnectionsSockets.remove(ID); 
+           System.out.println("before remove thread");
+           publicConnectionsThreads.remove(ID);
+           System.out.println("after remove thread");
+            System.out.println("before stop method ");
+           runningServer.stop();
+           System.out.println("after stop method");
+     }
+  
+       
+     
 
 }

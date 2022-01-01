@@ -1,5 +1,7 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
@@ -14,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -97,13 +99,16 @@ public class MainGridPaneController implements Initializable {
     private Pane grid22;
     private Stage stage;
     private Scene scene;
-    private Parent root;
+    @FXML
+    private StackPane root;
     private Stage dialogStage;
     private Line line;
 
-    Navigation navigator = new Navigation();
+    private final Navigation navigator = new Navigation();
     GameSession gameSession = new GameSession();
-    DialogController dialog = new DialogController();
+
+    @FXML
+    JFXDialog newDialog;
     Label label = new Label();
     int playerOneScore = 0;
     int playerTwoScore = 0;
@@ -116,19 +121,35 @@ public class MainGridPaneController implements Initializable {
     private boolean isAIMode = false;
     Label[] labelArr = new Label[9];
 
-
     boolean isGameEnded;
     boolean isPlayerTurn = true;
     boolean isPcTurn = false;
     int XOCounter = 0;
 
     @FXML
-    private Button backBtn;
+    private ImageView exitImage;
+    @FXML
+    private ImageView backImage;
+    @FXML
+    private JFXButton LeaveBtn;
+    @FXML
+    private JFXButton cancelBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
+        newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
+        newDialog.setDialogContainer(root);
+        LeaveBtn.setOnAction((event) -> {
+            try {
+                navigator.navigateTo(event, Navigation.MAIN_SCREEN);
+                newDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        cancelBtn.setOnAction((e) -> newDialog.close());
         addLabelArray();
 
     }
@@ -143,6 +164,7 @@ public class MainGridPaneController implements Initializable {
         labelArr[6] = label7;
         labelArr[7] = label8;
         labelArr[8] = label9;
+
     }
 
     @FXML
@@ -151,6 +173,7 @@ public class MainGridPaneController implements Initializable {
 
     @FXML
     private void onBackClick(MouseEvent event) {
+        newDialog.show();
     }
     Random random = new Random();
     int randomNumber;
@@ -177,7 +200,7 @@ public class MainGridPaneController implements Initializable {
                     XOCounter++;
                     isPlayerTurn = false;
 
-                    for (int i=0;i<9;i++) {
+                    for (int i = 0; i < 9; i++) {
                         randomNumber = random.nextInt(9);
                         if (labelArr[randomNumber].getText().equals("")) {
 
@@ -199,7 +222,6 @@ public class MainGridPaneController implements Initializable {
 
     private void removeLine() {
         mainPane.getChildren().remove(line);
-
     }
 
     private void reMatch() {
