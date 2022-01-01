@@ -19,11 +19,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -125,6 +127,7 @@ public class MainGridPaneController implements Initializable {
     boolean isPlayerTurn = true;
     boolean isPcTurn = false;
     int XOCounter = 0;
+    private boolean isPlayer1BtnEditeClilcked;
 
     @FXML
     private ImageView exitImage;
@@ -134,6 +137,18 @@ public class MainGridPaneController implements Initializable {
     private JFXButton LeaveBtn;
     @FXML
     private JFXButton cancelBtn;
+    @FXML
+    private HBox player1HBox;
+    @FXML
+    private HBox player2HBox;
+    @FXML
+    private JFXDialog getPlayerNameDialog;
+    @FXML
+    private TextField playerEditText;
+    @FXML
+    private JFXButton confirm;
+    @FXML
+    private JFXButton cancel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -141,6 +156,9 @@ public class MainGridPaneController implements Initializable {
         playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
         newDialog.setDialogContainer(root);
+        getPlayerNameDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        getPlayerNameDialog.setDialogContainer(root);
+        playerEditText.setFocusTraversable(false);
         LeaveBtn.setOnAction((event) -> {
             try {
                 navigator.navigateTo(event, Navigation.MAIN_SCREEN);
@@ -149,7 +167,17 @@ public class MainGridPaneController implements Initializable {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        confirm.setOnAction((e) -> {
+            if (isPlayer1BtnEditeClilcked) {
+                playerOneNameLbl.setText(playerEditText.getText());
+                isPlayer1BtnEditeClilcked = !isPlayer1BtnEditeClilcked;
+            }else {
+                playerTwoNameLbl.setText(playerEditText.getText());
+            }
+            getPlayerNameDialog.close();
+        });
         cancelBtn.setOnAction((e) -> newDialog.close());
+        cancel.setOnAction((e) -> getPlayerNameDialog.close());
         addLabelArray();
 
     }
@@ -164,7 +192,6 @@ public class MainGridPaneController implements Initializable {
         labelArr[6] = label7;
         labelArr[7] = label8;
         labelArr[8] = label9;
-
     }
 
     @FXML
@@ -502,7 +529,6 @@ public class MainGridPaneController implements Initializable {
          */
     }
 
-    @FXML
     private void backBtnAction(ActionEvent event) {
         Stage dialogStage = new Stage();
 
@@ -571,6 +597,19 @@ public class MainGridPaneController implements Initializable {
 
     public void setIsAIMode(boolean isAIMode) {
         this.isAIMode = isAIMode;
+    }
+
+    @FXML
+    private void onPlayer1HBoxClick(MouseEvent event) {
+        isPlayer1BtnEditeClilcked = !isPlayer1BtnEditeClilcked;
+        playerEditText.setPromptText("Enter player1 name");
+        getPlayerNameDialog.show();
+    }
+
+    @FXML
+    private void onPlayer2HBoxClick(MouseEvent event) {
+        playerEditText.setPromptText("Enter player2 name");
+        getPlayerNameDialog.show();
     }
 
 }
