@@ -158,7 +158,7 @@ private static  List<Integer> handlersStatus = new ArrayList<>();
                 }
                 //sendMessageToAll(str);     /let's check what object we have
             } catch (IOException ex) {
-                //closeStreamBySocket(socket);
+                closeStreamBySocket(socket);
                 //here we remove socket and thread permentaly also search for the socket every where then update every single UI&client
             } catch (ClassNotFoundException ex) {
                 System.out.println("any catch 2 ?");
