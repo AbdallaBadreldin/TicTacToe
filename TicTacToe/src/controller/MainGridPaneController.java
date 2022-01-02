@@ -1,5 +1,6 @@
 package controller;
 
+import client.GameClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import helpers.Navigation;
@@ -9,15 +10,9 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -28,11 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import models.GameSession;
 import models.PlayerMove;
 
@@ -43,10 +34,8 @@ import models.PlayerMove;
  */
 public class MainGridPaneController implements Initializable {
 
-    private boolean isGameActive = true;
     @FXML
     private AnchorPane mainPane;
-
     @FXML
     private Label label1;
     @FXML
@@ -99,15 +88,16 @@ public class MainGridPaneController implements Initializable {
     private Pane grid21;
     @FXML
     private Pane grid22;
-    private Stage stage;
-    private Scene scene;
     @FXML
     private StackPane root;
-    private Stage dialogStage;
+    
     private Line line;
-
+    private boolean isGameActive = true;
     private final Navigation navigator = new Navigation();
-    GameSession gameSession = new GameSession();
+    private GameSession gameSession = new GameSession();
+    private GameClient client;
+    private Random random = new Random();
+    private int randomNumber;
 
     @FXML
     JFXDialog newDialog;
@@ -121,6 +111,7 @@ public class MainGridPaneController implements Initializable {
     private boolean winner;
     private String symbol;
     private boolean isAIMode = false;
+    private boolean isItOnlineGame;
     Label[] labelArr = new Label[9];
 
     boolean isGameEnded;
@@ -150,6 +141,9 @@ public class MainGridPaneController implements Initializable {
     @FXML
     private JFXButton cancel;
 
+    private String ip = "10.178.240.229";
+    private int port = 3333;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
@@ -171,7 +165,7 @@ public class MainGridPaneController implements Initializable {
             if (isPlayer1BtnEditeClilcked) {
                 playerOneNameLbl.setText(playerEditText.getText());
                 isPlayer1BtnEditeClilcked = !isPlayer1BtnEditeClilcked;
-            }else {
+            } else {
                 playerTwoNameLbl.setText(playerEditText.getText());
             }
             getPlayerNameDialog.close();
@@ -202,18 +196,22 @@ public class MainGridPaneController implements Initializable {
     private void onBackClick(MouseEvent event) {
         newDialog.show();
     }
-    Random random = new Random();
-    int randomNumber;
 
     @FXML
-    private void handleLabels(MouseEvent mouseEvent) {
+    private void handleLabels(MouseEvent mouseEvent) throws ClassNotFoundException {
         ((Label) mouseEvent.getSource()).setDisable(true);
 
         if (!isAIMode) {
             gameSession.addMove(returnMove((Label) mouseEvent.getSource()));
-            //playersMoves[counter++] = returnMove((Label) mouseEvent.getSource());
             ((Label) mouseEvent.getSource()).setText(returnSymbol());
 
+        }else if (isItOnlineGame){
+            try {
+                client.sendRequest(returnMove(label));
+                client.getGameMove();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             Label clickedButton = (Label) mouseEvent.getSource();
             if (isGameEnded == false && clickedButton.getText().equals("")) {
@@ -237,14 +235,10 @@ public class MainGridPaneController implements Initializable {
                             break;
                         }
                     }
-
                 }
-
             }
-
         }
         checkState();
-
     }
 
     private void removeLine() {
@@ -453,32 +447,6 @@ public class MainGridPaneController implements Initializable {
                 && !label9.getText().equals("");
     }
 
-    /* private void dialogHandle() {
-
-        StackPane root = new StackPane();
-        Stage dialogStage = new Stage();
-
-        Image image = new Image("/Gallary/congrats.gif", 150, 150, false, true, true);
-        ImageView imageView = new ImageView(image);
-         root.getChildren().add(imageView);
-        Button btn = new Button();
-        btn.setText("Rematch");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialogStage.close();
-
-                reMatch();
-            }
-        });
-        root.getChildren().addAll( btn);
-
-        Scene scene = new Scene(root, 500,500);
-        dialogStage.setScene(scene);
-        dialogStage.show();
-
-    }*/
     private void checkState() {
         checkRows();
         checkColumns();
@@ -529,53 +497,6 @@ public class MainGridPaneController implements Initializable {
          */
     }
 
-    private void backBtnAction(ActionEvent event) {
-        Stage dialogStage = new Stage();
-
-        VBox vb = new VBox();
-        vb.setPadding(new Insets(10, 50, 50, 50));
-        vb.setSpacing(10);
-
-        Label lb = new Label("Do you want to exit game!");
-        lb.setFont(Font.font("Amble CN", FontWeight.BOLD, 24));
-        lb.setAlignment(Pos.CENTER);
-        vb.getChildren().add(lb);
-
-        Button forfeitBtn = new Button();
-        forfeitBtn.setText("Forfeit");
-        vb.getChildren().add(forfeitBtn);
-        forfeitBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    //stage.close();
-                    //stage.hide();
-                    //mainPane.setVisible(false);
-
-                    navigator.navigateTo(event, Navigation.MAIN_SCREEN);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-
-        Button cancelBtn = new Button();
-        cancelBtn.setText("Cancel");
-        vb.getChildren().add(cancelBtn);
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialogStage.close();
-            }
-        });
-
-        Scene scene = new Scene(vb);
-        dialogStage.setScene(scene);
-        dialogStage.show();
-    }
-
     public void setPlayerOneName(String name) {
         playerOneNameLbl.setText(name);
 
@@ -612,4 +533,14 @@ public class MainGridPaneController implements Initializable {
         getPlayerNameDialog.show();
     }
 
+    public void setIsItOnlineGame(boolean isItOnlineGame) {
+        this.isItOnlineGame = isItOnlineGame;
+        if (isGameActive) {
+            try {
+                client = GameClient.getInstactance(ip, port);
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

@@ -20,7 +20,7 @@ public class Navigation {
     public final static String RECORDERS_SCREEN = "/view/RecordesScreen.fxml";
     public final static String MAIN_SCREEN = "/view/MainScreen.fxml";
     public final static String IP_OF_SERVER = "/view/IPOfServer.fxml";
-
+    public final static String ONLINE_PLAYER = "/view/PlayerVsPlayerOnline.fxml";
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -32,7 +32,7 @@ public class Navigation {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public void navigateTo(MouseEvent event, String destination) throws IOException {
         root = FXMLLoader.load(getClass().getResource(destination));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -40,7 +40,7 @@ public class Navigation {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public void navigateTo(Stage stage, String destination) throws IOException {
         root = FXMLLoader.load(getClass().getResource(destination));
         this.stage = stage;
@@ -48,5 +48,5 @@ public class Navigation {
         stage.setScene(scene);
         stage.show();
     }
-    
+
 }

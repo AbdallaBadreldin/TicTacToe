@@ -64,7 +64,7 @@ public class GameClient {
         output.writeObject(msg);
         output.flush();
     }
-
+    
     /**
      *
      * @param move
@@ -89,6 +89,7 @@ public class GameClient {
     }
     
     public PlayerMove getGameMove() throws IOException, ClassNotFoundException{
+        input.readLine();
         PlayerMove move = (PlayerMove) input.readObject();
         input.reset();
         return move;
