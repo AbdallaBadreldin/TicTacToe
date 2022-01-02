@@ -9,6 +9,7 @@ import java.net.Socket;
 import models.GameRequest;
 import models.Message;
 import models.OnlinePlayers;
+import models.Player;
 import models.PlayerMove;
 
 /**
@@ -55,6 +56,14 @@ public class GameClient {
         System.out.println("method finsehd.");
     }
 
+    public void sendRequest(Player player) throws IOException {
+        System.out.println("method started.");
+        output.writeObject(player);
+        System.out.println("req sent.");
+        output.flush();
+        System.out.println("method finsehd.");
+    }
+    
     /**
      *
      * @param msg
@@ -89,7 +98,6 @@ public class GameClient {
     }
     
     public PlayerMove getGameMove() throws IOException, ClassNotFoundException{
-        input.readLine();
         PlayerMove move = (PlayerMove) input.readObject();
         input.reset();
         return move;

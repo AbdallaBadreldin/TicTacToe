@@ -5,6 +5,7 @@
  */
 package controller;
 
+import client.GameClient;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
@@ -19,14 +20,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import models.Player;
 
 /**
  *
  * @author Radwa
  */
-public class RegisterScreenController implements Initializable{
-    Navigation navigator=new Navigation();
+public class RegisterScreenController implements Initializable {
 
+    Navigation navigator = new Navigation();
+    private Player player;
     @FXML
     private AnchorPane loginStage;
     @FXML
@@ -41,7 +44,7 @@ public class RegisterScreenController implements Initializable{
     private ImageView registerImage;
     @FXML
     private TextField confirmPassText;
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         registerImage.setImage(new Image("/Gallary/loginImage.png"));
@@ -63,6 +66,15 @@ public class RegisterScreenController implements Initializable{
 
     @FXML
     private void signUpBtn(ActionEvent event) {
+        player = new Player();
+        player.setPassword(passwordText.getText());
+        player.setUserName(usernameText.getText());
+        try {
+            GameClient client = GameClient.getInstactance("10.178.240.229", 3333);
+            client.sendRequest(player);
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -83,7 +95,6 @@ public class RegisterScreenController implements Initializable{
         }
     }
 
-
     @FXML
     private void usernameText(MouseEvent event) {
         usernameText.clear();
@@ -94,6 +105,4 @@ public class RegisterScreenController implements Initializable{
         confirmPassText.clear();
     }
 
-    
-    
 }

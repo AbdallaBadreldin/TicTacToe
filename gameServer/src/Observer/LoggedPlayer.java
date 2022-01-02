@@ -16,16 +16,18 @@ import socket.SocketHandler;
  *
  * @author Bossm
  */
-public class LoggedPlayer implements Clients{
-private SocketHandler clientConnectionData;
+public class LoggedPlayer implements Clients {
+
+    private SocketHandler clientConnectionData;
+
     @Override
     public void update(Message m) {
-    try {
-        clientConnectionData.getClientOOS().writeObject(m);
-    } catch (IOException ex) {
-        Logger.getLogger(LoggedPlayer.class.getName()).log(Level.SEVERE, null, ex);
-   //we should delete this user
-    }
+        try {
+            clientConnectionData.getClientOOS().writeObject(m);
+        } catch (IOException ex) {
+            Logger.getLogger(LoggedPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            //we should delete this user
+        }
     }
 
     @Override
@@ -35,7 +37,7 @@ private SocketHandler clientConnectionData;
 
     @Override
     public void Clients(SocketHandler clientConnectionData) {
-    this.clientConnectionData=clientConnectionData;
+        this.clientConnectionData = clientConnectionData;
     }
-    
+
 }

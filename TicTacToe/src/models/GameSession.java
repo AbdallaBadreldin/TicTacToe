@@ -5,8 +5,6 @@
  */
 package models;
 
-import static java.sql.JDBCType.NULL;
-import java.util.Arrays;
 
 /**
  *
