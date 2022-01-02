@@ -36,9 +36,8 @@ public class PlayerVsPlayerOnlineController implements Initializable {
          try {
             mainPane.getChildren().add(loader.load());
             mainnGridPaneController = loader.getController();
-            mainnGridPaneController.setPlayerOneName("Mahmoud");
-            mainnGridPaneController.setPlayerTwoName("Comp");
-            mainnGridPaneController.setPlayerTwoImage("/resources/ai-avatar.png");
+            mainnGridPaneController.setPlayerOneName("pl");
+            mainnGridPaneController.setPlayerTwoName("pl2");
             mainnGridPaneController.setPlayerOneImage("/resources/player-one-avatar.jpg");
             mainnGridPaneController.setIsItOnlineGame(true);
         } catch (IOException ex) {

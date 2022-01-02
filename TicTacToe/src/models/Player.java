@@ -14,6 +14,8 @@ import javafx.scene.image.ImageView;
  */
 public class Player implements Serializable {
 
+    private static final long serialVersionUID = 6529685098267757690L;
+    
     private String userName;
     private String password;
     private int status;

@@ -24,10 +24,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import models.GameSession;
 import models.PlayerMove;
 
@@ -155,7 +151,7 @@ public class MainGridPaneController implements Initializable {
     @FXML
     private JFXButton cancelButton;
 
-    private String ip = "10.178.240.229";
+    private String ip = "127.0.0.1";
     private int port = 3333;
     @FXML
     private JFXDialog getPlayerNameDialog;
@@ -173,7 +169,6 @@ public class MainGridPaneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
@@ -284,7 +279,22 @@ public class MainGridPaneController implements Initializable {
         } else if (isItOnlineGame) {
             try {
                 client.sendRequest(returnMove(label));
-                client.getGameMove();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            PlayerMove move = null ;
+                            while (move == null){
+                                 move = client.getGameMove();
+                            }
+                            gameSession.addMove(move);
+                        } catch (IOException | ClassNotFoundException ex) {
+                            Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
+                }).start();
+                
             } catch (IOException ex) {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }

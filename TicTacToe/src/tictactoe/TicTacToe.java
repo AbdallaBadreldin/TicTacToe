@@ -20,8 +20,14 @@ public class TicTacToe extends Application {
         stage.setScene(scene);
         stage.setMinHeight(700);
         stage.setMinWidth(1000);
-      
+
         stage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+       
     }
 
     /**
