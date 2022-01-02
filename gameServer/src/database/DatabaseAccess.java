@@ -19,9 +19,9 @@ import org.apache.derby.jdbc.ClientDriver;
  */
 public class DatabaseAccess {
 
-    private final static String USER_NAME = "mahmoud";
+    private final static String USER_NAME = "root";
     private final static String PASSWORD = "1234";
-    private final static String URL = "jdbc:derby://localhost:1527/tictactoe";
+    private final static String URL = "jdbc:derby://localhost:1527/root";
 
     static Connection connection;
     static Statement statement;

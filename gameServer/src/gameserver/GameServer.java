@@ -5,6 +5,8 @@
  */
 package gameserver;
 
+import static gameserver.FXMLDocumentController.serverListenerThread;
+import static gameserver.FXMLDocumentController.serverSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -24,9 +26,9 @@ import static socket.SocketHandler.closeStream;
  */
 public class GameServer extends Application {
 
-    public void init() {
-
-    }
+    public static final int ONLINE = 1;
+    public static final int OFF_ONLINE = 2;
+    public static final int BUSY = 3;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -56,8 +58,8 @@ public class GameServer extends Application {
     public void stop() {
         try {
             closeStream();
-            FXMLDocumentController.serverSocket.close();
-            FXMLDocumentController.serverListenerThread.stop();
+            serverSocket.close();
+            serverListenerThread.stop();
         } catch (IOException ex) {
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
         }
