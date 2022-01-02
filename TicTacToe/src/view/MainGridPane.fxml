@@ -3,9 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDialog?>
 <?import com.jfoenix.controls.JFXDialogLayout?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,11 +15,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainGridPaneController">
     <children>
-        <AnchorPane fx:id="mainPane" maxHeight="6000.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0">
+        <AnchorPane fx:id="mainPane" maxHeight="6000.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0">
             <children>
                 <Pane fx:id="gamePane" layoutX="263.0" layoutY="230.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                     <children>
@@ -130,16 +127,7 @@
                 <VBox alignment="CENTER" layoutX="164.0" layoutY="80.0" prefHeight="140.0" prefWidth="140.0" spacing="20.0">
                     <children>
                         <ImageView fx:id="playerOneImageView" fitHeight="75.0" fitWidth="84.0" onMouseClicked="#playerOneImageClicked" pickOnBounds="true" preserveRatio="true" />
-                        <HBox fx:id="player1HBox" alignment="CENTER" onMouseClicked="#onPlayer1HBoxClick" prefHeight="44.0" prefWidth="140.0">
-                            <children>
-                                <Label fx:id="playerOneNameLbl" alignment="CENTER" prefHeight="28.0" prefWidth="113.0" text="Player 1" textAlignment="CENTER" />
-                                <ImageView fitHeight="25.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../Gallary/editIcon.png" />
-                                    </image>
-                                </ImageView>
-                            </children>
-                        </HBox>
+                        <Label fx:id="playerOneNameLbl" alignment="CENTER" prefHeight="23.0" prefWidth="113.0" text="Player 1" textAlignment="CENTER" />
                     </children>
                 </VBox>
                 <HBox alignment="CENTER" layoutX="374.0" layoutY="125.0" maxWidth="481.0" prefHeight="75.0" prefWidth="191.0" spacing="15.0">
@@ -152,16 +140,7 @@
                 <VBox alignment="CENTER" layoutX="661.0" layoutY="80.0" prefHeight="140.0" prefWidth="140.0" spacing="20.0">
                     <children>
                         <ImageView fx:id="playerTwoImageView" fitHeight="82.0" fitWidth="98.0" onMouseClicked="#playerTwoImageClicked" pickOnBounds="true" preserveRatio="true" />
-                        <HBox fx:id="player2HBox" alignment="CENTER" onMouseClicked="#onPlayer2HBoxClick" prefHeight="100.0" prefWidth="200.0">
-                            <children>
-                                <Label fx:id="playerTwoNameLbl" alignment="CENTER" prefHeight="23.0" prefWidth="101.0" text="Player 2" textAlignment="CENTER" />
-                                <ImageView fitHeight="25.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../Gallary/editIcon.png" />
-                                    </image>
-                                </ImageView>
-                            </children>
-                        </HBox>
+                        <Label fx:id="playerTwoNameLbl" alignment="CENTER" prefHeight="23.0" prefWidth="101.0" text="Player 2" textAlignment="CENTER" />
                     </children>
                 </VBox>
                 <ImageView fx:id="exitImage" fitHeight="45.0" fitWidth="53.0" layoutX="928.0" layoutY="35.0" onMouseClicked="#onExitImageClick" pickOnBounds="true" preserveRatio="true">
@@ -174,7 +153,6 @@
                         <Image url="@../Gallary/back_btn.png" />
                     </image>
                 </ImageView>
-            
             </children>
         </AnchorPane>
         <JFXDialog fx:id="newDialog">
@@ -186,35 +164,56 @@
                     <JFXButton fx:id="LeaveBtn">Leave</JFXButton>
                     <JFXButton fx:id="cancelBtn">Cancel</JFXButton>
                 </actions>
+            </JFXDialogLayout >
+        </JFXDialog>
+         <JFXDialog fx:id="winnerDialog"  >
+            <JFXDialogLayout >
+                <VBox alignment="CENTER">
+
+                <ImageView fx:id="winnerImage" fitHeight="248" fitWidth="314" layoutX="210" layoutY="21"  pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Gallary/congrats.gif" />
+                    </image>
+                </ImageView>
+                    <Label >Do you want play again?</Label>
+                    <JFXButton fx:id="RematchBtn">Rematch</JFXButton>
+                    <JFXButton fx:id="CancelBtn">Cancel</JFXButton>
+
+                </VBox>
+              
             </JFXDialogLayout>
         </JFXDialog>
-        
-        <JFXDialog fx:id="getPlayerNameDialog">
-            <JFXDialogLayout>
-                <body>
-                    <VBox layoutX="29.0" layoutY="426.0" prefHeight="82.0" prefWidth="223.0">
-                        <children>
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player name">
-                                <font>
-                                    <Font size="16.0" />
-                                </font>
-                            </Text>
-                            <TextField fx:id="playerEditText" promptText="Enter player1 name">
-                                <VBox.margin>
-                                    <Insets top="10.0" />
-                                </VBox.margin>
-                            </TextField>
-                        </children>
-                        <padding>
-                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                        </padding>
-                    </VBox>
-                </body>
-                <actions>
-                    <JFXButton fx:id="confirm">Confirm</JFXButton>
-                    <JFXButton fx:id="cancel">Cancel</JFXButton>
-                </actions>
+        <JFXDialog fx:id="loserDialog"  >
+            <JFXDialogLayout >
+                <VBox alignment="CENTER">
+                    <ImageView fx:id="loserImage" fitHeight="248" fitWidth="314" layoutX="210" layoutY="21"  pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Gallary/loser.gif" />
+                    </image>
+                </ImageView>
+                    
+
+                    <Label >Do you want play again?</Label>
+                    <JFXButton fx:id="RematchButton">Rematch</JFXButton>
+                    <JFXButton fx:id="CancelButton">Cancel</JFXButton>
+
+                </VBox>
+              
             </JFXDialogLayout>
         </JFXDialog>
+        <JFXDialog fx:id="drawDialog"  >
+            <JFXDialogLayout >
+                <VBox alignment="CENTER">
+
+                    <Label >****DRAW!****</Label>
+                    <Label >Do you want play again?</Label>
+                    <JFXButton fx:id="rematchButton">Rematch</JFXButton>
+                    <JFXButton fx:id="cancelButton">Cancel</JFXButton>
+
+                </VBox>
+              
+            </JFXDialogLayout>
+        </JFXDialog>
+      
     </children>
 </StackPane>

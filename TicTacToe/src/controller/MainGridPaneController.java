@@ -19,13 +19,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -33,6 +31,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.GameSession;
 import models.PlayerMove;
 
@@ -111,6 +110,9 @@ public class MainGridPaneController implements Initializable {
 
     @FXML
     JFXDialog newDialog;
+    @FXML
+    JFXDialog winnerDialog;
+
     Label label = new Label();
     int playerOneScore = 0;
     int playerTwoScore = 0;
@@ -127,7 +129,6 @@ public class MainGridPaneController implements Initializable {
     boolean isPlayerTurn = true;
     boolean isPcTurn = false;
     int XOCounter = 0;
-    private boolean isPlayer1BtnEditeClilcked;
 
     @FXML
     private ImageView exitImage;
@@ -138,27 +139,33 @@ public class MainGridPaneController implements Initializable {
     @FXML
     private JFXButton cancelBtn;
     @FXML
-    private HBox player1HBox;
+    private ImageView winnerImage;
     @FXML
-    private HBox player2HBox;
+    private JFXButton RematchBtn;
     @FXML
-    private JFXDialog getPlayerNameDialog;
+    private JFXButton CancelBtn;
     @FXML
-    private TextField playerEditText;
+    private JFXDialog loserDialog;
     @FXML
-    private JFXButton confirm;
+    private ImageView loserImage;
     @FXML
-    private JFXButton cancel;
+    private JFXButton RematchButton;
+    @FXML
+    private JFXButton CancelButton;
+    @FXML
+    private JFXDialog drawDialog;
+    @FXML
+    private JFXButton rematchButton;
+    @FXML
+    private JFXButton cancelButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
         newDialog.setDialogContainer(root);
-        getPlayerNameDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        getPlayerNameDialog.setDialogContainer(root);
-        playerEditText.setFocusTraversable(false);
         LeaveBtn.setOnAction((event) -> {
             try {
                 navigator.navigateTo(event, Navigation.MAIN_SCREEN);
@@ -167,17 +174,52 @@ public class MainGridPaneController implements Initializable {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        confirm.setOnAction((e) -> {
-            if (isPlayer1BtnEditeClilcked) {
-                playerOneNameLbl.setText(playerEditText.getText());
-                isPlayer1BtnEditeClilcked = !isPlayer1BtnEditeClilcked;
-            }else {
-                playerTwoNameLbl.setText(playerEditText.getText());
-            }
-            getPlayerNameDialog.close();
-        });
         cancelBtn.setOnAction((e) -> newDialog.close());
-        cancel.setOnAction((e) -> getPlayerNameDialog.close());
+
+        winnerDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        winnerDialog.setDialogContainer(root);
+        RematchBtn.setOnAction((event) -> {
+            winnerDialog.close();
+            reMatch();
+        });
+        CancelBtn.setOnAction((e) -> {
+            try {
+                navigator.navigateTo(e, Navigation.MAIN_SCREEN);
+                newDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        loserDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        loserDialog.setDialogContainer(root);
+        RematchButton.setOnAction((event) -> {
+            loserDialog.close();
+            reMatch();
+        });
+        CancelButton.setOnAction((e) -> {
+            try {
+                navigator.navigateTo(e, Navigation.MAIN_SCREEN);
+                newDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+         drawDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        drawDialog.setDialogContainer(root);
+        rematchButton.setOnAction((event) -> {
+            drawDialog.close();
+            reMatch();
+        });
+        cancelButton.setOnAction((e) -> {
+            try {
+                navigator.navigateTo(e, Navigation.MAIN_SCREEN);
+                drawDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
         addLabelArray();
 
     }
@@ -192,10 +234,12 @@ public class MainGridPaneController implements Initializable {
         labelArr[6] = label7;
         labelArr[7] = label8;
         labelArr[8] = label9;
+
     }
 
     @FXML
     private void onExitImageClick(MouseEvent event) {
+      
     }
 
     @FXML
@@ -211,7 +255,6 @@ public class MainGridPaneController implements Initializable {
 
         if (!isAIMode) {
             gameSession.addMove(returnMove((Label) mouseEvent.getSource()));
-            //playersMoves[counter++] = returnMove((Label) mouseEvent.getSource());
             ((Label) mouseEvent.getSource()).setText(returnSymbol());
 
         } else {
@@ -251,10 +294,22 @@ public class MainGridPaneController implements Initializable {
         mainPane.getChildren().remove(line);
     }
 
+    private void setLabelsEnable() {
+
+        label1.setDisable(false);
+        label2.setDisable(false);
+        label3.setDisable(false);
+        label4.setDisable(false);
+        label5.setDisable(false);
+        label6.setDisable(false);
+        label7.setDisable(false);
+        label8.setDisable(false);
+        label9.setDisable(false);
+
+    }
+
     private void reMatch() {
-        isGameActive = !isGameActive;
-        //System.out.println("controller.MainGridPaneController.reMatch()");
-        gamePane.setDisable(isGameActive);
+        gamePane.setDisable(false);
         label1.setText("");
         label2.setText("");
         label3.setText("");
@@ -264,11 +319,14 @@ public class MainGridPaneController implements Initializable {
         label7.setText("");
         label8.setText("");
         label9.setText("");
+        gameSession.resetMove();
         removeLine();
+        setLabelsEnable();
+        firstWinner = false;
+        secondWinner = false;
         winner = false;
-        //gamePane.getChildren().clear();
-        //removeLine();
-        //if(winner){checkState();}
+        XOCounter = 0;
+
 
     }
 
@@ -320,6 +378,7 @@ public class MainGridPaneController implements Initializable {
     }
 
     private void checkRows() {
+        
         if (label1.getText().equals(label2.getText())
                 && label2.getText().equals(label3.getText())
                 && !label1.getText().equals("")) {
@@ -453,32 +512,6 @@ public class MainGridPaneController implements Initializable {
                 && !label9.getText().equals("");
     }
 
-    /* private void dialogHandle() {
-
-        StackPane root = new StackPane();
-        Stage dialogStage = new Stage();
-
-        Image image = new Image("/Gallary/congrats.gif", 150, 150, false, true, true);
-        ImageView imageView = new ImageView(image);
-         root.getChildren().add(imageView);
-        Button btn = new Button();
-        btn.setText("Rematch");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialogStage.close();
-
-                reMatch();
-            }
-        });
-        root.getChildren().addAll( btn);
-
-        Scene scene = new Scene(root, 500,500);
-        dialogStage.setScene(scene);
-        dialogStage.show();
-
-    }*/
     private void checkState() {
         checkRows();
         checkColumns();
@@ -488,24 +521,35 @@ public class MainGridPaneController implements Initializable {
             playerOneScoreLbl.setText("" + playerOneScore);
             playerTwoScoreLbl.setText("" + playerTwoScore);
             isGameActive = !isGameActive;
-            //navigator.navigateToDialog(event);
+            winnerDialog.show();
 
-            //dialogHandle();
             gamePane.setDisable(true);
             //System.out.println("X is win");
         } else if (secondWinner) {
-            playerTwoScore++;
-            playerTwoScoreLbl.setText("" + playerTwoScore);
-            playerOneScoreLbl.setText("" + playerOneScore);
-            isGameActive = !isGameActive;
+            if (isAIMode) {
+                playerTwoScore++;
+                playerTwoScoreLbl.setText("" + playerTwoScore);
+                playerOneScoreLbl.setText("" + playerOneScore);
+                isGameActive = !isGameActive;
+                loserDialog.show();
+                gamePane.setDisable(true);
 
-            //dialogHandle();
-            //System.out.println("O is win");
-            gamePane.setDisable(true);
+            } else {
+                playerTwoScore++;
+                playerTwoScoreLbl.setText("" + playerTwoScore);
+                playerOneScoreLbl.setText("" + playerOneScore);
+                isGameActive = !isGameActive;
+                winnerDialog.show();
+
+                gamePane.setDisable(true);
+            }
+
         } else {
             if ((isFullGrid())) {
                 gamePane.setDisable(true);
+                drawDialog.show();
                 System.out.println("It's a Draw");
+                
                 isGameActive = !isGameActive;
             }
         }
@@ -529,53 +573,6 @@ public class MainGridPaneController implements Initializable {
          */
     }
 
-    private void backBtnAction(ActionEvent event) {
-        Stage dialogStage = new Stage();
-
-        VBox vb = new VBox();
-        vb.setPadding(new Insets(10, 50, 50, 50));
-        vb.setSpacing(10);
-
-        Label lb = new Label("Do you want to exit game!");
-        lb.setFont(Font.font("Amble CN", FontWeight.BOLD, 24));
-        lb.setAlignment(Pos.CENTER);
-        vb.getChildren().add(lb);
-
-        Button forfeitBtn = new Button();
-        forfeitBtn.setText("Forfeit");
-        vb.getChildren().add(forfeitBtn);
-        forfeitBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    //stage.close();
-                    //stage.hide();
-                    //mainPane.setVisible(false);
-
-                    navigator.navigateTo(event, Navigation.MAIN_SCREEN);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-
-        Button cancelBtn = new Button();
-        cancelBtn.setText("Cancel");
-        vb.getChildren().add(cancelBtn);
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialogStage.close();
-            }
-        });
-
-        Scene scene = new Scene(vb);
-        dialogStage.setScene(scene);
-        dialogStage.show();
-    }
-
     public void setPlayerOneName(String name) {
         playerOneNameLbl.setText(name);
 
@@ -597,19 +594,6 @@ public class MainGridPaneController implements Initializable {
 
     public void setIsAIMode(boolean isAIMode) {
         this.isAIMode = isAIMode;
-    }
-
-    @FXML
-    private void onPlayer1HBoxClick(MouseEvent event) {
-        isPlayer1BtnEditeClilcked = !isPlayer1BtnEditeClilcked;
-        playerEditText.setPromptText("Enter player1 name");
-        getPlayerNameDialog.show();
-    }
-
-    @FXML
-    private void onPlayer2HBoxClick(MouseEvent event) {
-        playerEditText.setPromptText("Enter player2 name");
-        getPlayerNameDialog.show();
     }
 
 }
