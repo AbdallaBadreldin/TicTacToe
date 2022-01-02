@@ -18,11 +18,9 @@ public class TicTacToe extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setMinHeight(750);
+        stage.setMinHeight(700);
         stage.setMinWidth(1000);
-        stage.setMaxWidth(1000);
-        stage.setMaxHeight(600);
-
+      
         stage.show();
     }
 

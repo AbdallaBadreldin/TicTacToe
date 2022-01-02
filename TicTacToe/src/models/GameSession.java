@@ -5,6 +5,9 @@
  */
 package models;
 
+import static java.sql.JDBCType.NULL;
+import java.util.Arrays;
+
 /**
  *
  * @author Mahmoud
@@ -26,6 +29,10 @@ public class GameSession {
     public void addMove(PlayerMove move){
         playersMoves[counter] = move;
         counter++;
+    }
+      public void resetMove(){
+        playersMoves= new PlayerMove[9];
+        counter=0;
     }
 
     public PlayerMove[] getPlayersMoves() {

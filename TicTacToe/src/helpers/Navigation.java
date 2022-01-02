@@ -21,6 +21,11 @@ public class Navigation {
     public final static String MAIN_SCREEN = "/view/MainScreen.fxml";
     public final static String IP_OF_SERVER = "/view/IPOfServer.fxml";
     public final static String ONLINE_PLAYER = "/view/PlayerVsPlayerOnline.fxml";
+    public final static String LOGIN_SCREEN = "/view/LoginScreen.fxml";
+    public final static String REGISTER_SCREEN = "/view/RegisterScreen.fxml";
+
+
+
     private Stage stage;
     private Scene scene;
     private Parent root;

@@ -24,6 +24,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.GameSession;
 import models.PlayerMove;
 
@@ -90,7 +94,7 @@ public class MainGridPaneController implements Initializable {
     private Pane grid22;
     @FXML
     private StackPane root;
-    
+
     private Line line;
     private boolean isGameActive = true;
     private final Navigation navigator = new Navigation();
@@ -101,6 +105,9 @@ public class MainGridPaneController implements Initializable {
 
     @FXML
     JFXDialog newDialog;
+    @FXML
+    JFXDialog winnerDialog;
+
     Label label = new Label();
     int playerOneScore = 0;
     int playerTwoScore = 0;
@@ -118,7 +125,6 @@ public class MainGridPaneController implements Initializable {
     boolean isPlayerTurn = true;
     boolean isPcTurn = false;
     int XOCounter = 0;
-    private boolean isPlayer1BtnEditeClilcked;
 
     @FXML
     private ImageView exitImage;
@@ -129,9 +135,28 @@ public class MainGridPaneController implements Initializable {
     @FXML
     private JFXButton cancelBtn;
     @FXML
-    private HBox player1HBox;
+    private ImageView winnerImage;
     @FXML
-    private HBox player2HBox;
+    private JFXButton RematchBtn;
+    @FXML
+    private JFXButton CancelBtn;
+    @FXML
+    private JFXDialog loserDialog;
+    @FXML
+    private ImageView loserImage;
+    @FXML
+    private JFXButton RematchButton;
+    @FXML
+    private JFXButton CancelButton;
+    @FXML
+    private JFXDialog drawDialog;
+    @FXML
+    private JFXButton rematchButton;
+    @FXML
+    private JFXButton cancelButton;
+
+    private String ip = "10.178.240.229";
+    private int port = 3333;
     @FXML
     private JFXDialog getPlayerNameDialog;
     @FXML
@@ -140,12 +165,15 @@ public class MainGridPaneController implements Initializable {
     private JFXButton confirm;
     @FXML
     private JFXButton cancel;
-
-    private String ip = "10.178.240.229";
-    private int port = 3333;
+    private boolean isPlayer1BtnEditeClilcked;
+    @FXML
+    private HBox player1HBox;
+    @FXML
+    private HBox player2HBox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
@@ -169,8 +197,54 @@ public class MainGridPaneController implements Initializable {
                 playerTwoNameLbl.setText(playerEditText.getText());
             }
             getPlayerNameDialog.close();
+            playerEditText.setText("");
         });
         cancelBtn.setOnAction((e) -> newDialog.close());
+
+        winnerDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        winnerDialog.setDialogContainer(root);
+        RematchBtn.setOnAction((event) -> {
+            winnerDialog.close();
+            reMatch();
+        });
+        CancelBtn.setOnAction((e) -> {
+            try {
+                navigator.navigateTo(e, Navigation.MAIN_SCREEN);
+                newDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        loserDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        loserDialog.setDialogContainer(root);
+        RematchButton.setOnAction((event) -> {
+            loserDialog.close();
+            reMatch();
+        });
+        CancelButton.setOnAction((e) -> {
+            try {
+                navigator.navigateTo(e, Navigation.MAIN_SCREEN);
+                newDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+        drawDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        drawDialog.setDialogContainer(root);
+        rematchButton.setOnAction((event) -> {
+            drawDialog.close();
+            reMatch();
+        });
+        cancelButton.setOnAction((e) -> {
+            try {
+                navigator.navigateTo(e, Navigation.MAIN_SCREEN);
+                drawDialog.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
         cancel.setOnAction((e) -> getPlayerNameDialog.close());
         addLabelArray();
 
@@ -186,10 +260,12 @@ public class MainGridPaneController implements Initializable {
         labelArr[6] = label7;
         labelArr[7] = label8;
         labelArr[8] = label9;
+
     }
 
     @FXML
     private void onExitImageClick(MouseEvent event) {
+
     }
 
     @FXML
@@ -205,7 +281,7 @@ public class MainGridPaneController implements Initializable {
             gameSession.addMove(returnMove((Label) mouseEvent.getSource()));
             ((Label) mouseEvent.getSource()).setText(returnSymbol());
 
-        }else if (isItOnlineGame){
+        } else if (isItOnlineGame) {
             try {
                 client.sendRequest(returnMove(label));
                 client.getGameMove();
@@ -245,10 +321,22 @@ public class MainGridPaneController implements Initializable {
         mainPane.getChildren().remove(line);
     }
 
+    private void setLabelsEnable() {
+
+        label1.setDisable(false);
+        label2.setDisable(false);
+        label3.setDisable(false);
+        label4.setDisable(false);
+        label5.setDisable(false);
+        label6.setDisable(false);
+        label7.setDisable(false);
+        label8.setDisable(false);
+        label9.setDisable(false);
+
+    }
+
     private void reMatch() {
-        isGameActive = !isGameActive;
-        //System.out.println("controller.MainGridPaneController.reMatch()");
-        gamePane.setDisable(isGameActive);
+        gamePane.setDisable(false);
         label1.setText("");
         label2.setText("");
         label3.setText("");
@@ -258,11 +346,13 @@ public class MainGridPaneController implements Initializable {
         label7.setText("");
         label8.setText("");
         label9.setText("");
+        gameSession.resetMove();
         removeLine();
+        setLabelsEnable();
+        firstWinner = false;
+        secondWinner = false;
         winner = false;
-        //gamePane.getChildren().clear();
-        //removeLine();
-        //if(winner){checkState();}
+        XOCounter = 0;
 
     }
 
@@ -314,6 +404,7 @@ public class MainGridPaneController implements Initializable {
     }
 
     private void checkRows() {
+
         if (label1.getText().equals(label2.getText())
                 && label2.getText().equals(label3.getText())
                 && !label1.getText().equals("")) {
@@ -456,24 +547,35 @@ public class MainGridPaneController implements Initializable {
             playerOneScoreLbl.setText("" + playerOneScore);
             playerTwoScoreLbl.setText("" + playerTwoScore);
             isGameActive = !isGameActive;
-            //navigator.navigateToDialog(event);
+            winnerDialog.show();
 
-            //dialogHandle();
             gamePane.setDisable(true);
             //System.out.println("X is win");
         } else if (secondWinner) {
-            playerTwoScore++;
-            playerTwoScoreLbl.setText("" + playerTwoScore);
-            playerOneScoreLbl.setText("" + playerOneScore);
-            isGameActive = !isGameActive;
+            if (isAIMode) {
+                playerTwoScore++;
+                playerTwoScoreLbl.setText("" + playerTwoScore);
+                playerOneScoreLbl.setText("" + playerOneScore);
+                isGameActive = !isGameActive;
+                loserDialog.show();
+                gamePane.setDisable(true);
 
-            //dialogHandle();
-            //System.out.println("O is win");
-            gamePane.setDisable(true);
+            } else {
+                playerTwoScore++;
+                playerTwoScoreLbl.setText("" + playerTwoScore);
+                playerOneScoreLbl.setText("" + playerOneScore);
+                isGameActive = !isGameActive;
+                winnerDialog.show();
+
+                gamePane.setDisable(true);
+            }
+
         } else {
             if ((isFullGrid())) {
                 gamePane.setDisable(true);
+                drawDialog.show();
                 System.out.println("It's a Draw");
+
                 isGameActive = !isGameActive;
             }
         }

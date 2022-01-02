@@ -21,7 +21,7 @@
 
 <StackPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainGridPaneController">
     <children>
-        <AnchorPane fx:id="mainPane" maxHeight="6000.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0">
+         <AnchorPane fx:id="mainPane" maxHeight="6000.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" StackPane.alignment="CENTER">
             <children>
                 <Pane fx:id="gamePane" layoutX="263.0" layoutY="230.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                     <children>
@@ -188,6 +188,54 @@
                 </actions>
             </JFXDialogLayout>
         </JFXDialog>
+         <JFXDialog fx:id="winnerDialog">
+            <JFXDialogLayout>
+                <VBox alignment="CENTER">
+
+                <ImageView fx:id="winnerImage" fitHeight="248" fitWidth="314" layoutX="210" layoutY="21" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Gallary/congrats.gif" />
+                    </image>
+                </ImageView>
+                    <Label>Do you want play again?</Label>
+                    <JFXButton fx:id="RematchBtn">Rematch</JFXButton>
+                    <JFXButton fx:id="CancelBtn">Cancel</JFXButton>
+
+                </VBox>
+              
+            </JFXDialogLayout>
+        </JFXDialog>
+        <JFXDialog fx:id="loserDialog">
+            <JFXDialogLayout>
+                <VBox alignment="CENTER">
+                    <ImageView fx:id="loserImage" fitHeight="248" fitWidth="314" layoutX="210" layoutY="21" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Gallary/loser.gif" />
+                    </image>
+                </ImageView>
+                    
+
+                    <Label>Do you want play again?</Label>
+                    <JFXButton fx:id="RematchButton">Rematch</JFXButton>
+                    <JFXButton fx:id="CancelButton">Cancel</JFXButton>
+
+                </VBox>
+              
+            </JFXDialogLayout>
+        </JFXDialog>
+        <JFXDialog fx:id="drawDialog">
+            <JFXDialogLayout>
+                <VBox alignment="CENTER">
+
+                    <Label>****DRAW!****</Label>
+                    <Label>Do you want play again?</Label>
+                    <JFXButton fx:id="rematchButton">Rematch</JFXButton>
+                    <JFXButton fx:id="cancelButton">Cancel</JFXButton>
+
+                </VBox>
+              
+            </JFXDialogLayout>
+        </JFXDialog>
         
         <JFXDialog fx:id="getPlayerNameDialog">
             <JFXDialogLayout>
@@ -216,5 +264,6 @@
                 </actions>
             </JFXDialogLayout>
         </JFXDialog>
+      
     </children>
 </StackPane>
