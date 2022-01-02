@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Message;
+
 import socket.Clients;
 import socket.SocketHandler;
 
@@ -46,7 +47,10 @@ private int status;
     @Override
     public SocketHandler getSocketInformation() {
         return clientConnectionData;
+    }
+   
 
+    
     @Override
     public void update(Message m) {
         try {
@@ -56,22 +60,14 @@ private int status;
             //we should delete this user
         }
     }
-
-    @Override
-    public void update(Message m) {
-        try {
-            clientConnectionData.getClientOOS().writeObject(m);
-        } catch (IOException ex) {
-            Logger.getLogger(LoggedPlayer.class.getName()).log(Level.SEVERE, null, ex);
-            //we should delete this user
-        }
+/*
+        public void Clients(SocketHandler clientConnectionData) {
+        this.clientConnectionData = clientConnectionData;
     }
-
+*/
     @Override
     public void updateUI() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    public void Clients(SocketHandler clientConnectionData) {
-        this.clientConnectionData = clientConnectionData;
     }
 
-}
+    }
