@@ -1,6 +1,5 @@
 package controller;
 
-import client.GameClient;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import models.PlayerMove;
 
 /**
  * FXML Controller class
@@ -21,8 +19,6 @@ import models.PlayerMove;
  * @author Abdo
  */
 public class IPOfServerController implements Initializable {
-
-    Navigation navigator = new Navigation();
 
     @FXML
     private TextField serverIpTextField;
@@ -46,9 +42,7 @@ public class IPOfServerController implements Initializable {
     @FXML
     private void onConnectBtnClick(MouseEvent event) {
         try {
-            navigator.navigateTo(event, Navigation.LOGIN_SCREEN);
-
-            
+            nav.navigateTo(event, Navigation.LOGIN_SCREEN);
         } catch (IOException ex) {
             Logger.getLogger(IPOfServerController.class.getName()).log(Level.SEVERE, null, ex);
         }
