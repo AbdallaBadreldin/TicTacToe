@@ -48,24 +48,7 @@ public class IPOfServerController implements Initializable {
         try {
             navigator.navigateTo(event, Navigation.LOGIN_SCREEN);
 
-            String ip = "127.0.0.1";
-            int port = 3333;
-            try {
-                GameClient gameClient = GameClient.getInstactance(ip, port);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            gameClient.sendRequest(new PlayerMove());
-                        } catch (IOException ex) {
-                            Logger.getLogger(IPOfServerController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                    }
-                }).start();
-            } catch (IOException ex) {
-                Logger.getLogger(IPOfServerController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
         } catch (IOException ex) {
             Logger.getLogger(IPOfServerController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import client.GameClient;
 import helpers.Navigation;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,25 +16,24 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import models.Common;
 import models.LoginRequest;
 import models.Player;
-
+import client.interfaces.SignInInterface;
 
 /**
  * FXML Controller class
  *
  * @author Radwa
  */
-public class LoginScreenController implements Initializable {
-    Navigation navigator=new Navigation();
-    private LoginRequest loginRequest;
-
+public class LoginScreenController implements Initializable, SignInInterface {
+    
     @FXML
     private ImageView backImage;
     @FXML
     private TextField passwordText;
+    @FXML
+    private TextField emailText;
     @FXML
     private AnchorPane loginStage;
     @FXML
@@ -47,6 +41,8 @@ public class LoginScreenController implements Initializable {
     @FXML
     private TextField usernameText;
     
+    private GameClient gameClient;
+    private final Navigation nav = new Navigation();
 
     /**
      * Initializes the controller class.
@@ -54,51 +50,64 @@ public class LoginScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loginImage.setImage(new Image("/Gallary/loginImage.png"));
-        //stage.initStyle(StageStyle.UNDECORATED);
+        passwordText.setFocusTraversable(false);
+        try {
+            gameClient = GameClient.getInstactance(Common.IP, Common.PORT);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
-
+    
     @FXML
     private void passwordText(MouseEvent event) {
         passwordText.clear();
     }
-
+    
     @FXML
     private void emailText(MouseEvent event) {
-        usernameText.clear();    }
-
+        emailText.clear();
+    }
+    
     @FXML
     private void rememberCheckBox(ActionEvent event) {
     }
-
-
+    
     @FXML
     private void signInBtn(ActionEvent event) {
-        loginRequest=new LoginRequest();
-        loginRequest.setPassword(passwordText.getText());
-        loginRequest.setUserName(usernameText.getText());      
-        GameClient client;
+        gameClient.setSignInInterface(this);
         try {
-            client = GameClient.getInstactance("10.178.241.60", 3333);
-            
+            gameClient.sendRequest(new LoginRequest(emailText.getText(), passwordText.getText()));
+            gameClient.startReading();
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
     }
-
+    
     @FXML
     private void signUp(MouseEvent event) {
         try {
-            navigator.navigateTo(event, Navigation.REGISTER_SCREEN);
+            nav.navigateTo(event, Navigation.REGISTER_SCREEN);
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
-
+    
     @FXML
     private void backMouseClicked(MouseEvent event) {
     }
 
+    @Override
+    public void onPlayerRevice(Player player) {
+        if (player.getUserName() == null){
+            System.out.println("data is not vailed.");
+        }else {
+            ///TODO: navigate to inGameSreacn;
+            System.out.println("DONE!s "+player.getUserName());
+            gameClient.stopReading();
+            //nav.navigateTo(event, Navigation.ONLINE_SCREEN);
+           
+        }
+    }
     
 }

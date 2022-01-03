@@ -12,12 +12,13 @@ import java.io.Serializable;
  * @author Bossm
  */
 public class LoginRequest implements Serializable {
-
+    
+    private static final long serialVersionUID = 6521234598267757690L;
     private String username;
     private String password;
     private String token;
 
-    public void LoginRequest(String username, String password) {
+    public LoginRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -25,15 +26,9 @@ public class LoginRequest implements Serializable {
     public String getUsername() {
         return username;
     }
-       public void setUserName(String userName) {
-        this.username = userName;
-    }
 
     public String getPassword() {
         return password;
-    }
-     public void setPassword(String Password) {
-        this.password = Password;
     }
 
     public String getToken() {
@@ -44,6 +39,4 @@ public class LoginRequest implements Serializable {
         this.token = token;
     }
     
-
-
 }

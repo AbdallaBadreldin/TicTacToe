@@ -48,6 +48,8 @@ public class RegisterScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         registerImage.setImage(new Image("/Gallary/loginImage.png"));
+        confirmPassText.setFocusTraversable(false);
+        passwordText.setFocusTraversable(false);
     }
 
     @FXML
@@ -72,6 +74,7 @@ public class RegisterScreenController implements Initializable {
         try {
             GameClient client = GameClient.getInstactance("10.178.240.229", 3333);
             client.sendRequest(player);
+            
         } catch (IOException ex) {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
