@@ -5,6 +5,7 @@
  */
 package controller;
 
+import client.GameClient;
 import helpers.Navigation;
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.LoginRequest;
+import models.Player;
 
 
 /**
@@ -31,19 +34,18 @@ import javafx.stage.StageStyle;
  */
 public class LoginScreenController implements Initializable {
     Navigation navigator=new Navigation();
+    private LoginRequest loginRequest;
 
     @FXML
     private ImageView backImage;
     @FXML
     private TextField passwordText;
     @FXML
-    private TextField emailText;
-    @FXML
-    private ImageView exitImage;
-    @FXML
     private AnchorPane loginStage;
     @FXML
     private ImageView loginImage;
+    @FXML
+    private TextField usernameText;
     
 
     /**
@@ -62,18 +64,26 @@ public class LoginScreenController implements Initializable {
 
     @FXML
     private void emailText(MouseEvent event) {
-        emailText.clear();    }
+        usernameText.clear();    }
 
     @FXML
     private void rememberCheckBox(ActionEvent event) {
     }
 
-    @FXML
-    private void forgetPassword(MouseEvent event) {
-    }
 
     @FXML
     private void signInBtn(ActionEvent event) {
+        loginRequest=new LoginRequest();
+        loginRequest.setPassword(passwordText.getText());
+        loginRequest.setUserName(usernameText.getText());      
+        GameClient client;
+        try {
+            client = GameClient.getInstactance("10.178.241.60", 3333);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }
 
     @FXML
@@ -90,10 +100,5 @@ public class LoginScreenController implements Initializable {
     private void backMouseClicked(MouseEvent event) {
     }
 
-    @FXML
-    private void onExitImageClick(MouseEvent event) {
-                   //stage.close();
-
-    }
     
 }

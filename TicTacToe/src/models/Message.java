@@ -5,14 +5,16 @@ import java.io.Serializable;
 /**
  * @author Abdo
  */
-public class Message implements Serializable{
-    
+public class Message implements Serializable {
+
     private String message;
     private String username;
-    
-    public Message(){}
-    
-    public Message(String msg, String username){
+    private static final long serialVersionUID = 6525095098267757690L;
+
+    public Message() {
+    }
+
+    public Message(String msg, String username) {
         this.message = msg;
         this.username = username;
     }
@@ -37,5 +39,5 @@ public class Message implements Serializable{
     public String toString() {
         return "Message{" + "message=" + message + ", username=" + username + '}';
     }
-    
+
 }

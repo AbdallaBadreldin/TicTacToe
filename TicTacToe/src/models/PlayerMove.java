@@ -12,6 +12,8 @@ import java.io.Serializable;
  * @author Radwa
  */
 public class PlayerMove implements Serializable{
+    
+    private static final long serialVersionUID = 6529682930267757690L;
 
     private int x;
     private int y;

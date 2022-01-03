@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,8 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import static javafx.scene.paint.Color.rgb;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -22,6 +28,8 @@ import javafx.stage.StageStyle;
  * @author Radwa
  */
 public class SplashScrennController extends Thread implements Initializable, Runnable {
+       
+
 
     @FXML
     private BorderPane splashScreen;
@@ -30,9 +38,13 @@ public class SplashScrennController extends Thread implements Initializable, Run
     private Stage stage;
     private Thread thread;
     private Scene scene;
+    @FXML
+    private ImageView splashImage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
 
     }
 
@@ -47,7 +59,6 @@ public class SplashScrennController extends Thread implements Initializable, Run
             Platform.runLater(stage::close);
         } catch (InterruptedException ex) {
             Logger.getLogger(SplashScrennController.class.getName()).log(Level.SEVERE, null, ex);
-
         }
 
     }
@@ -56,6 +67,7 @@ public class SplashScrennController extends Thread implements Initializable, Run
         try {
             start();
             stage.initStyle(StageStyle.UNDECORATED);
+           // splashImage.setImage(new Image("/Gallary/splash.png"));
             Parent root = FXMLLoader.load(getClass().getResource("/view/SplashScreen.fxml"));
             scene = new Scene(root);
             stage.setScene(scene);

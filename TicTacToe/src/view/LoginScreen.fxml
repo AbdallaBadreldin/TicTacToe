@@ -10,11 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="loginStage" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
+<AnchorPane id="AnchorPane" fx:id="loginStage" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
    <children>
       <ImageView fx:id="loginImage" fitHeight="700.0" fitWidth="512.0" layoutX="488.0" layoutY="2.0" pickOnBounds="true" AnchorPane.leftAnchor="488.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
-      <TextField fx:id="passwordText" focusTraversable="false" layoutX="68.0" layoutY="300.0" onMouseClicked="#passwordText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your password" />
-      <TextField fx:id="emailText" focusTraversable="false" layoutX="68.0" layoutY="207.0" onMouseClicked="#emailText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your email" />
+      <TextField fx:id="passwordText" focusTraversable="false" layoutX="68.0" layoutY="300.0" onMouseClicked="#passwordText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your password" style="-fx-background-color: #FFFFCC;" />
+      <TextField fx:id="usernameText" focusTraversable="false" layoutX="68.0" layoutY="207.0" onMouseClicked="#emailText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your username" style="-fx-background-color: #FFFFCC;" />
       <Text layoutX="68.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="123.515625">
          <font>
             <Font size="24.0" />
@@ -30,13 +30,13 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="63.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="92.765625">
+      <Text layoutX="68.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="149.51563626527786">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
       <CheckBox focusTraversable="false" layoutX="68.0" layoutY="358.0" mnemonicParsing="false" onAction="#rememberCheckBox" text="Remember my account" />
-      <Button focusTraversable="false" layoutX="71.0" layoutY="411.0" mnemonicParsing="false" onAction="#signInBtn" prefHeight="37.0" prefWidth="364.0" text="Sign in" textAlignment="JUSTIFY">
+      <Button focusTraversable="false" layoutX="71.0" layoutY="411.0" mnemonicParsing="false" onAction="#signInBtn" prefHeight="37.0" prefWidth="364.0" style="-fx-background-color: #FFFFCC;" text="Sign in" textAlignment="JUSTIFY">
          <font>
             <Font size="22.0" />
          </font>

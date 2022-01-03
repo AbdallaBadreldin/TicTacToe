@@ -19,32 +19,37 @@ public class log implements Room {
 
     private static Vector<Clients> publicConnections = new Vector<>();
 
-    @Override
+    public static void attach(Clients c) {
+     publicConnections.add(c);
+        updateUI();    
+    }
+
+  /*  @Override
     public void attach(Clients c) {
         publicConnections.add(c);
         updateUI();
     }
-
-    @Override
-    public void detach(Clients c) {
+*/
+ 
+    public static void detach(Clients c) {
         publicConnections.remove(c);
         updateUI();
     }
 
-    @Override
-    public void notifyUpdate(Message m) {
+    
+    public static void notifyUpdate(Message m) {
         for (Clients c : publicConnections) {
             c.update(m);
         }
     }
 
-    @Override
-    public void updateUI() {
+ 
+    public static void updateUI() {
         FXMLDocumentController.setTotalPlayers(publicConnections.size());
     }
 
-    @Override
-    public void clearRoom() {
+    
+    public static void clearRoom() {
         publicConnections.clear();
     }
 

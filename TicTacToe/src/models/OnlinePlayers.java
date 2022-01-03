@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class OnlinePlayers implements Serializable{
     
+    private static final long serialVersionUID = 6529685098267723070L;
+
     private List<Player> players;
 
     public OnlinePlayers() {

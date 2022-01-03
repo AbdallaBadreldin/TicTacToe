@@ -12,9 +12,9 @@ import models.Message;
  * @author Bossm
  */
 public interface Room {
-    public void attach(Clients o);
-    public void detach(Clients o);
-    public void notifyUpdate(Message m);
-    public void clearRoom();
-    public void updateUI();
+   // public  static void attach(Clients o);
+  //  public void detach(Clients o);
+    //public void notifyUpdate(Message m);
+    //public static void clearRoom();
+    //public  static  void updateUI();
 }

@@ -72,7 +72,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private void playerOnlineBtnAction(ActionEvent event) {
         try {
-            navigator.navigateTo(event, Navigation.IP_OF_SERVER);
+            navigator.navigateTo(event, Navigation.ONLINE_PLAYER);
         } catch (IOException ex) {
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,7 +82,7 @@ public class MainScreenController implements Initializable {
     private void onRecClick(MouseEvent event) {
         System.out.println("clicked.");
         try {
-            navigator.navigateTo(event, Navigation.RECORDERS_SCREEN);
+            navigator.navigateTo(event, Navigation.REGISTER_SCREEN);
         } catch (IOException ex) {
             ex.getMessage();
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
