@@ -25,8 +25,6 @@ import javafx.scene.input.MouseEvent;
  */
 public class IPOfServerController implements Initializable {
 
-    Navigation navigator = new Navigation();
-
     @FXML
     private TextField serverIpTextField;
     @FXML
@@ -124,7 +122,7 @@ public class IPOfServerController implements Initializable {
                 checkip = true;
 
                 System.out.println("socket is " + socket.isConnected() + " from Ip server controller");
-                navigator.navigateTo(event, Navigation.LOGIN_SCREEN);
+                nav.navigateTo(event, Navigation.LOGIN_SCREEN);
             } else {
                 serverIpTextField.setText("You entered a wrong ip please try again");
                 serverIpTextField.selectAll();

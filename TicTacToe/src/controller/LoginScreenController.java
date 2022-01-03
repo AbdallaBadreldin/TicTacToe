@@ -1,4 +1,3 @@
-
 package controller;
 
 import client.GameClient;
@@ -27,7 +26,7 @@ import client.interfaces.SignInInterface;
  * @author Radwa
  */
 public class LoginScreenController implements Initializable, SignInInterface {
-    
+
     @FXML
     private ImageView backImage;
     @FXML
@@ -38,7 +37,6 @@ public class LoginScreenController implements Initializable, SignInInterface {
     private AnchorPane loginStage;
     @FXML
     private ImageView loginImage;
-    
     private GameClient gameClient;
     private final Navigation nav = new Navigation();
 
@@ -54,22 +52,22 @@ public class LoginScreenController implements Initializable, SignInInterface {
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-    
+    }
+
     @FXML
     private void passwordText(MouseEvent event) {
         passwordText.clear();
     }
-    
+
     @FXML
     private void emailText(MouseEvent event) {
         emailText.clear();
     }
-    
+
     @FXML
     private void rememberCheckBox(ActionEvent event) {
     }
-    
+
     @FXML
     private void signInBtn(ActionEvent event) {
         gameClient.setSignInInterface(this);
@@ -80,7 +78,7 @@ public class LoginScreenController implements Initializable, SignInInterface {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     private void signUp(MouseEvent event) {
         try {
@@ -88,24 +86,28 @@ public class LoginScreenController implements Initializable, SignInInterface {
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     @FXML
     private void backMouseClicked(MouseEvent event) {
     }
 
     @Override
     public void onPlayerRevice(Player player) {
-        if (player.getUserName() == null){
+        if (player.getUserName() == null) {
             System.out.println("data is not vailed.");
-        }else {
+        } else {
             ///TODO: navigate to inGameSreacn;
-            System.out.println("DONE!s "+player.getUserName());
-            gameClient.stopReading();
-            //nav.navigateTo(event, Navigation.ONLINE_SCREEN);
-           
+            System.out.println("DONE!s " + player.getUserName());
+            try {
+                gameClient.stopReading();
+                //nav.navigateTo(event, Navigation.ONLINE_SCREEN);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
     }
-    
+
 }
