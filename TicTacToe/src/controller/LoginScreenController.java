@@ -23,15 +23,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
 /**
  * FXML Controller class
  *
  * @author Radwa
  */
 public class LoginScreenController implements Initializable {
-    Navigation navigator=new Navigation();
 
+    Navigation navigator = new Navigation();
+    
     @FXML
     private ImageView backImage;
     @FXML
@@ -39,12 +39,9 @@ public class LoginScreenController implements Initializable {
     @FXML
     private TextField emailText;
     @FXML
-    private ImageView exitImage;
-    @FXML
     private AnchorPane loginStage;
     @FXML
     private ImageView loginImage;
-    
 
     /**
      * Initializes the controller class.
@@ -53,29 +50,27 @@ public class LoginScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         loginImage.setImage(new Image("/Gallary/loginImage.png"));
         //stage.initStyle(StageStyle.UNDECORATED);
+        passwordText.setFocusTraversable(false);
     }    
-
+    
     @FXML
     private void passwordText(MouseEvent event) {
         passwordText.clear();
     }
-
+    
     @FXML
     private void emailText(MouseEvent event) {
-        emailText.clear();    }
-
+        emailText.clear();
+    }
+    
     @FXML
     private void rememberCheckBox(ActionEvent event) {
     }
-
-    @FXML
-    private void forgetPassword(MouseEvent event) {
-    }
-
+    
     @FXML
     private void signInBtn(ActionEvent event) {
     }
-
+    
     @FXML
     private void signUp(MouseEvent event) {
         try {
@@ -85,15 +80,9 @@ public class LoginScreenController implements Initializable {
         }
         
     }
-
+    
     @FXML
     private void backMouseClicked(MouseEvent event) {
-    }
-
-    @FXML
-    private void onExitImageClick(MouseEvent event) {
-                   //stage.close();
-
     }
     
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package models;
 
 import java.io.Serializable;
@@ -15,7 +11,6 @@ import javafx.scene.image.ImageView;
 public class Player implements Serializable {
 
     private static final long serialVersionUID = 6529685098267757690L;
-    
     private String userName;
     private String password;
     private int status;

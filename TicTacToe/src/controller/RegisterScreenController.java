@@ -48,6 +48,8 @@ public class RegisterScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         registerImage.setImage(new Image("/Gallary/loginImage.png"));
+        confirmPassText.setFocusTraversable(false);
+        passwordText.setFocusTraversable(false);
     }
 
     @FXML

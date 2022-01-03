@@ -90,38 +90,10 @@ public class MainGridPaneController implements Initializable {
     private Pane grid22;
     @FXML
     private StackPane root;
-
-    private Line line;
-    private boolean isGameActive = true;
-    private final Navigation navigator = new Navigation();
-    private GameSession gameSession = new GameSession();
-    private GameClient client;
-    private Random random = new Random();
-    private int randomNumber;
-
     @FXML
     JFXDialog newDialog;
     @FXML
     JFXDialog winnerDialog;
-
-    Label label = new Label();
-    int playerOneScore = 0;
-    int playerTwoScore = 0;
-    private boolean playerTurn = true;
-    private boolean firstWinner = false;
-    private boolean secondWinner = false;
-    private boolean isXSymbol = true;
-    private boolean winner;
-    private String symbol;
-    private boolean isAIMode = false;
-    private boolean isItOnlineGame;
-    Label[] labelArr = new Label[9];
-
-    boolean isGameEnded;
-    boolean isPlayerTurn = true;
-    boolean isPcTurn = false;
-    int XOCounter = 0;
-
     @FXML
     private ImageView exitImage;
     @FXML
@@ -150,9 +122,6 @@ public class MainGridPaneController implements Initializable {
     private JFXButton rematchButton;
     @FXML
     private JFXButton cancelButton;
-
-    private String ip = "127.0.0.1";
-    private int port = 3333;
     @FXML
     private JFXDialog getPlayerNameDialog;
     @FXML
@@ -166,6 +135,33 @@ public class MainGridPaneController implements Initializable {
     private HBox player1HBox;
     @FXML
     private HBox player2HBox;
+
+    private Label label = new Label();
+    private int playerOneScore = 0;
+    private int playerTwoScore = 0;
+    private boolean playerTurn = true;
+    private boolean firstWinner = false;
+    private boolean secondWinner = false;
+    private boolean isXSymbol = true;
+    private boolean winner;
+    private String symbol;
+    private boolean isAIMode = false;
+    private boolean isItOnlineGame;
+    private Label[] labelArr = new Label[9];
+    private boolean isGameEnded;
+    private boolean isPlayerTurn = true;
+    private boolean isPcTurn = false;
+    private int XOCounter = 0;
+    private Line line;
+    private boolean isGameActive = true;
+    private final Navigation navigator = new Navigation();
+    private GameSession gameSession = new GameSession();
+    private GameClient client;
+    private Random random = new Random();
+    private int randomNumber;
+
+    private String ip = "192.168.1.5";
+    private int port = 3333;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -283,9 +279,9 @@ public class MainGridPaneController implements Initializable {
                     @Override
                     public void run() {
                         try {
-                            PlayerMove move = null ;
-                            while (move == null){
-                                 move = client.getGameMove();
+                            PlayerMove move = null;
+                            while (move == null) {
+                                move = client.getGameMove();
                             }
                             gameSession.addMove(move);
                         } catch (IOException | ClassNotFoundException ex) {
@@ -294,7 +290,7 @@ public class MainGridPaneController implements Initializable {
 
                     }
                 }).start();
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -558,7 +554,6 @@ public class MainGridPaneController implements Initializable {
             playerTwoScoreLbl.setText("" + playerTwoScore);
             isGameActive = !isGameActive;
             winnerDialog.show();
-
             gamePane.setDisable(true);
             //System.out.println("X is win");
         } else if (secondWinner) {
