@@ -194,7 +194,7 @@
 
                 <ImageView fx:id="winnerImage" fitHeight="248" fitWidth="314" layoutX="210" layoutY="21" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Gallary/congrats.gif" />
+                        <Image url="@../Gallary/congratus.gif" />
                     </image>
                 </ImageView>
                     <Label>Do you want play again?</Label>

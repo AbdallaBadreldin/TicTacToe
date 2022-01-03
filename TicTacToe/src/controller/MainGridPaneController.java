@@ -173,7 +173,6 @@ public class MainGridPaneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);

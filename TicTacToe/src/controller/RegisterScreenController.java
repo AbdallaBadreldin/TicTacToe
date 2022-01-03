@@ -63,6 +63,7 @@ public class RegisterScreenController implements Initializable{
 
     @FXML
     private void signUpBtn(ActionEvent event) {
+        
     }
 
     @FXML
