@@ -37,7 +37,6 @@ public class LoginScreenController implements Initializable, SignInInterface {
     private AnchorPane loginStage;
     @FXML
     private ImageView loginImage;
-
     private GameClient gameClient;
     private final Navigation nav = new Navigation();
 
