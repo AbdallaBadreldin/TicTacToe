@@ -5,8 +5,8 @@
  */
 package controller;
 
+import client.GameClient;
 import helpers.Navigation;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,15 +20,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import models.LoginRequest;
+import models.Player;
+import models.SignInInterface;
 
 /**
  * FXML Controller class
  *
  * @author Radwa
  */
-public class LoginScreenController implements Initializable {
+public class LoginScreenController implements Initializable, SignInInterface {
 
     Navigation navigator = new Navigation();
     
@@ -42,6 +43,10 @@ public class LoginScreenController implements Initializable {
     private AnchorPane loginStage;
     @FXML
     private ImageView loginImage;
+    
+    private GameClient gameClient;
+    private String ip = "10.178.241.60";
+    private int port = 3333;
 
     /**
      * Initializes the controller class.
@@ -51,6 +56,12 @@ public class LoginScreenController implements Initializable {
         loginImage.setImage(new Image("/Gallary/loginImage.png"));
         //stage.initStyle(StageStyle.UNDECORATED);
         passwordText.setFocusTraversable(false);
+        try {
+            gameClient = GameClient.getInstactance(ip, port);
+            gameClient.read();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
     
     @FXML
@@ -69,6 +80,13 @@ public class LoginScreenController implements Initializable {
     
     @FXML
     private void signInBtn(ActionEvent event) {
+        gameClient.setSignInInterface(this);
+        try {
+            gameClient.sendRequest(new LoginRequest(emailText.getText(), passwordText.getText()));
+            gameClient.read();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
@@ -83,6 +101,16 @@ public class LoginScreenController implements Initializable {
     
     @FXML
     private void backMouseClicked(MouseEvent event) {
+    }
+
+    @Override
+    public void onPlayerRevice(Player player) {
+        if (player.getUserName() == null){
+            System.out.println("data is not vailed.");
+        }else {
+            ///TODO: navigate to inGameSreacn;
+            System.out.println("DONE!s");
+        }
     }
     
 }

@@ -74,6 +74,7 @@ public class RegisterScreenController implements Initializable {
         try {
             GameClient client = GameClient.getInstactance("10.178.240.229", 3333);
             client.sendRequest(player);
+            
         } catch (IOException ex) {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }

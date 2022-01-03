@@ -275,22 +275,7 @@ public class MainGridPaneController implements Initializable {
         } else if (isItOnlineGame) {
             try {
                 client.sendRequest(returnMove(label));
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            PlayerMove move = null;
-                            while (move == null) {
-                                move = client.getGameMove();
-                            }
-                            gameSession.addMove(move);
-                        } catch (IOException | ClassNotFoundException ex) {
-                            Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                    }
-                }).start();
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
