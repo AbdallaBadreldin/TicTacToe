@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import client.GameClient;
@@ -20,9 +16,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import models.Common;
 import models.LoginRequest;
 import models.Player;
-import models.SignInInterface;
+import client.interfaces.SignInInterface;
 
 /**
  * FXML Controller class
@@ -30,8 +27,6 @@ import models.SignInInterface;
  * @author Radwa
  */
 public class LoginScreenController implements Initializable, SignInInterface {
-
-    Navigation navigator = new Navigation();
     
     @FXML
     private ImageView backImage;
@@ -45,8 +40,7 @@ public class LoginScreenController implements Initializable, SignInInterface {
     private ImageView loginImage;
     
     private GameClient gameClient;
-    private String ip = "10.178.241.60";
-    private int port = 3333;
+    private final Navigation nav = new Navigation();
 
     /**
      * Initializes the controller class.
@@ -54,11 +48,9 @@ public class LoginScreenController implements Initializable, SignInInterface {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loginImage.setImage(new Image("/Gallary/loginImage.png"));
-        //stage.initStyle(StageStyle.UNDECORATED);
         passwordText.setFocusTraversable(false);
         try {
-            gameClient = GameClient.getInstactance(ip, port);
-            gameClient.read();
+            gameClient = GameClient.getInstactance(Common.IP, Common.PORT);
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,7 +75,7 @@ public class LoginScreenController implements Initializable, SignInInterface {
         gameClient.setSignInInterface(this);
         try {
             gameClient.sendRequest(new LoginRequest(emailText.getText(), passwordText.getText()));
-            gameClient.read();
+            gameClient.startReading();
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,7 +84,7 @@ public class LoginScreenController implements Initializable, SignInInterface {
     @FXML
     private void signUp(MouseEvent event) {
         try {
-            navigator.navigateTo(event, Navigation.REGISTER_SCREEN);
+            nav.navigateTo(event, Navigation.REGISTER_SCREEN);
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,7 +101,10 @@ public class LoginScreenController implements Initializable, SignInInterface {
             System.out.println("data is not vailed.");
         }else {
             ///TODO: navigate to inGameSreacn;
-            System.out.println("DONE!s");
+            System.out.println("DONE!s "+player.getUserName());
+            gameClient.stopReading();
+            //nav.navigateTo(event, Navigation.ONLINE_SCREEN);
+           
         }
     }
     

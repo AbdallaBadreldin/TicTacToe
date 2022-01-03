@@ -1,7 +1,5 @@
 package client;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,20 +7,20 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.GameRequest;
-import models.GameSessionInterface;
-import models.InGameInterface;
+import client.interfaces.GameSessionInterface;
+import client.interfaces.InGameInterface;
 import models.LoginRequest;
 import models.Message;
 import models.OnlinePlayers;
 import models.Player;
 import models.PlayerMove;
-import models.SignInInterface;
-import models.SignUpInterface;
+import client.interfaces.SignInInterface;
+import client.interfaces.SignUpInterface;
 
 /**
  * @author Abdo
  */
-public class GameClient {
+public class GameClient extends Thread {
 
     private Socket mSocket;
     private ObjectOutputStream output;
@@ -60,19 +58,18 @@ public class GameClient {
      * @throws IOException
      */
     public void sendRequest(GameRequest request) throws IOException {
-        System.out.println("method started.");
         output.writeObject(request);
-        System.out.println("req sent.");
         output.flush();
-        System.out.println("method finsehd.");
     }
 
+    /**
+     *
+     * @param player
+     * @throws IOException
+     */
     public void sendRequest(Player player) throws IOException {
-        System.out.println("method started.");
         output.writeObject(player);
-        System.out.println("req sent.");
         output.flush();
-        System.out.println("method finsehd.");
     }
 
     /**
@@ -100,48 +97,14 @@ public class GameClient {
         output.flush();
     }
 
-    public void read() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Object obj;
-                while (true) {
-                    try {
-                        if (input != null) {
-                            obj = input.readObject();
-                            if (obj instanceof PlayerMove) {
-
-                                gameSessionInterface.onPlayerMoveRecive((PlayerMove) obj);
-
-                            } else if (obj instanceof Message) {
-
-                                inGameInterface.onMessageRecive((Message) obj);
-
-                            } else if (obj instanceof OnlinePlayers) {
-
-                                inGameInterface.onOnlinePlayersRecive((OnlinePlayers) obj);
-
-                            } else if (obj instanceof GameRequest) {
-
-                                inGameInterface.onGameRequestRecive((GameRequest) obj);
-
-                            } else if (obj instanceof Player) {
-
-                                signInInterface.onPlayerRevice((Player) obj);
-                                //signUpInterface.onStateRecive((Player) obj);
-
-                            } else {
-                                System.out.println("UKNOWEN OBJECT RECIVED");
-                            }
-                        }
-                    } catch (IOException | ClassNotFoundException ex) {
-                        ex.getMessage();
-                        Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }).start();
-        System.out.println("read thread stoped.");
+    public void startReading() {
+        start();
+        System.out.println("reading");
+    }
+    
+    public void stopReading() {
+        interrupt();
+        System.out.println("stop reading");
     }
 
     /**
@@ -170,4 +133,45 @@ public class GameClient {
         this.gameSessionInterface = gameSessionInterface;
     }
 
+    @Override
+    public void run() {
+        Object obj;
+        while (true) {
+            try {
+                if (input != null) {
+                    obj = input.readObject();
+                    if (obj instanceof PlayerMove) {
+
+                        gameSessionInterface.onPlayerMoveRecive((PlayerMove) obj);
+
+                    } else if (obj instanceof Message) {
+
+                        inGameInterface.onMessageRecive((Message) obj);
+
+                    } else if (obj instanceof OnlinePlayers) {
+
+                        inGameInterface.onOnlinePlayersRecive((OnlinePlayers) obj);
+
+                    } else if (obj instanceof GameRequest) {
+
+                        inGameInterface.onGameRequestRecive((GameRequest) obj);
+
+                    } else if (obj instanceof Player) {
+                        
+                        if (signInInterface != null) {
+                            signInInterface.onPlayerRevice((Player) obj);
+                        } else {
+                            signUpInterface.onStateRecive((Player) obj);
+                        }
+
+                    } else {
+                        System.out.println("UKNOWEN OBJECT RECIVED");
+                    }
+                }
+            } catch (IOException | ClassNotFoundException ex) {
+                ex.getMessage();
+                Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

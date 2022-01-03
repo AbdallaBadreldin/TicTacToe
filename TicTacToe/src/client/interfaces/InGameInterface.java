@@ -1,5 +1,9 @@
 
-package models;
+package client.interfaces;
+
+import models.GameRequest;
+import models.Message;
+import models.OnlinePlayers;
 
 /**
  *

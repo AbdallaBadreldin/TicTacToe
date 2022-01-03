@@ -1,5 +1,7 @@
 
-package models;
+package client.interfaces;
+
+import models.PlayerMove;
 
 /**
  *
