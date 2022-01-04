@@ -1,11 +1,12 @@
 package tictactoe;
 
-import controller.SplashScrennController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import controller.SplashScreenController;
 
 /**
  * @author Mahmoud
@@ -14,7 +15,7 @@ public class TicTacToe extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        new SplashScrennController().startScreen();
+        new SplashScreenController().startScreen();
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -27,7 +28,7 @@ public class TicTacToe extends Application {
     @Override
     public void stop() throws Exception {
         super.stop();
-       
+
     }
 
     /**

@@ -45,6 +45,25 @@ public class Player implements Serializable {
     public Player() {
     }
 
+    public Player(String userName, String password, int status, int win, int lose, int draw, int totalScore) {
+        this.userName = userName;
+        this.password = password;
+        this.status = status;
+        this.win = win;
+        this.lose = lose;
+        this.draw = draw;
+        this.totalScore = totalScore;
+    }
+
+    
+    public ImageView getMyImage() {
+        return myImage;
+    }
+
+    public void setMyImage(ImageView myImage) {
+        this.myImage = myImage;
+    }
+
     public String getUserName() {
         return userName;
     }

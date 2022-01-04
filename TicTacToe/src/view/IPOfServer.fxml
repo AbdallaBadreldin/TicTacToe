@@ -6,23 +6,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IPOfServerController">
+<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IPOfServerController">
    <children>
-      <TextField fx:id="serverIpTextField" layoutX="379.0" layoutY="342.0" prefHeight="38.0" prefWidth="242.0" promptText="Enter ip here...." />
+      <TextField fx:id="serverIpTextField" layoutX="379.0" layoutY="342.0" prefHeight="38.0" prefWidth="242.0" promptText="Enter ip here...." style="-fx-background-color: #FFFFCC;" />
       <ImageView fitHeight="148.0" fitWidth="164.0" layoutX="425.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Gallary/server.png" />
          </image>
       </ImageView>
-      <Button fx:id="connectBtn" layoutX="413.0" layoutY="424.0" mnemonicParsing="false" onMouseClicked="#onConnectBtnClick" prefHeight="38.0" prefWidth="173.0" text="Connect" />
+      <Button fx:id="connectBtn" layoutX="413.0" layoutY="424.0" mnemonicParsing="false" onMouseClicked="#onConnectBtnClick" prefHeight="38.0" prefWidth="173.0" style="-fx-background-color: #FFFFCC;" text="Connect" />
       <ImageView fx:id="backImage" fitHeight="55.0" fitWidth="79.0" layoutX="23.0" layoutY="14.0" onMouseClicked="#onBackImageClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Gallary/back_btn.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="exitImage" fitHeight="55.0" fitWidth="79.0" layoutX="912.0" layoutY="14.0" onMouseClicked="#onExitImageClick" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Gallary/exit.png" />
          </image>
       </ImageView>
    </children>

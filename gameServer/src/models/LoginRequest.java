@@ -12,8 +12,8 @@ import java.io.Serializable;
  * @author Bossm
  */
 public class LoginRequest implements Serializable {
-    
     private static final long serialVersionUID = 6521234598267757690L;
+
     private String username;
     private String password;
     private String token;

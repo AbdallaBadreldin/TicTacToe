@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package models;
 
 import java.io.Serializable;
-import javafx.scene.image.ImageView;
 
 /**
  *
@@ -15,7 +10,6 @@ import javafx.scene.image.ImageView;
 public class Player implements Serializable {
 
     private static final long serialVersionUID = 6529685098267757690L;
-    
     private String userName;
     private String password;
     private int status;
@@ -25,11 +19,10 @@ public class Player implements Serializable {
     private int draw;
     private int totalScore;
     private int totalMatches;
-    private ImageView myImage;
     private boolean isInGame;
 
     public Player(String userName, String password, int status, String gender,
-            int win, int lose, int draw, int totalScore, int totalMatches, ImageView myImage, boolean isInGame) {
+            int win, int lose, int draw, int totalScore, int totalMatches, boolean isInGame) {
         this.userName = userName;
         this.password = password;
         this.status = status;
@@ -39,7 +32,6 @@ public class Player implements Serializable {
         this.draw = draw;
         this.totalScore = totalScore;
         this.totalMatches = totalMatches;
-        this.myImage = myImage;
         this.isInGame = isInGame;
     }
 
@@ -47,20 +39,14 @@ public class Player implements Serializable {
     public Player() {
     }
     
-    public ImageView getMyImage() {
-        return myImage;
-    }
-
-    public void setMyImage(ImageView myImage) {
-        this.myImage = myImage;
-    }
+  
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.userName = username;
     }
 
     public String getPassword() {

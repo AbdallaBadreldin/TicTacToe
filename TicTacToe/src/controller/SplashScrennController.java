@@ -1,5 +1,6 @@
 package controller;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -22,6 +24,8 @@ import javafx.stage.StageStyle;
  * @author Radwa
  */
 public class SplashScrennController extends Thread implements Initializable, Runnable {
+       
+
 
     @FXML
     private BorderPane splashScreen;
@@ -30,9 +34,14 @@ public class SplashScrennController extends Thread implements Initializable, Run
     private Stage stage;
     private Thread thread;
     private Scene scene;
+    @FXML
+    private ImageView splashImage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+
+        splashImage.setImage(new Image("/Gallary/splashVideo.gif"));
 
     }
 
@@ -47,7 +56,6 @@ public class SplashScrennController extends Thread implements Initializable, Run
             Platform.runLater(stage::close);
         } catch (InterruptedException ex) {
             Logger.getLogger(SplashScrennController.class.getName()).log(Level.SEVERE, null, ex);
-
         }
 
     }

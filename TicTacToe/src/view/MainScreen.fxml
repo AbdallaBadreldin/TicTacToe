@@ -5,20 +5,23 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainPane" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+<AnchorPane fx:id="mainPane" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
    <children>
-      <Button fx:id="playerVsAIBtn" layoutX="350.0" layoutY="400.0" mnemonicParsing="false" onAction="#playerVsAIBtnAction" prefHeight="42.0" prefWidth="300.0" text="Player Vs AI" textAlignment="CENTER" />
-      <Button fx:id="playerVsPlayerBtn" layoutX="350.0" layoutY="462.0" mnemonicParsing="false" onAction="#playerVsPlayerBtnAction" prefHeight="42.0" prefWidth="300.0" text="Player Vs Player" textAlignment="CENTER" />
-      <Button fx:id="playerOnlineBtn" layoutX="350.0" layoutY="528.0" mnemonicParsing="false" onAction="#playerOnlineBtnAction" prefHeight="42.0" prefWidth="300.0" text="Playing Online" textAlignment="CENTER" />
+      <Button fx:id="playerVsAIBtn" layoutX="350.0" layoutY="400.0" mnemonicParsing="false" onAction="#playerVsAIBtnAction" prefHeight="42.0" prefWidth="300.0" style="-fx-background-color: #FFFFCC;" text="Player Vs AI" textAlignment="CENTER" />
+      <Button fx:id="playerVsPlayerBtn" layoutX="350.0" layoutY="462.0" mnemonicParsing="false" onAction="#playerVsPlayerBtnAction" prefHeight="42.0" prefWidth="300.0" style="-fx-background-color: #FFFFCC;" text="Player Vs Player" textAlignment="CENTER" />
+      <Button fx:id="playerOnlineBtn" layoutX="350.0" layoutY="528.0" mnemonicParsing="false" onAction="#playerOnlineBtnAction" prefHeight="42.0" prefWidth="300.0" style="-fx-background-color: #FFFFCC;" text="Playing Online" textAlignment="CENTER" />
       <ImageView fitHeight="289.0" fitWidth="351.0" layoutX="325.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Gallary/main.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="recImage" fitHeight="63.0" fitWidth="68.0" layoutX="907.0" layoutY="507.0" onMouseClicked="#onRecClick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="recImage" fitHeight="63.0" fitWidth="68.0" layoutX="904.0" layoutY="614.0" onMouseClicked="#onRecClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Gallary/rec_image.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="img2" fitHeight="150.0" fitWidth="200.0" layoutX="47.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img3" fitHeight="150.0" fitWidth="200.0" layoutX="63.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img1" fitHeight="150.0" fitWidth="200.0" layoutX="757.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
