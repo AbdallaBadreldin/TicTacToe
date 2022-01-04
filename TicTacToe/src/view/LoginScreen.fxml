@@ -14,7 +14,7 @@
 <AnchorPane id="AnchorPane" fx:id="loginStage" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
    <children>
       <ImageView fx:id="loginImage" fitHeight="700.0" fitWidth="512.0" layoutX="488.0" layoutY="2.0" pickOnBounds="true" AnchorPane.leftAnchor="488.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
-      <TextField fx:id="emailText" focusTraversable="false" layoutX="68.0" layoutY="207.0" onMouseClicked="#emailText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your email" />
+      <TextField fx:id="emailText" focusTraversable="false" layoutX="68.0" layoutY="207.0" onMouseClicked="#emailText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your email" style="-fx-background-color: &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;?import javafx.scene.image.ImageView?&gt;&lt;ImageView fitHeight=&quot;150.0&quot; fitWidth=&quot;156.0&quot; pickOnBounds=&quot;true&quot; preserveRatio=&quot;true&quot; xmlns=&quot;http://javafx.com/javafx/8.0.171&quot; xmlns:fx=&quot;http://javafx.com/fxml/1&quot; /&gt;;" />
       <Text layoutX="68.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="123.515625">
          <font>
             <Font size="24.0" />
@@ -55,6 +55,6 @@
             <Image url="@../Gallary/back_btn.png" />
          </image>
       </ImageView>
-      <PasswordField fx:id="passwordText" layoutX="68.0" layoutY="292.0" onMouseClicked="#passwordText" prefHeight="37.0" prefWidth="364.0" promptText="Password" />
+      <PasswordField fx:id="passwordText" layoutX="68.0" layoutY="292.0" onMouseClicked="#passwordText" prefHeight="37.0" prefWidth="364.0" promptText="Password" style="-fx-background-color: &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;?import javafx.scene.image.ImageView?&gt;&lt;ImageView fitHeight=&quot;150.0&quot; fitWidth=&quot;156.0&quot; pickOnBounds=&quot;true&quot; preserveRatio=&quot;true&quot; xmlns=&quot;http://javafx.com/javafx/8.0.171&quot; xmlns:fx=&quot;http://javafx.com/fxml/1&quot; /&gt;;" />
    </children>
 </AnchorPane>

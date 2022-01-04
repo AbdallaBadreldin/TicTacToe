@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -35,13 +36,24 @@ public class MainScreenController implements Initializable {
     private AnchorPane mainPane;
     @FXML
     private ImageView recImage;
+    @FXML
+    private ImageView img2;
+    @FXML
+    private ImageView img3;
+    @FXML
+    private ImageView img1;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //mainImageView.setImage(new Image("/resources/tic-tac-toe.png"));
+        img1.setImage(new Image("/Gallary/img4.png"));
+        img2.setImage(new Image("/Gallary/img2.png"));
+        img3.setImage(new Image("/Gallary/img3.png"));
+        
+
+
 
     }
 
@@ -53,7 +65,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private void playerVsAIBtnAction(ActionEvent event) {
         try {
-            navigator.navigateTo(event, Navigation.HARD_Mose_SCREEN);
+            navigator.navigateTo(event, Navigation.PLAYER_VS_AI);
         } catch (IOException ex) {
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }

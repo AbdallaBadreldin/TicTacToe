@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class PlayerMove implements Serializable{
     
-    private static final long serialVersionUID = 6529685098267757691L;
+    private static final long serialVersionUID = 6529682930267757690L;
     private int x;
     private int y;
     private boolean isX;
@@ -69,7 +69,6 @@ public class PlayerMove implements Serializable{
 
     @Override
     public String toString() {
-        return "PlayerMove{" + "x=" + x + ", y=" + y + ", isX=" + isX + ", isPlayerOneMove=" + isPlayerOneMove + '}';
+        return "X : " + x + ",Y : " + y + (isX ? " X " : " O ");
     }
-
 }

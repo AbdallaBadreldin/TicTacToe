@@ -23,7 +23,6 @@ public class Navigation {
     public final static String ONLINE_PLAYER = "/view/PlayerVsPlayerOnline.fxml";
     public final static String LOGIN_SCREEN = "/view/LoginScreen.fxml";
     public final static String REGISTER_SCREEN = "/view/RegisterScreen.fxml";
-    public final static String HARD_Mose_SCREEN = "/view/HardModeView.fxml";
 
 
 

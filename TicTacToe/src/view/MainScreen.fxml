@@ -15,10 +15,13 @@
             <Image url="@../Gallary/main.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="recImage" fitHeight="63.0" fitWidth="68.0" layoutX="907.0" layoutY="507.0" onMouseClicked="#onRecClick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="recImage" fitHeight="63.0" fitWidth="68.0" layoutX="904.0" layoutY="614.0" onMouseClicked="#onRecClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Gallary/rec_image.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="img2" fitHeight="150.0" fitWidth="200.0" layoutX="47.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img3" fitHeight="150.0" fitWidth="200.0" layoutX="63.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img1" fitHeight="150.0" fitWidth="200.0" layoutX="757.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

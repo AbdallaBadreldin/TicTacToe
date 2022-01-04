@@ -20,10 +20,5 @@
             <Image url="@../Gallary/back_btn.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="exitImage" fitHeight="55.0" fitWidth="79.0" layoutX="912.0" layoutY="14.0" onMouseClicked="#onExitImageClick" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Gallary/exit.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

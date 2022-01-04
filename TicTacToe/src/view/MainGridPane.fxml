@@ -203,7 +203,7 @@
         </JFXDialog>
 
         
-        <JFXDialog fx:id="getPlayerNameDialog" >
+        <JFXDialog fx:id="getPlayerNameDialog">
             <JFXDialogLayout>
                 <body>
                     <VBox layoutX="29.0" layoutY="426.0" prefHeight="82.0" prefWidth="223.0">
