@@ -19,6 +19,11 @@ import models.Common;
 import models.LoginRequest;
 import models.Player;
 import client.interfaces.SignInInterface;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 
 /**
  * FXML Controller class
@@ -39,6 +44,14 @@ public class LoginScreenController implements Initializable, SignInInterface {
     private ImageView loginImage;
     private GameClient gameClient;
     private final Navigation nav = new Navigation();
+    @FXML
+    private StackPane root;
+    @FXML
+    private JFXDialog feedbackDialog;
+    @FXML
+    private JFXButton okBnt;
+    @FXML
+    private Label lab;
 
     /**
      * Initializes the controller class.
@@ -47,6 +60,15 @@ public class LoginScreenController implements Initializable, SignInInterface {
     public void initialize(URL url, ResourceBundle rb) {
         loginImage.setImage(new Image("/Gallary/loginImage.png"));
         passwordText.setFocusTraversable(false);
+        feedbackDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        feedbackDialog.setDialogContainer(root);
+        
+        okBnt.setOnAction((e)-> {
+            feedbackDialog.close();
+            passwordText.setText("");
+            emailText.setText("");
+        });
+        
         try {
             gameClient = GameClient.getInstactance(Common.IP, Common.PORT);
         } catch (IOException ex) {
@@ -74,7 +96,7 @@ public class LoginScreenController implements Initializable, SignInInterface {
         try {
             gameClient.sendRequest(new LoginRequest(emailText.getText(), passwordText.getText()));
             gameClient.startReading();
-        } catch (IOException ex) {
+        } catch (IOException | InterruptedException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -91,18 +113,24 @@ public class LoginScreenController implements Initializable, SignInInterface {
 
     @FXML
     private void backMouseClicked(MouseEvent event) {
+        try {
+            nav.navigateTo(event, Navigation.IP_OF_SERVER);
+            gameClient.closeConnection();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void onPlayerRevice(Player player) {
         if (player.getUserName() == null) {
-            System.out.println("data is not vailed.");
+            lab.setText("data is not vailed.");
+            feedbackDialog.show();
         } else {
             ///TODO: navigate to inGameSreacn;
-            System.out.println("DONE!s " + player.getUserName());
             try {
                 gameClient.stopReading();
-                //nav.navigateTo(event, Navigation.ONLINE_SCREEN);
+                //nav.navigateTo(, Navigation.ONLINE_PLAYER);
             } catch (InterruptedException ex) {
                 Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }

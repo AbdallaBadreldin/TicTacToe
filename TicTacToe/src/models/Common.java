@@ -11,7 +11,7 @@ package models;
  */
 public class Common {
     
-    public static String IP = "10.178.241.60";
+    public static String IP = "192.168.1.5";
     public static int PORT = 3333;
     public static Player signedInPlayer;
     

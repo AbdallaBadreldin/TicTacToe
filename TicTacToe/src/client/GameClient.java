@@ -31,8 +31,8 @@ public class GameClient {
     private SignUpInterface signUpInterface;
     private InGameInterface inGameInterface;
     private GameSessionInterface gameSessionInterface;
-    private boolean paused;
-    
+    private boolean isFirstTimeToRun = true;
+
     private Thread thread = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -101,10 +101,10 @@ public class GameClient {
         output = new ObjectOutputStream(mSocket.getOutputStream());
     }
 
-    public boolean isSocketConnected (){
+    public boolean isSocketConnected() {
         return mSocket.isConnected();
     }
-    
+
     /**
      * @param request
      * @throws IOException
@@ -149,18 +149,20 @@ public class GameClient {
         output.flush();
     }
 
-    public void startReading() {
-        if (paused) {
-            thread.resume();
-            paused = !paused;
-        } else {
+    public void startReading() throws InterruptedException {
+        if (isFirstTimeToRun) {
+            System.out.println("start called");
+
             thread.start();
+        } else {
+            System.out.println("notify called");
+            thread.resume();
         }
+        isFirstTimeToRun = false;
         System.out.println("reading");
     }
 
     public void stopReading() throws InterruptedException {
-        paused = !paused;
         thread.suspend();
         System.out.println("stop reading");
     }
@@ -173,6 +175,7 @@ public class GameClient {
         input.close();
         output.close();
         mSocket.close();
+        gameClient = null ;
     }
 
     public void setSignInInterface(SignInInterface signInInterface) {
