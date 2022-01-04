@@ -152,8 +152,8 @@ public class MainGridPaneController implements Initializable {
     private Random random = new Random();
     private int randomNumber;
 
-    private String ip = "192.168.1.5";
-    private int port = 3333;
+    private String ip = "192.168.1.254";
+    private int port = 5006;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

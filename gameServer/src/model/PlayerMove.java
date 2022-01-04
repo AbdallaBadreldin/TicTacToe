@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package model;
 
 import java.io.Serializable;
 
 /**
  *
- * @author Radwa
+ * @author Ghaly
  */
-public class PlayerMove implements Serializable{
-    
+public class PlayerMove implements Serializable {
+
     private static final long serialVersionUID = 6529685098267757691L;
     private int x;
     private int y;
@@ -71,5 +71,7 @@ public class PlayerMove implements Serializable{
     public String toString() {
         return "PlayerMove{" + "x=" + x + ", y=" + y + ", isX=" + isX + ", isPlayerOneMove=" + isPlayerOneMove + '}';
     }
+
+   
 
 }
