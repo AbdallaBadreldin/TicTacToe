@@ -1,3 +1,4 @@
+
 package helpers;
 
 import java.util.regex.Matcher;
@@ -5,20 +6,33 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Abdo
+ * @author Mahmoud
  */
 public class IPValidation {
 
-    private static final String IPV4_PATTERN
-            = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-            + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-            + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-            + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+    private static String validIp;
 
-    private static final Pattern pattern = Pattern.compile(IPV4_PATTERN);
+    public static boolean isValidIPAddress(String ip) {
+        String zeroTo255
+                = "(\\d{1,2}|(0|1)\\"
+                + "d{2}|2[0-4]\\d|25[0-5])";
 
-    public static boolean isIpValid(String ip) {
-        Matcher matcher = pattern.matcher(ip);
-        return matcher.matches();
+        String regex
+                = zeroTo255 + "\\."
+                + zeroTo255 + "\\."
+                + zeroTo255 + "\\."
+                + zeroTo255;
+
+        Pattern p = Pattern.compile(regex);
+        if (ip == null) {
+            return false;
+        }
+        Matcher m = p.matcher(ip);
+        return m.matches();
     }
+
+    public static String getIp() {
+        return validIp;
+    }
+
 }

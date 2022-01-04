@@ -23,7 +23,10 @@ public class Navigation {
     public final static String ONLINE_PLAYER = "/view/OnlinePlayers.fxml";
     public final static String LOGIN_SCREEN = "/view/LoginScreen.fxml";
     public final static String REGISTER_SCREEN = "/view/RegisterScreen.fxml";
-    
+    public final static String HARD_Mode_SCREEN = "/view/HardModeView.fxml";
+
+
+
     private Stage stage;
     private Scene scene;
     private Parent root;

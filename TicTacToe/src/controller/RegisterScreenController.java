@@ -6,6 +6,7 @@
 package controller;
 
 import client.GameClient;
+import client.interfaces.SignUpInterface;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +27,7 @@ import models.Player;
  *
  * @author Radwa
  */
-public class RegisterScreenController implements Initializable {
+public class RegisterScreenController implements Initializable, SignUpInterface {
 
     Navigation navigator = new Navigation();
     private Player player;
@@ -106,6 +107,11 @@ public class RegisterScreenController implements Initializable {
     @FXML
     private void confirmPasswordText(MouseEvent event) {
         confirmPassText.clear();
+    }
+
+    @Override
+    public void onStateRecive(Player player) {
+        
     }
 
 }

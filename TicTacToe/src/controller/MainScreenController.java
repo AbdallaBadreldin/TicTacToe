@@ -53,7 +53,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private void playerVsAIBtnAction(ActionEvent event) {
         try {
-            navigator.navigateTo(event, Navigation.PLAYER_VS_AI);
+            navigator.navigateTo(event, Navigation.HARD_Mode_SCREEN);
         } catch (IOException ex) {
             Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
