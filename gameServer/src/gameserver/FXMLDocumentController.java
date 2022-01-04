@@ -26,7 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import models.Player;
 import socket.SocketHandler;
-import static socket.SocketHandler.closeStream;
+import static socket.SocketHandler.closeStreams;
 //import static socket.SocketHandler.closeAllStreams;
 
 /**
@@ -45,21 +45,22 @@ public class FXMLDocumentController implements Initializable, Runnable {
     private Text current;
     @FXML
     private Text total;
-
+private int totalPlayersConnected;
     public static volatile ServerSocket serverSocket;
     public static Thread serverListenerThread;
     public List<Player> players;
     Player player;
-
-    static int totalPlayers = 5;
+public static volatile FXMLDocumentController fx;
+    public static volatile int totalPlayers ;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        fx=this;
         DatabaseAccess.setUpConnection();
         serverListenerThread = new Thread(this);
                        setPlayers();
                 printPlayers(players);
-      
+     
         try {
             serverSocket = new ServerSocket(3333);
         } catch (IOException ex) {
@@ -70,10 +71,10 @@ public class FXMLDocumentController implements Initializable, Runnable {
 
     @FXML
     private void stopServer(ActionEvent event) {
-
+updateTotalPlayers(0);
         if (!serverSocket.isClosed()) {
             try {
-                closeStream();
+                closeStreams();
                 serverSocket.close();
                 serverListenerThread.suspend();
             } catch (IOException ex) {
@@ -86,10 +87,9 @@ public class FXMLDocumentController implements Initializable, Runnable {
     private void startServer(ActionEvent event) {
         if (serverSocket.isClosed()) {
             try {
-                //updateTotalPlayers();
                 serverSocket = new ServerSocket(3333);
                 serverListenerThread.resume();
- 
+                
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -102,18 +102,17 @@ public class FXMLDocumentController implements Initializable, Runnable {
             try {
                 Socket mySocket = serverSocket.accept();
                 new SocketHandler(mySocket);
+                 //updateTotalPlayers(totalPlayersConnected++);
             } catch (IOException ex) {
                 Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    public static void setTotalPlayers(int i) {
-        totalPlayers = i;
-    }
+    
 
-    public void updateTotalPlayers() {
-        total.setText(String.valueOf(totalPlayers));
+    public void updateTotalPlayers( int i) {
+        total.setText(String.valueOf(i));
         //FXMLDocumentController.updateTotalPlayers(5);
     }
     
