@@ -55,15 +55,6 @@ public class Player implements Serializable {
         this.totalScore = totalScore;
     }
 
-    
-    public ImageView getMyImage() {
-        return myImage;
-    }
-
-    public void setMyImage(ImageView myImage) {
-        this.myImage = myImage;
-    }
-
     public String getUserName() {
         return userName;
     }

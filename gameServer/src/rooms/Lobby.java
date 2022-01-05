@@ -22,10 +22,11 @@ import socket.SocketHandler;
 public class Lobby implements Room {
 
     private static List<LoggedPlayer> publicConnections = new Vector<>();
-
+    
     private static List<String> connectedPlayersUserNames = new Vector<>();
     private static List<Integer> connectedPlayersStatus = new Vector<>();
 
+    @Override
     public void attach(LoggedPlayer c) {
         System.out.println("attach called");
      publicConnections.add(c);
@@ -35,6 +36,7 @@ public class Lobby implements Room {
     }
 
  
+    @Override
     public void detach(LoggedPlayer c) {
         int i =publicConnections.indexOf(c);
         System.out.println("the deattach"+i);

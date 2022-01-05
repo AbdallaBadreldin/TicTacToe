@@ -84,7 +84,7 @@ public class SocketHandler implements Runnable {
               int i = handlers.size() ;
                 System.out.println(i);
                   fx.updateTotalPlayers(i);
-                  closeStream();
+                  closeStreamBySocket(this);
                  
             Logger.getLogger(SocketHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -192,7 +192,7 @@ public class SocketHandler implements Runnable {
                   fx.updateTotalPlayers(i);
                 
                 removeOnlinePlayerFromList(playerUsername);
-               closeStream();
+              closeStreamBySocket(this);
              
                 //here we remove socket and thread permentaly also search for the socket every where then update every single UI&client
             } catch (ClassNotFoundException ex) {
