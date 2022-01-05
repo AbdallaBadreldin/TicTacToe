@@ -13,12 +13,14 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import socket.SocketHandler;
-import static socket.SocketHandler.closeStream;
+import static socket.SocketHandler.closeStreams;
+
 
 /**
  *
@@ -60,9 +62,11 @@ public class GameServer extends Application {
     @Override
     public void stop() {
         try {
-            closeStream();
+            closeStreams();
             serverSocket.close();
             serverListenerThread.stop();
+            Platform.exit();
+            System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
         }

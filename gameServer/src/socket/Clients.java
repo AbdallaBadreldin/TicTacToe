@@ -6,6 +6,7 @@
 package socket;
 
 import java.net.Socket;
+import java.util.List;
 import java.util.Vector;
 import models.Message;
 
@@ -21,18 +22,17 @@ public interface Clients {
     // protected Socket clientSocket;
     // protected String toekn;
     // protected String username;
-    public abstract void update(Message m);
+    
+    public abstract void updateChat(Message m);
 
-    public abstract void setSocketInformation(SocketHandler clientConnectionData);
+    public abstract void updatePlayersList( List<String> l ,List<Integer> i);
 
     public abstract void updateUI();
 
     public abstract SocketHandler getSocketInformation();
     
-    public abstract void setLoggedPlayerName(String username);
     
-    public abstract String getLoggedPlayerName();
-    // public Clients getClient (int ID){
+// public Clients getClient (int ID){
     /*
        
        return playersConnected.get(ID);

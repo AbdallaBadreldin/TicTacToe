@@ -7,6 +7,8 @@ import helpers.GameRecorder;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -142,7 +144,7 @@ public class MainGridPaneController implements Initializable {
     private boolean isPlayerTurn = true;
     private boolean isPcTurn = false;
     private int XOCounter = 0;
-    private Line line;
+    private List<Line> arrayLine;
     private boolean isGameActive = true;
     private final Navigation navigator = new Navigation();
     private GameSession gameSession = new GameSession(new Player("hamda"), new Player("ali"));
@@ -159,6 +161,7 @@ public class MainGridPaneController implements Initializable {
         getPlayerNameDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         getPlayerNameDialog.setDialogContainer(root);
         playerEditText.setFocusTraversable(false);
+        arrayLine = new ArrayList<Line>();
         LeaveBtn.setOnAction((event) -> {
             try {
                 navigator.navigateTo(event, Navigation.MAIN_SCREEN);
@@ -263,7 +266,10 @@ public class MainGridPaneController implements Initializable {
     }
 
     private void removeLine() {
-        mainPane.getChildren().remove(line);
+        for (int i = 0; i < arrayLine.size(); i++) {
+            mainPane.getChildren().remove(arrayLine.get(i));
+        }
+        arrayLine.clear();
     }
 
     private void setLabelsEnable() {
@@ -302,6 +308,7 @@ public class MainGridPaneController implements Initializable {
     }
 
     private void drawLine(Label b1, Label b2) {
+
         Bounds bound1 = b1.localToScene(b1.getBoundsInLocal());
         Bounds bound2 = b2.localToScene(b2.getBoundsInLocal());
         double x1, y1, x2, y2;
@@ -309,7 +316,8 @@ public class MainGridPaneController implements Initializable {
         y1 = (bound1.getMinY() + bound1.getMaxY()) / 2;
         x2 = (bound2.getMinX() + bound2.getMaxX()) / 2;
         y2 = (bound2.getMinY() + bound2.getMaxY()) / 2;
-        line = new Line(x1, y1, x2, y2);
+        Line line = new Line(x1, y1, x2, y2);
+        arrayLine.add(line);
         mainPane.getChildren().add(line);
     }
 

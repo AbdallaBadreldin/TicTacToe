@@ -1,6 +1,5 @@
 package tictactoe;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,8 +26,8 @@ public class TicTacToe extends Application {
 
     @Override
     public void stop() throws Exception {
-        super.stop();
-
+        super.stop(); //To change body of generated methods, choose Tools | Templates.
+        System.exit(0);
     }
 
     /**

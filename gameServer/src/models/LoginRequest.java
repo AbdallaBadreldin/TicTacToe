@@ -39,6 +39,4 @@ public class LoginRequest implements Serializable {
         this.token = token;
     }
     
-
-
 }
