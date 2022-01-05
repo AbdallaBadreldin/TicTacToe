@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author Ghaly
+ * @author Mahmoud
  */
 public class Player {
     private String userName;

@@ -92,9 +92,6 @@ public class GameClient {
         }
     }
 
-    /**
-     * @throws IOException
-     */
     private void openConnection(String address, int port) throws IOException {
         mSocket = new Socket(address, port);
         input = new ObjectInputStream(mSocket.getInputStream());
@@ -105,30 +102,16 @@ public class GameClient {
         return mSocket.isConnected();
     }
 
-    /**
-     * @param request
-     * @throws IOException
-     */
     public void sendRequest(GameRequest request) throws IOException {
         output.writeObject(request);
         output.flush();
     }
 
-    /**
-     *
-     * @param player
-     * @throws IOException
-     */
     public void sendRequest(Player player) throws IOException {
         output.writeObject(player);
         output.flush();
     }
 
-    /**
-     *
-     * @param msg
-     * @throws IOException
-     */
     public void sendRequest(Message msg) throws IOException {
         output.writeObject(msg);
         output.flush();
@@ -139,11 +122,6 @@ public class GameClient {
         output.flush();
     }
 
-    /**
-     *
-     * @param move
-     * @throws IOException
-     */
     public void sendRequest(PlayerMove move) throws IOException {
         output.writeObject(move);
         output.flush();
@@ -167,15 +145,11 @@ public class GameClient {
         System.out.println("stop reading");
     }
 
-    /**
-     *
-     * @throws IOException
-     */
     public void closeConnection() throws IOException {
         input.close();
         output.close();
         mSocket.close();
-        gameClient = null ;
+        gameClient = null;
     }
 
     public void setSignInInterface(SignInInterface signInInterface) {
@@ -192,5 +166,9 @@ public class GameClient {
 
     public void setGameSessionInterface(GameSessionInterface gameSessionInterface) {
         this.gameSessionInterface = gameSessionInterface;
+    }
+
+    public Socket getmSocket() {
+        return mSocket;
     }
 }

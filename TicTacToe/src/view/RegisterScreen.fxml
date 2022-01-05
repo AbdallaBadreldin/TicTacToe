@@ -1,71 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.ColorAdjust?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="loginStage" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterScreenController">
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterScreenController">
    <children>
-      <ImageView fx:id="registerImage" fitHeight="700.0" fitWidth="517.0" layoutX="488.0" layoutY="1.0" pickOnBounds="true" AnchorPane.leftAnchor="488.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="1.0" />
-      <TextField fx:id="emailText" focusTraversable="false" layoutX="68.0" layoutY="137.0" onMouseClicked="#emailText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your email" />
-      <Text layoutX="68.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="123.515625">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="62.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account" wrappingWidth="231.734375">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Text>
-      <Text layoutX="68.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="92.765625">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <CheckBox focusTraversable="false" layoutX="68.0" layoutY="446.0" mnemonicParsing="false" onAction="#policyCheckBox" prefHeight="25.0" prefWidth="364.0" text="I agree to the Teams and Privacy Policy" />
-      <Button focusTraversable="false" layoutX="68.0" layoutY="484.0" mnemonicParsing="false" onAction="#signUpBtn" prefHeight="37.0" prefWidth="364.0" style="-fx-background-color: #FFFFCC;" text="Sign up" textAlignment="JUSTIFY">
-         <font>
-            <Font size="22.0" />
-         </font>
-         <effect>
-            <ColorAdjust brightness="-0.55" contrast="1.0" />
-         </effect>
-      </Button>
-      <Text fill="#000000bb" layoutX="68.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an accouont?" wrappingWidth="219.00001859664917" />
-      <Text layoutX="294.0" layoutY="560.0" onMouseClicked="#signInMouseClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign in" wrappingWidth="149.5156294107437">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <ImageView fx:id="backImage" fitHeight="45.0" fitWidth="53.0" layoutX="23.0" layoutY="14.0" onMouseClicked="#backMouseClicked" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Gallary/back_btn.png" />
-         </image>
-      </ImageView>
-      <Text layoutX="68.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="149.51563253998756">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <TextField fx:id="usernameText" focusTraversable="false" layoutX="68.0" layoutY="222.0" onMouseClicked="#usernameText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your username" style="-fx-background-color: #FFFFCC;" />
-      <Text layoutX="70.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password" wrappingWidth="243.515625">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-<<<<<<< HEAD
-      <TextField fx:id="confirmPassText" focusTraversable="false" layoutX="68.0" layoutY="391.0" onMouseClicked="#confirmPasswordText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your password" style="-fx-background-color: #FFFFCC;" />
-=======
-      <PasswordField fx:id="passwordText" layoutX="68.0" layoutY="310.0" onMouseClicked="#passwordText" prefHeight="37.0" prefWidth="364.0" promptText="Password" />
-      <PasswordField fx:id="confirmPassText" layoutX="70.0" layoutY="389.0" onMouseClicked="#confirmPasswordText" prefHeight="37.0" prefWidth="364.0" promptText="Confirm Password" />
->>>>>>> 99e93578eb4eb7b3633dae1462183a6bd96ef563
+      <AnchorPane id="AnchorPane" fx:id="loginStage" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;">
+         <children>
+            <ImageView fx:id="registerImage" fitHeight="700.0" fitWidth="364.0" layoutX="636.0" pickOnBounds="true" AnchorPane.leftAnchor="636.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@../Gallary/loginImage.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="81.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Create Account" wrappingWidth="231.734375">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text layoutX="348.0" layoutY="506.0" onMouseClicked="#signInMouseClicked" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Sign in" wrappingWidth="75.00001788139343">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <JFXTextField fx:id="usernameTxt" cache="true" focusColor="#ffffccf5" labelFloat="true" layoutX="81.0" layoutY="238.0" onAction="#onUsernameTxtAction" prefHeight="42.0" prefWidth="364.0" promptText="Enter your username" style="-fx-background-color: #FFFFCC; -fx-background-radius: 9;" unFocusColor="#cccccc00">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXTextField>
+            <Text fill="#0000009a" layoutX="81.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to TicTacToe the most satisfied game ever" wrappingWidth="325.515625">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <StackPane AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+               <children>
+                  <ImageView fx:id="backImage" fitHeight="42.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Gallary/back_btn.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="imgBtn" onMouseClicked="#backMouseClicked" prefHeight="67.0" prefWidth="75.0" style="-fx-border-radius: 50; -fx-background-radius: 50;" />
+               </children>
+            </StackPane>
+            <JFXPasswordField fx:id="passwordTxt" cache="true" focusColor="#ffffccf5" labelFloat="true" layoutX="81.0" layoutY="301.0" onAction="#onPasswordTxtAction" prefHeight="42.0" prefWidth="364.0" promptText="Enter password" style="-fx-background-color: #FFFFCC; -fx-background-radius: 9;" unFocusColor="#cccccc00">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXPasswordField>
+            <JFXPasswordField fx:id="confirmPasswordTxt" cache="true" focusColor="#ffffccf5" labelFloat="true" layoutX="81.0" layoutY="366.0" onAction="#onConfirmPasswordTxtAction" prefHeight="42.0" prefWidth="364.0" promptText="Re-enter password" style="-fx-background-color: #FFFFCC; -fx-background-radius: 9;" unFocusColor="#cccccc00">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXPasswordField>
+            <JFXCheckBox layoutX="90.0" layoutY="441.0" text="I agree to the Teams and Privacy Policy" />
+            <JFXButton fx:id="signUpBtn" layoutX="81.0" layoutY="477.0" onAction="#onSignUp" prefHeight="42.0" prefWidth="232.0" ripplerFill="#8a8a8a" style="-fx-background-color: #FFFFCC; -fx-border-radius: 20; -fx-background-radius: 20;" text="Sign up" />
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>

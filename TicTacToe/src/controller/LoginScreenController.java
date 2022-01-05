@@ -21,7 +21,6 @@ import models.Player;
 import client.interfaces.SignInInterface;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
@@ -42,8 +41,6 @@ public class LoginScreenController implements Initializable, SignInInterface {
     private AnchorPane loginStage;
     @FXML
     private ImageView loginImage;
-    private GameClient gameClient;
-    private final Navigation nav = new Navigation();
     @FXML
     private StackPane root;
     @FXML
@@ -52,7 +49,14 @@ public class LoginScreenController implements Initializable, SignInInterface {
     private JFXButton okBnt;
     @FXML
     private Label lab;
+    @FXML
+    private JFXButton imgBtn;
+    @FXML
+    private JFXButton signInBtn;
 
+    private GameClient gameClient;
+    private final Navigation nav = new Navigation();
+    
     /**
      * Initializes the controller class.
      */
@@ -62,7 +66,6 @@ public class LoginScreenController implements Initializable, SignInInterface {
         passwordText.setFocusTraversable(false);
         feedbackDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         feedbackDialog.setDialogContainer(root);
-        
         okBnt.setOnAction((e)-> {
             feedbackDialog.close();
             passwordText.setText("");
@@ -90,7 +93,6 @@ public class LoginScreenController implements Initializable, SignInInterface {
     private void rememberCheckBox(ActionEvent event) {
     }
 
-    @FXML
     private void signInBtn(ActionEvent event) {
         gameClient.setSignInInterface(this);
         try {
@@ -111,15 +113,6 @@ public class LoginScreenController implements Initializable, SignInInterface {
 
     }
 
-    @FXML
-    private void backMouseClicked(MouseEvent event) {
-        try {
-            nav.navigateTo(event, Navigation.IP_OF_SERVER);
-            gameClient.closeConnection();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     @Override
     public void onPlayerRevice(Player player) {
@@ -134,8 +127,16 @@ public class LoginScreenController implements Initializable, SignInInterface {
             } catch (InterruptedException ex) {
                 Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
+    }
+
+    @FXML
+    private void onBackImageClick(MouseEvent event) {
+    }
+
+    @FXML
+    private void onSignInBtn(ActionEvent event) {
+        ///TODO: send sigin in request to the server and if it is valied, navigate to online board.
     }
 
 }

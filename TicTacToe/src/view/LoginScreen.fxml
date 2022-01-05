@@ -1,75 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDialog?>
 <?import com.jfoenix.controls.JFXDialogLayout?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.ColorAdjust?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Label?>
-<?import com.jfoenix.controls.JFXButton?>
-
-
 
 <StackPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
    <children>
-      <AnchorPane id="AnchorPane" fx:id="loginStage" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;">
-         <children>
-            <ImageView fx:id="loginImage" fitHeight="700.0" fitWidth="512.0" layoutX="488.0" layoutY="2.0" pickOnBounds="true" AnchorPane.leftAnchor="488.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
-            <TextField fx:id="emailText" focusTraversable="false" layoutX="68.0" layoutY="207.0" onMouseClicked="#emailText" prefHeight="37.0" prefWidth="364.0" promptText="Enter your email" />
-            <Text layoutX="68.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="123.515625">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text layoutX="68.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back" wrappingWidth="231.734375">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Text>
-            <Text fill="#0000009a" layoutX="68.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back! please enter your details." wrappingWidth="363.515625">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="68.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="149.51563626527786">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <CheckBox focusTraversable="false" layoutX="68.0" layoutY="358.0" mnemonicParsing="false" onAction="#rememberCheckBox" text="Remember my account" />
-            <Button focusTraversable="false" layoutX="71.0" layoutY="411.0" mnemonicParsing="false" onAction="#signInBtn" prefHeight="37.0" prefWidth="364.0" style="-fx-background-color: #FFFFCC;" text="Sign in" textAlignment="JUSTIFY">
-               <font>
-                  <Font size="22.0" />
-               </font>
-               <effect>
-                  <ColorAdjust brightness="-0.55" contrast="1.0" />
-               </effect>
-            </Button>
-            <Text fill="#000000bb" layoutX="68.0" layoutY="498.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dont't you have an account?" wrappingWidth="219.00001859664917" />
-            <Text layoutX="285.0" layoutY="500.0" onMouseClicked="#signUp" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign up for free" wrappingWidth="149.5156294107437">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
-            <ImageView fx:id="backImage" fitHeight="45.0" fitWidth="53.0" layoutX="23.0" layoutY="14.0" onMouseClicked="#backMouseClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Gallary/back_btn.png" />
-               </image>
-            </ImageView>
-            <PasswordField fx:id="passwordText" layoutX="68.0" layoutY="292.0" onMouseClicked="#passwordText" prefHeight="37.0" prefWidth="364.0" promptText="Password" />
-         </children>
-      </AnchorPane>
       <JFXDialog fx:id="feedbackDialog">
          <children>
-             <JFXDialogLayout >
+             <JFXDialogLayout>
                  <body>
                      <Label fx:id="lab">Something wen't wong pleas try again</Label>
                  </body>
@@ -79,5 +28,53 @@
              </JFXDialogLayout>
          </children>
       </JFXDialog>
+      <AnchorPane id="AnchorPane" fx:id="loginStage" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;">
+         <children>
+            <StackPane layoutY="2.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+               <children>
+                  <ImageView fx:id="backImage" fitHeight="42.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Gallary/back_btn.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="imgBtn" onMouseClicked="#onBackImageClick" prefHeight="67.0" prefWidth="75.0" style="-fx-border-radius: 50; -fx-background-radius: 50;" />
+               </children>
+            </StackPane>
+            <ImageView fx:id="loginImage" fitHeight="700.0" fitWidth="411.0" layoutX="589.0" layoutY="2.0" pickOnBounds="true" AnchorPane.leftAnchor="589.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
+            <Text layoutX="109.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Welcome back" wrappingWidth="231.734375">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#0000009a" layoutX="109.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back! please enter your details." wrappingWidth="363.515625">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="366.0" layoutY="492.0" onMouseClicked="#signUp" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Sign up" wrappingWidth="75.00001788139343">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <JFXTextField fx:id="emailText" cache="true" focusColor="#ffffccf5" labelFloat="true" layoutX="109.0" layoutY="272.0" onMouseClicked="#emailText" prefHeight="42.0" prefWidth="350.0" promptText="Enter your username" style="-fx-background-color: #FFFFCC; -fx-background-radius: 9;" unFocusColor="#cccccc00">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXTextField>
+            <JFXTextField fx:id="passwordText" cache="true" focusColor="#ffffccf5" labelFloat="true" layoutX="109.0" layoutY="349.0" onMouseClicked="#passwordText" prefHeight="42.0" prefWidth="350.0" promptText="Enter your password" style="-fx-background-color: #FFFFCC; -fx-background-radius: 9;" unFocusColor="#cccccc00">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXTextField>
+            <JFXCheckBox layoutX="113.0" layoutY="424.0" onAction="#rememberCheckBox" text="Remember me" />
+            <JFXButton fx:id="signInBtn" layoutX="109.0" layoutY="464.0" onAction="#onSignInBtn" prefHeight="42.0" prefWidth="232.0" ripplerFill="#8a8a8a" style="-fx-background-color: #FFFFCC; -fx-border-radius: 20; -fx-background-radius: 20;" text="Sign In" />
+         </children>
+      </AnchorPane>
    </children>
 </StackPane>

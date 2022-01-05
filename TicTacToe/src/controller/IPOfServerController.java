@@ -1,5 +1,7 @@
 package controller;
 
+import client.GameClient;
+import com.jfoenix.controls.JFXButton;
 import helpers.IPValidation;
 import helpers.Navigation;
 import java.io.DataInputStream;
@@ -31,8 +33,6 @@ public class IPOfServerController implements Initializable {
     private Button connectBtn;
     @FXML
     private ImageView backImage;
-    @FXML
-    private ImageView exitImage;
 
     static boolean checkip = false;
     static Socket socket;
@@ -41,10 +41,13 @@ public class IPOfServerController implements Initializable {
     static PrintStream ps;
 
     private final Navigation nav = new Navigation();
+    private GameClient client;
+    @FXML
+    private JFXButton imgBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
 
     @FXML
@@ -58,7 +61,6 @@ public class IPOfServerController implements Initializable {
 
     @FXML
     private void onBackImageClick(MouseEvent event) {
-        System.out.println("clicked.");
         try {
             nav.navigateTo(event, Navigation.MAIN_SCREEN);
         } catch (IOException ex) {
@@ -66,41 +68,33 @@ public class IPOfServerController implements Initializable {
         }
     }
 
-    @FXML
-    private void onExitImageClick(MouseEvent event) {
-    }
-
     public boolean connection(String s) {
 
         if (IPValidation.isValidIPAddress(s)) {
-            try {
-                System.out.println("enter try valip ip");
-                if (socket == null || socket.isClosed()) {
-                    socket = new Socket(s, 9081);
-                    System.out.println("conncet valid ip ");
-                    System.out.println(IPValidation.getIp());
-                    dis = new DataInputStream(socket.getInputStream());
-                    ps = new PrintStream(socket.getOutputStream());
-                }
-
-                return true;
-            } catch (IOException ex) {
-                try {
-                    System.out.println("closing socket in IPOfServerController");
-                    if (socket != null) {
-                        socket.close();
-                        dis.close();
-                        ps.close();
+            System.out.println("enter try valip ip");
+            if (socket == null || socket.isClosed()) {
+                /* socket = new Socket(s, 9081);
+                System.out.println("conncet valid ip ");
+                System.out.println(IPValidation.getIp());
+                dis = new DataInputStream(socket.getInputStream());
+                ps = new PrintStream(socket.getOutputStream());*/
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                            try {
+                                client = GameClient.getInstactance(s, 5006);
+                            } catch (IOException ex) {
+                                System.out.println("Could not connect");
+                                Logger.getLogger(IPOfServerController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        
                     }
-
-                } catch (IOException ex1) {
-                    Logger.getLogger(IPOfServerController.class.getName()).log(Level.SEVERE, null, ex1);
-                }
-                return false;
+                }).start();
             }
+            return true;
 
         } else {
-            serverIpTextField.setText("Please Enter Valid Ip");
+            serverIpTextField.setPromptText("Please Enter Valid Ip");
             serverIpTextField.selectAll();
             checkip = false;
             return false;
@@ -119,10 +113,10 @@ public class IPOfServerController implements Initializable {
             if (conn) {
                 checkip = true;
 
-                System.out.println("socket is " + socket.isConnected() + " from Ip server controller");
+                //System.out.println("socket is " + socket.isConnected() + " from Ip server controller");
                 nav.navigateTo(event, Navigation.LOGIN_SCREEN);
             } else {
-                serverIpTextField.setText("You entered a wrong ip please try again");
+                serverIpTextField.setPromptText("You entered a wrong ip please try again");
                 serverIpTextField.selectAll();
 
             }

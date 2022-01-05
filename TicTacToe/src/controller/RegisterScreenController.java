@@ -1,12 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import client.GameClient;
 import client.interfaces.SignUpInterface;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
@@ -16,7 +15,6 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -29,49 +27,43 @@ import models.Player;
  */
 public class RegisterScreenController implements Initializable, SignUpInterface {
 
-    Navigation navigator = new Navigation();
-    private Player player;
     @FXML
     private AnchorPane loginStage;
     @FXML
-    private TextField passwordText;
-    @FXML
-    private TextField emailText;
-    @FXML
     private ImageView backImage;
-    @FXML
-    private TextField usernameText;
     @FXML
     private ImageView registerImage;
     @FXML
-    private TextField confirmPassText;
-
+    private JFXTextField usernameTxt;
+    @FXML
+    private JFXButton imgBtn;
+    @FXML
+    private JFXPasswordField passwordTxt;
+    @FXML
+    private JFXPasswordField confirmPasswordTxt;
+    
+    private final Navigation navigator = new Navigation();
+    private Player player;
+    @FXML
+    private JFXButton signUpBtn;
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         registerImage.setImage(new Image("/Gallary/loginImage.png"));
-        confirmPassText.setFocusTraversable(false);
-        passwordText.setFocusTraversable(false);
+        confirmPasswordTxt.setFocusTraversable(false);
+        passwordTxt.setFocusTraversable(false);
     }
 
-    @FXML
     private void passwordText(MouseEvent event) {
-        passwordText.clear();
+        passwordTxt.clear();
     }
 
-    @FXML
-    private void emailText(MouseEvent event) {
-        emailText.clear();
-    }
 
-    @FXML
-    private void policyCheckBox(ActionEvent event) {
-    }
 
-    @FXML
     private void signUpBtn(ActionEvent event) {
         player = new Player();
-        player.setPassword(passwordText.getText());
-        player.setUserName(usernameText.getText());
+        player.setPassword(passwordTxt.getText());
+        player.setUserName(usernameTxt.getText());
         try {
             GameClient client = GameClient.getInstactance("10.178.240.229", 3333);
             client.sendRequest(player);
@@ -99,18 +91,33 @@ public class RegisterScreenController implements Initializable, SignUpInterface 
         }
     }
 
-    @FXML
     private void usernameText(MouseEvent event) {
-        usernameText.clear();
+        usernameTxt.clear();
     }
 
-    @FXML
     private void confirmPasswordText(MouseEvent event) {
-        confirmPassText.clear();
+        confirmPasswordTxt.clear();
     }
 
     @Override
     public void onStateRecive(Player player) {
+        
+    }
+
+    @FXML
+    private void onUsernameTxtAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void onPasswordTxtAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void onConfirmPasswordTxtAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void onSignUp(ActionEvent event) {
         
     }
 

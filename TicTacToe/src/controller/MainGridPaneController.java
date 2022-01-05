@@ -3,6 +3,7 @@ package controller;
 import client.GameClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import helpers.GameRecorder;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +25,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
+import models.Common;
 import models.GameSession;
+import models.Player;
+
 import models.PlayerMove;
 
 /**
@@ -106,12 +110,6 @@ public class MainGridPaneController implements Initializable {
     private JFXButton RematchBtn;
     @FXML
     private JFXButton CancelBtn;
-    private JFXDialog loserDialog;
-    private JFXButton RematchButton;
-    private JFXButton CancelButton;
-    private JFXDialog drawDialog;
-    private JFXButton rematchButton;
-    private JFXButton cancelButton;
     @FXML
     private JFXDialog getPlayerNameDialog;
     @FXML
@@ -147,13 +145,10 @@ public class MainGridPaneController implements Initializable {
     private Line line;
     private boolean isGameActive = true;
     private final Navigation navigator = new Navigation();
-    private GameSession gameSession = new GameSession();
+    private GameSession gameSession = new GameSession(new Player("hamda"), new Player("ali"));
     private GameClient client;
     private Random random = new Random();
     private int randomNumber;
-
-    private String ip = "192.168.1.254";
-    private int port = 5006;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -264,6 +259,7 @@ public class MainGridPaneController implements Initializable {
             }
         }
         checkState();
+
     }
 
     private void removeLine() {
@@ -493,15 +489,15 @@ public class MainGridPaneController implements Initializable {
             winnerName.setText("Player 1 Winner");
             winnerDialog.show();
             gamePane.setDisable(true);
-
+            GameRecorder rec = new GameRecorder();
+            rec.writer(gameSession);
         } else if (secondWinner) {
             if (isAIMode) {
                 playerTwoScore++;
                 playerTwoScoreLbl.setText("" + playerTwoScore);
                 playerOneScoreLbl.setText("" + playerOneScore);
                 isGameActive = !isGameActive;
-                ///TODO: preview winner name
-
+                //TODO: preview winner name
                 winnerName.setText("YOU LOST");
                 winnerImage.setImage(new Image("Gallary/loser.gif"));
                 winnerDialog.show();
@@ -518,7 +514,7 @@ public class MainGridPaneController implements Initializable {
 
                 gamePane.setDisable(true);
             }
-
+            
         } else {
             if ((isFullGrid())) {
                 gamePane.setDisable(true);
@@ -528,6 +524,7 @@ public class MainGridPaneController implements Initializable {
                 System.out.println("It's a Draw");
 
                 isGameActive = !isGameActive;
+
             }
         }
     }
@@ -590,7 +587,7 @@ public class MainGridPaneController implements Initializable {
         this.isItOnlineGame = isItOnlineGame;
         if (isGameActive) {
             try {
-                client = GameClient.getInstactance(ip, port);
+                client = GameClient.getInstactance(Common.IP, Common.PORT);
             } catch (IOException ex) {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }

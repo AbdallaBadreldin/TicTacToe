@@ -3,19 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/iTi-Intake%2042/JavaSE/Final%20Project/TicTacToe/src/controller/IPOfServerController.java</file>
-            <file>file:/D:/iTi-Intake%2042/JavaSE/Final%20Project/TicTacToe/src/controller/LoginScreenController.java</file>
-            <file>file:/D:/iTi-Intake%2042/JavaSE/Final%20Project/TicTacToe/src/helpers/IPValidation.java</file>
-=======
-            <file>file:/D:/New%20folder/TicTacToe/TicTacToe/src/controller/SplashScrennController.java</file>
-            <file>file:/D:/New%20folder/TicTacToe/TicTacToe/src/controller/MainGridPaneController.java</file>
-            <file>file:/D:/New%20folder/TicTacToe/TicTacToe/src/controller/RegisterScreenController.java</file>
-            <file>file:/D:/New%20folder/TicTacToe/TicTacToe/src/controller/OnlinePlayersController.java</file>
-            <file>file:/D:/New%20folder/TicTacToe/TicTacToe/src/view/onlinePlayers.fxml</file>
-            <file>file:/D:/New%20folder/TicTacToe/TicTacToe/src/view/MainGridPane.fxml</file>
-            <file>file:/D:/New%20folder/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
->>>>>>> b63e4a608ee21ac66d2e29825da61e7ca29e20e0
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/helpers/Navigation.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/controller/IPOfServerController.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/client/GameClient.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/view/MainScreen.fxml</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/view/MainGridPane.fxml</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/models/ListOfRecorders.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/helpers/GameRecorder.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/controller/RecordesScreenController.java</file>
+            <file>file:/C:/Users/Abdo/Documents/ITI/Java/Project/TicTacToe/TicTacToe/src/controller/MainGridPaneController.java</file>
         </group>
     </open-files>
 </project-private>

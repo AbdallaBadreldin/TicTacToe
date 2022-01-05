@@ -2,30 +2,42 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IPOfServerController">
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.IPOfServerController">
    <children>
-      <TextField fx:id="serverIpTextField" layoutX="330.0" layoutY="342.0" prefHeight="38.0" prefWidth="338.0" promptText="Enter ip here...." style="-fx-background-color: #FFFFCC;" />
-      <ImageView fitHeight="148.0" fitWidth="164.0" layoutX="425.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Gallary/server.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="backImage" fitHeight="55.0" fitWidth="79.0" layoutX="23.0" layoutY="14.0" onMouseClicked="#onBackImageClick" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Gallary/back_btn.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="exitImage" fitHeight="55.0" fitWidth="79.0" layoutX="912.0" layoutY="14.0" onMouseClicked="#onExitImageClick" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Gallary/exit.png" />
-         </image>
-      </ImageView>
-      <JFXButton fx:id="connectBtn" layoutX="387.0" layoutY="422.0" onMouseClicked="#onConnectBtnClick" prefHeight="42.0" prefWidth="224.0" ripplerFill="#8a8a8a" style="-fx-background-color: #FFFFCC; -fx-border-radius: 20; -fx-background-radius: 20;" text="Connect" />
-      <JFXTextField focusColor="#ffffff00" focusTraversable="false" layoutX="365.0" layoutY="525.0" prefHeight="42.0" prefWidth="268.0" promptText="Enter server ip here" style="-fx-background-color: #FFFFCC; -fx-background-radius: 20;" unFocusColor="#ffffff01" />
+      <AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D2691E;">
+         <children>
+            <ImageView fitHeight="148.0" fitWidth="164.0" layoutX="425.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Gallary/server.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="connectBtn" layoutX="387.0" layoutY="422.0" onMouseClicked="#onConnectBtnClick" prefHeight="42.0" prefWidth="224.0" ripplerFill="#8a8a8a" style="-fx-background-color: #FFFFCC; -fx-border-radius: 20; -fx-background-radius: 20;" text="Connect" />
+            <JFXTextField fx:id="serverIpTextField" cache="true" focusColor="#ffffccf5" labelFloat="true" layoutX="330.0" layoutY="350.0" prefHeight="42.0" prefWidth="350.0" promptText="Enter server ip here" style="-fx-background-color: #FFFFCC; -fx-background-radius: 9;" unFocusColor="#cccccc00">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXTextField>
+            <StackPane layoutX="36.0" layoutY="29.0">
+               <children>
+                  <ImageView fitHeight="42.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Gallary/back_btn.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="imgBtn" onMouseClicked="#onBackImageClick" prefHeight="67.0" prefWidth="75.0" style="-fx-border-radius: 50; -fx-background-radius: 50;" />
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>

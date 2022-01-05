@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -13,15 +16,17 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Text>
-        <ImageView fx:id="backImg" fitHeight="48.0" fitWidth="46.0" layoutX="27.0" layoutY="21.0" onMouseClicked="#onBackImageClick" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../Gallary/back_btn.png" />
-            </image>
-        </ImageView>
-        <ImageView fx:id="exitImg" fitHeight="32.0" fitWidth="35.0" layoutX="945.0" layoutY="29.0" onMouseClicked="#onExitImageClick" preserveRatio="true">
-            <image>
-                <Image url="@../Gallary/exit.png" />
-            </image>
-        </ImageView>
+      <StackPane layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <ImageView fx:id="backImg" fitHeight="42.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Gallary/back_btn.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="imgBtn" onAction="#onBackBtnClick" prefHeight="67.0" prefWidth="75.0" style="-fx-border-radius: 50; -fx-background-radius: 50;" />
+         </children>
+      </StackPane>
+      <ListView fx:id="listView" layoutX="223.0" layoutY="86.0" prefHeight="417.0" prefWidth="980.0" AnchorPane.bottomAnchor="97.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="86.0" />
+      <JFXButton fx:id="watchBtn" layoutX="408.0" layoutY="532.0" onAction="#onWatchBtnAction" prefHeight="42.0" prefWidth="201.0" style="-fx-background-radius: 10; -fx-background-radius: 10; -fx-background-color: white;" text="Watch" />
     </children>
 </AnchorPane>

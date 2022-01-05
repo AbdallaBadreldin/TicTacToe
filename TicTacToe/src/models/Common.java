@@ -14,5 +14,5 @@ public class Common {
     public static String IP = "192.168.1.5";
     public static int PORT = 3333;
     public static Player signedInPlayer;
-    
+    public static GameSession PREV_SESSION;
 }

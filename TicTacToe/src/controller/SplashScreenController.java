@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 
@@ -14,7 +19,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -23,29 +27,39 @@ import javafx.stage.StageStyle;
  *
  * @author Radwa
  */
-public class SplashScrennController extends Thread implements Initializable, Runnable {
-       
-
-
-    @FXML
-    private BorderPane splashScreen;
-    ImageView XOSplash = new ImageView();
-
+public class SplashScreenController extends Thread implements Initializable, Runnable  {
+    
     private Stage stage;
     private Thread thread;
     private Scene scene;
+
     @FXML
     private ImageView splashImage;
+    @FXML
+    private ImageView img1;
+    @FXML
+    private ImageView img3;
+    @FXML
+    private ImageView img2;
+    @FXML
+    private ImageView img4;
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        img1.setImage(new Image("/Gallary/img3.png"));
+        img2.setImage(new Image("/Gallary/img2.png"));
+        img3.setImage(new Image("/Gallary/img4.png"));
+        img4.setImage(new Image("/Gallary/img1.jfif"));
 
-        splashImage.setImage(new Image("/Gallary/splashVideo.gif"));
 
-    }
 
-    public SplashScrennController() {
+       
+    }    
+     public SplashScreenController() {
+         
         stage = new Stage();
 
     }
@@ -62,6 +76,7 @@ public class SplashScrennController extends Thread implements Initializable, Run
 
     public void startScreen() {
         try {
+        
             start();
             stage.initStyle(StageStyle.UNDECORATED);
             Parent root = FXMLLoader.load(getClass().getResource("/view/SplashScreen.fxml"));
@@ -74,4 +89,5 @@ public class SplashScrennController extends Thread implements Initializable, Run
 
     }
 
+    
 }

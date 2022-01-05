@@ -12,11 +12,14 @@
             <Image url="@../Gallary/main.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="recImage" fitHeight="63.0" fitWidth="68.0" layoutX="907.0" layoutY="507.0" onMouseClicked="#onRecClick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="recImage" fitHeight="63.0" fitWidth="68.0" layoutX="904.0" layoutY="614.0" onMouseClicked="#onRecClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Gallary/rec_image.png" />
          </image>
       </ImageView>
+       <ImageView fx:id="img2" fitHeight="150.0" fitWidth="200.0" layoutX="47.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img3" fitHeight="150.0" fitWidth="200.0" layoutX="63.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img1" fitHeight="150.0" fitWidth="200.0" layoutX="757.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
       <JFXButton fx:id="playerVsAIBtn" layoutX="350.0" layoutY="392.0" onAction="#playerVsAIBtnAction" prefHeight="42.0" prefWidth="300.0" ripplerFill="#8a8a8a" style="-fx-background-color: #FFFFCC; -fx-border-radius: 20; -fx-background-radius: 20;" text="Player Vs AI" />
       <JFXButton fx:id="playerVsPlayerBtn" layoutX="350.0" layoutY="465.0" onAction="#playerVsPlayerBtnAction" prefHeight="42.0" prefWidth="300.0" ripplerFill="#8a8a8a" style="-fx-background-color: #FFFFCC; -fx-border-radius: 20; -fx-background-radius: 20;" text="Player Vs Player" />
       <JFXButton fx:id="playerOnlineBtn" layoutX="350.0" layoutY="539.0" onAction="#playerOnlineBtnAction" prefHeight="42.0" prefWidth="300.0" ripplerFill="#8a8a8a" style="-fx-background-color: #FFFFCC; -fx-border-radius: 20; -fx-background-radius: 20;" text="Playing Online" />
