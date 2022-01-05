@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXDialog;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -144,7 +146,7 @@ public class MainGridPaneController implements Initializable {
     private boolean isPlayerTurn = true;
     private boolean isPcTurn = false;
     private int XOCounter = 0;
-    private Line line;
+    private List<Line> arrayLine;
     private boolean isGameActive = true;
     private final Navigation navigator = new Navigation();
     private GameSession gameSession = new GameSession();
@@ -152,8 +154,8 @@ public class MainGridPaneController implements Initializable {
     private Random random = new Random();
     private int randomNumber;
 
-    private String ip = "192.168.1.5";
-    private int port = 3333;
+    private String ip = "192.168.1.5"; //needs attention
+    private int port = 3333;//another attention here
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -164,6 +166,7 @@ public class MainGridPaneController implements Initializable {
         getPlayerNameDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         getPlayerNameDialog.setDialogContainer(root);
         playerEditText.setFocusTraversable(false);
+        arrayLine = new ArrayList<Line>();
         LeaveBtn.setOnAction((event) -> {
             try {
                 navigator.navigateTo(event, Navigation.MAIN_SCREEN);
@@ -198,9 +201,7 @@ public class MainGridPaneController implements Initializable {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
-        
-       
+
         cancel.setOnAction((e) -> getPlayerNameDialog.close());
         addLabelArray();
 
@@ -219,7 +220,6 @@ public class MainGridPaneController implements Initializable {
 
     }
 
-
     @FXML
     private void onBackClick(MouseEvent event) {
         newDialog.show();
@@ -236,7 +236,7 @@ public class MainGridPaneController implements Initializable {
         } else if (isItOnlineGame) {
             try {
                 client.sendRequest(returnMove(label));
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -270,7 +270,10 @@ public class MainGridPaneController implements Initializable {
     }
 
     private void removeLine() {
-        mainPane.getChildren().remove(line);
+        for (int i = 0; i < arrayLine.size(); i++) {
+            mainPane.getChildren().remove(arrayLine.get(i));
+        }
+        arrayLine.clear();
     }
 
     private void setLabelsEnable() {
@@ -309,6 +312,7 @@ public class MainGridPaneController implements Initializable {
     }
 
     private void drawLine(Label b1, Label b2) {
+
         Bounds bound1 = b1.localToScene(b1.getBoundsInLocal());
         Bounds bound2 = b2.localToScene(b2.getBoundsInLocal());
         double x1, y1, x2, y2;
@@ -316,11 +320,10 @@ public class MainGridPaneController implements Initializable {
         y1 = (bound1.getMinY() + bound1.getMaxY()) / 2;
         x2 = (bound2.getMinX() + bound2.getMaxX()) / 2;
         y2 = (bound2.getMinY() + bound2.getMaxY()) / 2;
-        line = new Line(x1, y1, x2, y2);
+        Line line = new Line(x1, y1, x2, y2);
+        arrayLine.add(line);
         mainPane.getChildren().add(line);
     }
-
-
 
     private String returnSymbol() {
         //  String symbol;
@@ -364,8 +367,6 @@ public class MainGridPaneController implements Initializable {
                 && !label1.getText().equals("")) {
 
             drawLine(label1, label3);
-           
-
 
             if (label1.getText().equals("X")) {
                 firstWinner = true;
@@ -377,7 +378,6 @@ public class MainGridPaneController implements Initializable {
                 && label4.getText().equals(label6.getText())
                 && !label4.getText().equals("")) {
             drawLine(label4, label6);
-
 
             if (label4.getText().equals("X")) {
                 firstWinner = true;
@@ -391,7 +391,6 @@ public class MainGridPaneController implements Initializable {
                 && label7.getText().equals(label9.getText())
                 && !label9.getText().equals("")) {
             drawLine(label7, label9);
-
 
             if (label9.getText().equals("X")) {
                 System.out.println("x is winning");
@@ -412,7 +411,6 @@ public class MainGridPaneController implements Initializable {
 
             drawLine(label1, label7);
 
-
             if (label1.getText().equals("X")) {
                 firstWinner = true;
             } else {
@@ -423,8 +421,6 @@ public class MainGridPaneController implements Initializable {
                 && label2.getText().equals(label8.getText())
                 && !label2.getText().equals("")) {
             drawLine(label2, label8);
-            
-
 
             if (label2.getText().equals("X")) {
                 firstWinner = true;
@@ -437,7 +433,7 @@ public class MainGridPaneController implements Initializable {
                 && label3.getText().equals(label9.getText())
                 && !label3.getText().equals("")) {
             drawLine(label3, label9);
-             
+
             if (label3.getText().equals("X")) {
                 System.out.println("x is winning");
                 firstWinner = true;
@@ -456,7 +452,6 @@ public class MainGridPaneController implements Initializable {
                 && !label1.getText().equals("")) {
 
             drawLine(label1, label9);
-          
 
             if (label1.getText().equals("X")) {
                 firstWinner = true;
@@ -468,7 +463,6 @@ public class MainGridPaneController implements Initializable {
                 && label3.getText().equals(label7.getText())
                 && !label3.getText().equals("")) {
             drawLine(label3, label7);
-            
 
             if (label3.getText().equals("X")) {
                 firstWinner = true;
@@ -506,7 +500,7 @@ public class MainGridPaneController implements Initializable {
             winnerName.setText("Player 1 Winner");
             winnerDialog.show();
             gamePane.setDisable(true);
-           
+
         } else if (secondWinner) {
             if (isAIMode) {
                 playerTwoScore++;
@@ -523,8 +517,8 @@ public class MainGridPaneController implements Initializable {
                 playerTwoScoreLbl.setText("" + playerTwoScore);
                 playerOneScoreLbl.setText("" + playerOneScore);
                 isGameActive = !isGameActive;
-                 winnerImage.setImage(new Image("Gallary/congrats.gif"));
-                 winnerName.setText("Player 2 Winner");
+                winnerImage.setImage(new Image("Gallary/congrats.gif"));
+                winnerName.setText("Player 2 Winner");
                 winnerDialog.show();
 
                 gamePane.setDisable(true);
@@ -533,8 +527,8 @@ public class MainGridPaneController implements Initializable {
         } else {
             if ((isFullGrid())) {
                 gamePane.setDisable(true);
-                
-                 winnerName.setText("****Draw****");
+
+                winnerName.setText("****Draw****");
                 winnerDialog.show();
                 System.out.println("It's a Draw");
 
