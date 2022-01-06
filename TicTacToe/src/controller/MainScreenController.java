@@ -57,7 +57,6 @@ public class MainScreenController implements Initializable {
     @FXML
     private JFXButton Easy;
 
-
     /**
      * Initializes the controller class.
      */
@@ -66,29 +65,28 @@ public class MainScreenController implements Initializable {
         img1.setImage(new Image("/Gallary/img4.png"));
         img2.setImage(new Image("/Gallary/img2.png"));
         img3.setImage(new Image("/Gallary/img3.png"));
+        
 
         levelDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         levelDialog.setDialogContainer(root);
         Easy.setOnAction((event) -> {
             try {
-                navigator.navigateTo(event, Navigation.PLAYER_VS_AI);
+                levelDialog.close();
+                navigator.navigateTo(event, Navigation.MAIN_GRID_PAIN);
             } catch (IOException ex) {
                 Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         });
         Hard.setOnAction((e) -> {
             try {
+                levelDialog.close();
                 navigator.navigateTo(e, Navigation.HARD_MODE);
             } catch (IOException ex) {
                 Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
+
         });
-
-
-        
-
-
 
     }
 
@@ -100,9 +98,8 @@ public class MainScreenController implements Initializable {
     @FXML
     private void playerVsAIBtnAction(ActionEvent event) {
 
-    levelDialog.show();
+        levelDialog.show();
 
-       
     }
 
     @FXML
