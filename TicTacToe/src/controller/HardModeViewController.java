@@ -29,7 +29,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import models.Common;
 import models.DiffcultLevel.Move;
 import models.DiffcultLevel;
 
@@ -185,6 +187,8 @@ public class HardModeViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         playerOneImageView.setImage(new Image("/Gallary/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/Gallary/ai-avatar.png"));
+        playerOneScoreLbl.setText("" + Common.PLAYER_ONE_SCORE);
+            playerTwoScoreLbl.setText("" + Common.PLAYER_TWO_SCORE);
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
         newDialog.setDialogContainer(root);
         getPlayerNameDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
@@ -227,6 +231,8 @@ public class HardModeViewController implements Initializable {
         CancelBtn.setOnAction((e) -> {
             try {
                 navigator.navigateTo(e, Navigation.MAIN_SCREEN);
+                Common.PLAYER_ONE_SCORE=0;
+                Common.PLAYER_TWO_SCORE=0;
                 newDialog.close();
             } catch (IOException ex) {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
@@ -380,6 +386,9 @@ public class HardModeViewController implements Initializable {
         x2 = (bound2.getMinX() + bound2.getMaxX()) / 2;
         y2 = (bound2.getMinY() + bound2.getMaxY()) / 2;
         line = new Line(x1, y1, x2, y2);
+        line.setFill(Color.rgb(255, 103, 1));
+        line.setStroke(Color.rgb(255, 103, 1));
+        line.setStrokeWidth(6);
         System.out.println("draw line");
         mainPane.getChildren().add(line);
     }
@@ -516,14 +525,11 @@ public class HardModeViewController implements Initializable {
         checkColumns();
         checkDiagonal();
         if (firstWinner) {
-            score++;
-            playerOneScoreLbl.setText("" + score);
-            playerTwoScoreLbl.setText("" + computerScore);
-            //isGameActive = !isGameActive;
+            Common.PLAYER_ONE_SCORE++;
+            playerOneScoreLbl.setText("" + Common.PLAYER_ONE_SCORE);
+            playerTwoScoreLbl.setText("" + Common.PLAYER_TWO_SCORE);
             winnerImage.setImage(new Image("Gallary/congrats.gif"));
-            ///TODO: preview winner name
-            winnerName.setText("Player 1 Winner");
-            //winnerName.setText(playerEditText.getText());
+            winnerName.setText(playerOneNameLbl.getText());
             winnerDialog.show();
             gamePane.setDisable(true);
 
@@ -532,11 +538,9 @@ public class HardModeViewController implements Initializable {
 
         } else if (secondWinner) {
 
-            computerScore++;
-            playerTwoScoreLbl.setText("" + computerScore);
-            playerOneScoreLbl.setText("" + score);
-            //isGameActive = !isGameActive;
-            //TODO: preview winner name
+            Common.PLAYER_TWO_SCORE++;
+            playerTwoScoreLbl.setText("" + Common.PLAYER_TWO_SCORE);
+            playerOneScoreLbl.setText("" + Common.PLAYER_ONE_SCORE);
             winnerName.setText("YOU LOST");
             winnerImage.setImage(new Image("Gallary/loser.gif"));
             winnerDialog.show();
@@ -553,7 +557,6 @@ public class HardModeViewController implements Initializable {
                 winnerDialog.show();
                 System.out.println("It's a Draw");
 
-                //isGameActive = !isGameActive;
             }
         }
     }

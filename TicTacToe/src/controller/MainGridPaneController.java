@@ -17,8 +17,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -31,7 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import models.Common;
 import models.GameSession;
 import models.Player;
@@ -131,7 +129,7 @@ public class MainGridPaneController implements Initializable {
     @FXML
     private HBox player2HBox;
     @FXML
-    private Label winnerName;
+    private Text winnerName;
     @FXML
     private ImageView editBtn2;
     @FXML
@@ -165,6 +163,8 @@ public class MainGridPaneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         playerOneImageView.setImage(new Image("/Gallary/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/Gallary/player-two-avatar.jpg"));
+        playerTwoScoreLbl.setText("" + playerTwoScore);
+        playerOneScoreLbl.setText("" + playerOneScore);
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
         newDialog.setDialogContainer(root);
         getPlayerNameDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
@@ -542,7 +542,7 @@ public class MainGridPaneController implements Initializable {
             playerTwoScoreLbl.setText("" + playerTwoScore);
             isGameActive = !isGameActive;
             winnerImage.setImage(new Image("Gallary/congrats.gif"));
-            winnerName.setText("Player 1 Winner");
+            winnerName.setText(playerOneNameLbl.getText());
             winnerDialog.show();
             gamePane.setDisable(true);
             if (!isItPrev) {
@@ -569,7 +569,7 @@ public class MainGridPaneController implements Initializable {
                 playerOneScoreLbl.setText("" + playerOneScore);
                 isGameActive = !isGameActive;
                 winnerImage.setImage(new Image("Gallary/congrats.gif"));
-                winnerName.setText("Player 2 Winner");
+                winnerName.setText(playerTwoNameLbl.getText());
                 winnerDialog.show();
                 gamePane.setDisable(true);
                 if (!isItPrev) {
@@ -581,7 +581,6 @@ public class MainGridPaneController implements Initializable {
             if ((isFullGrid())) {
                 gamePane.setDisable(true);
                 winnerName.setText("****Draw****");
-                winnerImage.setImage(new Image("Gallary/white_background.jpg"));
                 winnerDialog.show();
                 System.out.println("It's a Draw");
                 isGameActive = !isGameActive;
