@@ -153,16 +153,21 @@ public class MainGridPaneController implements Initializable {
     private List<Line> arrayLine;
     private boolean isGameActive = true;
     private final Navigation navigator = new Navigation();
-    private GameSession gameSession = new GameSession(new Player("hamda"), new Player("ali"));
+    private GameSession gameSession;
     private GameClient client;
     private Random random = new Random();
     private int randomNumber;
     public static boolean isItPrev;
+    private Player player1;
+    private Player player2;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playerOneImageView.setImage(new Image("/Gallary/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/Gallary/player-two-avatar.jpg"));
+        player1 = new Player(playerOneNameLbl.getText());
+        player2 = new Player(playerTwoNameLbl.getText());
+        gameSession = new GameSession(player1, player2);
         playerTwoScoreLbl.setText("" + playerTwoScore);
         playerOneScoreLbl.setText("" + playerOneScore);
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
@@ -196,11 +201,16 @@ public class MainGridPaneController implements Initializable {
             }
         });
         confirm.setOnAction((e) -> {
+            String updatedName;
             if (isPlayer1BtnEditeClilcked) {
-                playerOneNameLbl.setText(playerEditText.getText());
+                updatedName = playerEditText.getText();
+                playerOneNameLbl.setText(updatedName);
+                player1.setUserName(updatedName);
                 isPlayer1BtnEditeClilcked = !isPlayer1BtnEditeClilcked;
             } else {
-                playerTwoNameLbl.setText(playerEditText.getText());
+                updatedName = playerEditText.getText();
+                playerTwoNameLbl.setText(updatedName);
+                player2.setUserName(updatedName);
             }
             getPlayerNameDialog.close();
             playerEditText.setText("");
@@ -426,10 +436,8 @@ public class MainGridPaneController implements Initializable {
 
             if (label4.getText().equals("X")) {
                 firstWinner = true;
-
             } else {
                 secondWinner = true;
-
             }
             winner = true;
         } else if (label7.getText().equals(label8.getText())
@@ -543,9 +551,10 @@ public class MainGridPaneController implements Initializable {
             isGameActive = !isGameActive;
             winnerImage.setImage(new Image("Gallary/congrats.gif"));
             winnerName.setText(playerOneNameLbl.getText());
-            winnerDialog.show();
             gamePane.setDisable(true);
             if (!isItPrev) {
+                gameSession.createGameName();
+                winnerDialog.show();
                 GameRecorder rec = new GameRecorder();
                 rec.writer(gameSession);
             }
@@ -557,9 +566,10 @@ public class MainGridPaneController implements Initializable {
                 isGameActive = !isGameActive;
                 winnerName.setText("YOU LOST");
                 winnerImage.setImage(new Image("Gallary/loser.gif"));
-                winnerDialog.show();
                 gamePane.setDisable(true);
                 if (!isItPrev) {
+                    gameSession.createGameName();
+                    winnerDialog.show();
                     GameRecorder rec = new GameRecorder();
                     rec.writer(gameSession);
                 }
@@ -570,9 +580,10 @@ public class MainGridPaneController implements Initializable {
                 isGameActive = !isGameActive;
                 winnerImage.setImage(new Image("Gallary/congrats.gif"));
                 winnerName.setText(playerTwoNameLbl.getText());
-                winnerDialog.show();
                 gamePane.setDisable(true);
                 if (!isItPrev) {
+                    gameSession.createGameName();
+                    winnerDialog.show();
                     GameRecorder rec = new GameRecorder();
                     rec.writer(gameSession);
                 }
@@ -581,10 +592,11 @@ public class MainGridPaneController implements Initializable {
             if ((isFullGrid())) {
                 gamePane.setDisable(true);
                 winnerName.setText("****Draw****");
-                winnerDialog.show();
                 System.out.println("It's a Draw");
                 isGameActive = !isGameActive;
                 if (!isItPrev) {
+                    gameSession.createGameName();
+                    winnerDialog.show();
                     GameRecorder rec = new GameRecorder();
                     rec.writer(gameSession);
                 }
@@ -660,11 +672,15 @@ public class MainGridPaneController implements Initializable {
     Thread thread = new Thread(() -> {
         try {
             setLabelState(true);
+            gameSession = new GameSession(Common.PREV_SESSION.getPlayerOne(),
+                    Common.PREV_SESSION.getPlayerOne());
             for (PlayerMove move : Common.PREV_SESSION.getPlayersMoves()) {
                 if (move != null) {
                     Thread.sleep(2000);
                     Platform.runLater(() -> {
+                        gameSession.addMove(move);
                         drawPreviweGame(move);
+                        checkState();
                     });
                 } else {
                     Thread.sleep(2000);
@@ -674,7 +690,6 @@ public class MainGridPaneController implements Initializable {
                         cancelBtn.setVisible(false);
                         newDialog.show();
                     });
-
                     break;
                 }
             }
