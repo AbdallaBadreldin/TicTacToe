@@ -26,8 +26,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import models.DiffcultLevel.Move;
-import models.DiffcultLevel;
+import model.DiffcultLevel.Move;
+import model.DiffcultLevel;
 
 /**
  * FXML Controller class

@@ -15,9 +15,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import models.Common;
-import models.GameSession;
-import models.ListOfRecorders;
+import model.Common;
+import model.GameSession;
+import model.ListOfRecorders;
 
 /**
  * FXML Controller class

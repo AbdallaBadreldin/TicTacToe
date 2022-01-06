@@ -3,45 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package model;
 
 import java.io.Serializable;
 
 /**
  *
- * @author Radwa
+ * @author Mahmoud
  */
-public class PlayerMove implements Serializable{
-    
-    private static final long serialVersionUID = 6529682930267757690L;
+public class PlayerMoveOnlineMode implements Serializable {
 
+    private static final long serialVersionUID = 6529685098267757691L;
     private int x;
     private int y;
-    private boolean isX;
-    private boolean isPlayerOneMove;
+    private boolean isX; // for drawing in UI 
 
-    public PlayerMove() {
-    }
-
-    public PlayerMove(int x, int y, boolean isX, boolean isPlayerOneMove) {
+    public PlayerMoveOnlineMode(int x, int y, boolean isX, boolean isPlayerOneMove) {
         this.x = x;
         this.y = y;
         this.isX = isX;
-        this.isPlayerOneMove = isPlayerOneMove;
     }
 
-    public boolean isIsPlayerOneMove() {
-        return isPlayerOneMove;
-    }
-
-    public void setIsPlayerOneMove(boolean isPlayerOneMove) {
-        this.isPlayerOneMove = isPlayerOneMove;
-    }
-
-    public PlayerMove(int x, int y, boolean isX) {
+    public PlayerMoveOnlineMode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.isX = isX;
     }
 
     public int getX() {
@@ -70,6 +55,7 @@ public class PlayerMove implements Serializable{
 
     @Override
     public String toString() {
-        return "X : " + x + ",Y : " + y + (isX ? " X " : " O ");
+        return "PlayerMove{" + "x=" + x + ", y=" + y + ", isX=" + isX + ", isPlayerOneMove=" + '}';
     }
+    
 }

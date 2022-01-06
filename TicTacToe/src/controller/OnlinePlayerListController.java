@@ -5,57 +5,93 @@
  */
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
  *
- * @author Radwa
+ * @author Mahmoud
  */
 public class OnlinePlayerListController implements Initializable {
 
     @FXML
-    private ListView<?> playersList;
-    FXMLLoader fxml;
-    
-    private ArrayList<FXMLLoader>onlinePlayers;
-    private ObservableList playersObservableList;
-    PlayersListItemsController listItems;
-    
+    private AnchorPane anchorpane;
+    @FXML
+    private Label usernametxt;
+    @FXML
+    private Label scoretxt;
+    @FXML
+    private AnchorPane middanc;
+    @FXML
+    private Label emailtxt;
+    @FXML
+    private AnchorPane player2anc;
+    @FXML
+    private Label player2lbl;
+    @FXML
+    private AnchorPane player1anc;
+    @FXML
+    private Label player1lbl;
+    @FXML
+    private AnchorPane stateanc;
+    @FXML
+    private Label statelbl;
+    @FXML
+    private AnchorPane playboard;
+    @FXML
+    private GridPane grid;
+    @FXML
+    private Button btn5;
+    @FXML
+    private Button btn4;
+    @FXML
+    private Button btn2;
+    @FXML
+    private Button btn7;
+    @FXML
+    private Button btn1;
+    @FXML
+    private Button btn3;
+    @FXML
+    private Button btn9;
+    @FXML
+    private Button btn6;
+    @FXML
+    private Button btn8;
+    @FXML
+    private Pane paneLabel;
+    @FXML
+    private Label currentLabel;
+    @FXML
+    private ScrollPane scrollpane;
+    @FXML
+    private Button btnWatchGame;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }  
-    private void onlinePlayersList()
-    {
-         playersObservableList=FXCollections.observableArrayList();
-        try {
-           
-            fxml=new FXMLLoader(getClass().getResource("/view/PlayersListItems.fxml"));
-            listItems=fxml.getController();
-            onlinePlayers.add(fxml.load());
-            playersObservableList.addAll(onlinePlayers);
-                       
-        } catch (IOException ex) {
-            Logger.getLogger(OnlinePlayerListController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+    }    
+
+    @FXML
+    private void buttonPressed(ActionEvent event) {
     }
 
+    @FXML
+    private void watchGame(ActionEvent event) {
+    }
+
+    @FXML
+    private void backToMainPage(ActionEvent event) {
+    }
     
 }

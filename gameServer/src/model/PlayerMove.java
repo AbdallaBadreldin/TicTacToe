@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Ghaly
+ * @author Mahmoud
  */
 public class PlayerMove implements Serializable {
 
@@ -66,6 +66,8 @@ public class PlayerMove implements Serializable {
     public void setIsX(boolean isX) {
         this.isX = isX;
     }
+    
+    
 
     @Override
     public String toString() {

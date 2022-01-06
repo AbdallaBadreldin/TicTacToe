@@ -1,5 +1,5 @@
 
-package models;
+package model;
 
 import java.io.Serializable;
 
@@ -8,6 +8,7 @@ import java.io.Serializable;
  * @author Mahmoud
  */
 public class Player implements Serializable{
+    
     private static final long serialVersionUID = 6529682930267757690L;
     private String userName;
     private String password;
@@ -15,7 +16,13 @@ public class Player implements Serializable{
     private int win;
     private int lose;
     private int draw;
+
+    public Player(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
   
+    
 
 
     public Player(){}

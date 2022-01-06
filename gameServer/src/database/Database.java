@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Player;
+import model.Player;
 import org.apache.derby.jdbc.ClientDriver;
 
 /**
@@ -52,7 +52,7 @@ public class Database {
         }
     }
 
-    public synchronized int getCountOfOfflineUserse() {
+    public synchronized int getCountOfOfflineUsers() {
         try {
             this.pst = con.prepareStatement("select count(*) from player where status = 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet r = pst.executeQuery(); // rs has all data            System.out.println("has next"+r.next());
@@ -277,8 +277,8 @@ public class Database {
                         checkRs.getInt("status"),
                         checkRs.getInt("win"),
                         checkRs.getInt("lose"),
-                        checkRs.getInt("draw"),
-                        checkRs.getInt("totalscore")
+                        checkRs.getInt("draw")
+                        //checkRs.getInt("totalscore")
                 );
             }
 

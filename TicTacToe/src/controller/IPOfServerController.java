@@ -1,24 +1,24 @@
 package controller;
 
-import client.GameClient;
+
 import com.jfoenix.controls.JFXButton;
 import helpers.IPValidation;
 import helpers.Navigation;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.GameOnlineMode;
 
 /**
  * FXML Controller class
@@ -35,13 +35,15 @@ public class IPOfServerController implements Initializable {
     private ImageView backImage;
 
     static boolean checkip = false;
-    static Socket socket;
-    Preferences pref;
-    static DataInputStream dis;
-    static PrintStream ps;
+    static Socket socket = null;
+    static ObjectInputStream objInputStream = null;
+    static ObjectOutputStream objOutputStream = null;
+    static Thread listener;
+
+    private GameOnlineMode game;
 
     private final Navigation nav = new Navigation();
-    private GameClient client;
+    //private GameClient client;
     @FXML
     private JFXButton imgBtn;
 
@@ -73,21 +75,19 @@ public class IPOfServerController implements Initializable {
         if (IPValidation.isValidIPAddress(s)) {
             System.out.println("enter try valip ip");
             if (socket == null || socket.isClosed()) {
-                /* socket = new Socket(s, 9081);
-                System.out.println("conncet valid ip ");
-                System.out.println(IPValidation.getIp());
-                dis = new DataInputStream(socket.getInputStream());
-                ps = new PrintStream(socket.getOutputStream());*/
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                            try {
-                                client = GameClient.getInstactance(s, 5006);
-                            } catch (IOException ex) {
-                                System.out.println("Could not connect");
-                                Logger.getLogger(IPOfServerController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        
+                        try {
+                            socket = new Socket(s, 5006);
+
+                            objOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                            objInputStream = new ObjectInputStream(socket.getInputStream());
+                        } catch (IOException ex) {
+                            System.out.println("Could not connect");
+                            Logger.getLogger(IPOfServerController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
                     }
                 }).start();
             }
@@ -112,8 +112,6 @@ public class IPOfServerController implements Initializable {
             boolean conn = connection(serverIpTextField.getText());
             if (conn) {
                 checkip = true;
-
-                //System.out.println("socket is " + socket.isConnected() + " from Ip server controller");
                 nav.navigateTo(event, Navigation.LOGIN_SCREEN);
             } else {
                 serverIpTextField.setPromptText("You entered a wrong ip please try again");

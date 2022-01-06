@@ -1,6 +1,6 @@
 package controller;
 
-import client.GameClient;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import helpers.GameRecorder;
@@ -27,11 +27,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
-import models.Common;
-import models.GameSession;
-import models.Player;
-
-import models.PlayerMove;
+import model.Common;
+import model.GameSession;
+import model.Player;
+import model.PlayerMove;
 
 /**
  * FXML Controller class
@@ -148,7 +147,7 @@ public class MainGridPaneController implements Initializable {
     private boolean isGameActive = true;
     private final Navigation navigator = new Navigation();
     private GameSession gameSession = new GameSession(new Player("hamda"), new Player("ali"));
-    private GameClient client;
+   
     private Random random = new Random();
     private int randomNumber;
 
@@ -229,12 +228,7 @@ public class MainGridPaneController implements Initializable {
             ((Label) mouseEvent.getSource()).setText(returnSymbol());
 
         } else if (isItOnlineGame) {
-            try {
-                client.sendRequest(returnMove(label));
-
-            } catch (IOException ex) {
-                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           
         } else {
             Label clickedButton = (Label) mouseEvent.getSource();
             if (isGameEnded == false && clickedButton.getText().equals("")) {
@@ -594,11 +588,7 @@ public class MainGridPaneController implements Initializable {
     public void setIsItOnlineGame(boolean isItOnlineGame) {
         this.isItOnlineGame = isItOnlineGame;
         if (isGameActive) {
-            try {
-                client = GameClient.getInstactance(Common.IP, Common.PORT);
-            } catch (IOException ex) {
-                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
         }
     }
 }

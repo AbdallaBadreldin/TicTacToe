@@ -15,12 +15,12 @@ import javafx.stage.Stage;
 public class Navigation {
 
     public final static String PLAYER_VS_AI = "/view/PlayerVsAi.fxml";
-    public final static String PLAYER_ONLINE = "/view/OnlineScreen.fxml";
+    public final static String PLAYER_ONLINE = "/view/OnlinePlayerList.fxml";
     public final static String MAIN_GRID_PAIN = "/view/MainGridPane.fxml";
     public final static String RECORDERS_SCREEN = "/view/RecordesScreen.fxml";
     public final static String MAIN_SCREEN = "/view/MainScreen.fxml";
     public final static String IP_OF_SERVER = "/view/IPOfServer.fxml";
-    public final static String ONLINE_PLAYER = "/view/OnlinePlayers.fxml";
+    //public final static String ONLINE_PLAYER = "/view/OnlinePlayers.fxml";
     public final static String LOGIN_SCREEN = "/view/LoginScreen.fxml";
     public final static String REGISTER_SCREEN = "/view/RegisterScreen.fxml";
     public final static String HARD_Mode_SCREEN = "/view/HardModeView.fxml";
