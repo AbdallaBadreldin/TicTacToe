@@ -643,6 +643,8 @@ public class MainGridPaneController implements Initializable {
 
     public void setIsAIMode(boolean isAIMode) {
         this.isAIMode = isAIMode;
+        editBtn2.setVisible(false);
+        player2HBox.setDisable(true);
     }
 
     @FXML
