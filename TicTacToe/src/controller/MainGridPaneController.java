@@ -26,7 +26,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
 import models.Common;
 import models.GameSession;
 import models.Player;
@@ -151,11 +153,14 @@ public class MainGridPaneController implements Initializable {
     private GameClient client;
     private Random random = new Random();
     private int randomNumber;
+    @FXML
+    private ImageView editBtn2;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        playerOneImageView.setImage(new Image("/resources/player-one-avatar.jpg"));
-        playerTwoImageView.setImage(new Image("/resources/player-two-avatar.jpg"));
+        
+        playerOneImageView.setImage(new Image("/Gallary/player-one-avatar.jpg"));
+        playerTwoImageView.setImage(new Image("/Gallary/player-two-avatar.jpg"));
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
         newDialog.setDialogContainer(root);
         getPlayerNameDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
@@ -237,6 +242,7 @@ public class MainGridPaneController implements Initializable {
             }
         } else {
             Label clickedButton = (Label) mouseEvent.getSource();
+            
             if (isGameEnded == false && clickedButton.getText().equals("")) {
                 XOCounter++;
                 isPlayerTurn = true;
@@ -317,12 +323,14 @@ public class MainGridPaneController implements Initializable {
         x2 = (bound2.getMinX() + bound2.getMaxX()) / 2;
         y2 = (bound2.getMinY() + bound2.getMaxY()) / 2;
         Line line = new Line(x1, y1, x2, y2);
+        line.setFill(Color.rgb(255, 103, 1));
+        line.setStroke(Color.rgb(255, 103, 1));
+        line.setStrokeWidth(6);
         arrayLine.add(line);
         mainPane.getChildren().add(line);
     }
 
     private String returnSymbol() {
-        //  String symbol;
         if (isXSymbol == true) {
             symbol = "X";
         } else {
@@ -497,8 +505,12 @@ public class MainGridPaneController implements Initializable {
             winnerName.setText("Player 1 Winner");
             winnerDialog.show();
             gamePane.setDisable(true);
+
+
+
             GameRecorder rec = new GameRecorder();
             rec.writer(gameSession);
+
         } else if (secondWinner) {
             if (isAIMode) {
                 playerTwoScore++;
@@ -528,6 +540,11 @@ public class MainGridPaneController implements Initializable {
                 gamePane.setDisable(true);
 
                 winnerName.setText("****Draw****");
+
+                winnerImage.setImage(new Image("Gallary/white_background.jpg"));
+
+
+
                 winnerDialog.show();
                 System.out.println("It's a Draw");
 
