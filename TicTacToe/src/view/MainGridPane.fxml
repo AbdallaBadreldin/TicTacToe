@@ -175,7 +175,7 @@
         <JFXDialog fx:id="newDialog">
             <JFXDialogLayout style="-fx-background-color:  #FFFFCC;">
                 <body>
-                    <Label>do you really want to surrender!!</Label>
+                    <Label fx:id="newDialogLabel">do you really want to surrender!!</Label>
                 </body>
                 <actions>
                     <JFXButton fx:id="LeaveBtn" style="-fx-background-color:  #B1E693;">Leave</JFXButton>
@@ -195,7 +195,6 @@
 
                 <ImageView fx:id="winnerImage" fitHeight="200" fitWidth="314" layoutX="210" layoutY="21" pickOnBounds="true" preserveRatio="true">
                     <image>
-                       
                     </image>
                 </ImageView>
                     <Label>Do you want play again?</Label>

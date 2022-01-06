@@ -33,7 +33,6 @@ public class GameRecorder {
             FileWriter fileWriter = new FileWriter(PATH);
             fileWriter.write(strJson);
             fileWriter.close();
-            System.out.println("writing done");
         } catch (IOException ex) {
             Logger.getLogger(RecordesScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -45,7 +44,6 @@ public class GameRecorder {
             if (f.exists() && !f.isDirectory()) {
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH));
                 list = mGson.fromJson(bufferedReader, ListOfRecorders.class);
-                System.out.println("reader no file");
             } else {
 
                 try {
@@ -59,8 +57,6 @@ public class GameRecorder {
                 } catch (IOException ex) {
                     Logger.getLogger(GameRecorder.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                System.out.println("creating file");
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(RecordesScreenController.class.getName()).log(Level.SEVERE, null, ex);

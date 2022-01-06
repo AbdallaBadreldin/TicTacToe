@@ -21,9 +21,10 @@ public class GameSession implements Serializable {
         playersMoves = new PlayerMove[9];
         playerOne = player1;
         playerTwo = player2;
-
         counter = 0;
+    }
 
+    public void createGameName() {
         gameName = playerOne.getUserName()
                 + " vs "
                 + playerTwo.getUserName()

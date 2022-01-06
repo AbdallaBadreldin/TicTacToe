@@ -15,7 +15,7 @@ public class Common {
     public static int PORT = 3333;
     public static Player signedInPlayer;
     public static GameSession PREV_SESSION;
-    public static int PLAYER_ONE_SCORE=0;
-    public static int PLAYER_TWO_SCORE=0;
+    public static int PLAYER_ONE_SCORE = 0;
+    public static int PLAYER_TWO_SCORE = 0;
 
 }

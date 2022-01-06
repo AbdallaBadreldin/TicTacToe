@@ -25,9 +25,6 @@ public class Navigation {
     public final static String REGISTER_SCREEN = "/view/RegisterScreen.fxml";
     public final static String HARD_MODE = "/view/HardModeView.fxml";
 
-
-
-
     private Stage stage;
     private Scene scene;
     private Parent root;
