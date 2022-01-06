@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -128,7 +129,6 @@ public class MainGridPaneController implements Initializable {
     @FXML
     private Label winnerName;
 
-    private Label label = new Label();
     private int playerOneScore = 0;
     private int playerTwoScore = 0;
     private boolean playerTurn = true;
@@ -151,6 +151,7 @@ public class MainGridPaneController implements Initializable {
     private GameClient client;
     private Random random = new Random();
     private int randomNumber;
+    public static boolean isItPrev;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -162,6 +163,25 @@ public class MainGridPaneController implements Initializable {
         getPlayerNameDialog.setDialogContainer(root);
         playerEditText.setFocusTraversable(false);
         arrayLine = new ArrayList<Line>();
+        if (isItPrev) {
+            new Thread(() -> {
+                try {
+                    for (PlayerMove move : Common.PREV_SESSION.getPlayersMoves()) {
+                        if (move != null) {
+                            Thread.sleep(2000);
+                            Platform.runLater(() -> {
+                                drawPreviweGame(move);
+                            });
+                        } else {
+                            System.out.println("show rewatch dialog");
+                            break;
+                        }
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }).start();
+        }
         LeaveBtn.setOnAction((event) -> {
             try {
                 navigator.navigateTo(event, Navigation.MAIN_SCREEN);
@@ -229,12 +249,7 @@ public class MainGridPaneController implements Initializable {
             ((Label) mouseEvent.getSource()).setText(returnSymbol());
 
         } else if (isItOnlineGame) {
-            try {
-                client.sendRequest(returnMove(label));
-
-            } catch (IOException ex) {
-                Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            //TODO: handel the online game logic
         } else {
             Label clickedButton = (Label) mouseEvent.getSource();
             if (isGameEnded == false && clickedButton.getText().equals("")) {
@@ -262,7 +277,6 @@ public class MainGridPaneController implements Initializable {
             }
         }
         checkState();
-
     }
 
     private void removeLine() {
@@ -273,7 +287,6 @@ public class MainGridPaneController implements Initializable {
     }
 
     private void setLabelsEnable() {
-
         label1.setDisable(false);
         label2.setDisable(false);
         label3.setDisable(false);
@@ -354,6 +367,29 @@ public class MainGridPaneController implements Initializable {
             move = new PlayerMove(2, 2, isXSymbol);
         }
         return move;
+    }
+
+    private void drawPreviweGame(PlayerMove move) {
+        isXSymbol = move.isIsX();
+        if (move.getX() == 0 && move.getY() == 0) {
+            label1.setText(returnSymbol());
+        } else if (move.getX() == 0 && move.getY() == 1) {
+            label2.setText(returnSymbol());
+        } else if (move.getX() == 0 && move.getY() == 2) {
+            label3.setText(returnSymbol());
+        } else if (move.getX() == 1 && move.getY() == 0) {
+            label4.setText(returnSymbol());
+        } else if (move.getX() == 1 && move.getY() == 1) {
+            label5.setText(returnSymbol());
+        } else if (move.getX() == 1 && move.getY() == 2) {
+            label6.setText(returnSymbol());
+        } else if (move.getX() == 2 && move.getY() == 0) {
+            label7.setText(returnSymbol());
+        } else if (move.getX() == 2 && move.getY() == 1) {
+            label8.setText(returnSymbol());
+        } else if (move.getX() == 2 && move.getY() == 2) {
+            label9.setText(returnSymbol());
+        }
     }
 
     private void checkRows() {
@@ -522,7 +558,7 @@ public class MainGridPaneController implements Initializable {
 
                 gamePane.setDisable(true);
             }
-            
+
         } else {
             if ((isFullGrid())) {
                 gamePane.setDisable(true);
