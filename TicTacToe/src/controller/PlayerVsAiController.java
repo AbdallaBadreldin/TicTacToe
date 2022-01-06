@@ -35,8 +35,8 @@ public class PlayerVsAiController extends MainGridPaneController implements Init
             mainnGridPaneController = loader.getController();
             mainnGridPaneController.setPlayerOneName("Mahmoud");
             mainnGridPaneController.setPlayerTwoName("Comp");
-            mainnGridPaneController.setPlayerTwoImage("/resources/ai-avatar.png");
-            mainnGridPaneController.setPlayerOneImage("/resources/player-one-avatar.jpg");
+            mainnGridPaneController.setPlayerTwoImage("/Gallary/ai-avatar.png");
+            mainnGridPaneController.setPlayerOneImage("/Gallary/player-one-avatar.jpg");
             mainnGridPaneController.setIsAIMode(true);
         } catch (IOException ex) {
             Logger.getLogger(PlayerVsAiController.class.getName()).log(Level.SEVERE, null, ex);

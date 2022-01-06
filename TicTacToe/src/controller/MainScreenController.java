@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -72,7 +71,7 @@ public class MainScreenController implements Initializable {
         Easy.setOnAction((event) -> {
             try {
                 levelDialog.close();
-                navigator.navigateTo(event, Navigation.MAIN_GRID_PAIN);
+                navigator.navigateTo(event, Navigation.PLAYER_VS_AI);
             } catch (IOException ex) {
                 Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
