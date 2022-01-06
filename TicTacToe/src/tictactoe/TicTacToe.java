@@ -17,6 +17,7 @@ public class TicTacToe extends Application {
         new SplashScreenController().startScreen();
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
         Scene scene = new Scene(root);
+        stage.setTitle("TicTacToe");
         stage.setScene(scene);
         stage.setMinHeight(700);
         stage.setMinWidth(1000);

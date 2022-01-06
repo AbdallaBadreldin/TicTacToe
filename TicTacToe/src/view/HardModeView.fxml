@@ -186,7 +186,11 @@
          <JFXDialog fx:id="winnerDialog">
             <JFXDialogLayout style="-fx-background-color:  #FFFFCC;" >
                 <VBox alignment="CENTER" >
-                    <Label fx:id="winnerName">name</Label>
+                    <Text fx:id="winnerName" strokeType="OUTSIDE" strokeWidth="0.0" text="Player name">
+                                <font>
+                                    <Font size="36.0" />
+                                </font>
+                            </Text>
 
                 <ImageView fx:id="winnerImage" fitHeight="200" fitWidth="314" layoutX="210" layoutY="21" pickOnBounds="true" preserveRatio="true">
                     <image>

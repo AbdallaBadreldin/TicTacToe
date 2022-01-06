@@ -31,9 +31,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import models.Common;
 import models.DiffcultLevel.Move;
 import models.DiffcultLevel;
+import models.GameSession;
 
 /**
  * FXML Controller class
@@ -113,7 +115,7 @@ public class HardModeViewController implements Initializable {
     @FXML
     private JFXDialog winnerDialog;
     @FXML
-    private Label winnerName;
+    private Text winnerName;
     @FXML
     private ImageView winnerImage;
     @FXML
@@ -128,6 +130,7 @@ public class HardModeViewController implements Initializable {
     private JFXButton confirm;
     @FXML
     private JFXButton cancel;
+    private GameSession gameSession;
 
     /**
      * Initializes the controller class.
@@ -188,7 +191,7 @@ public class HardModeViewController implements Initializable {
         playerOneImageView.setImage(new Image("/Gallary/player-one-avatar.jpg"));
         playerTwoImageView.setImage(new Image("/Gallary/ai-avatar.png"));
         playerOneScoreLbl.setText("" + Common.PLAYER_ONE_SCORE);
-            playerTwoScoreLbl.setText("" + Common.PLAYER_TWO_SCORE);
+        playerTwoScoreLbl.setText("" + Common.PLAYER_TWO_SCORE);
         newDialog.setTransitionType(JFXDialog.DialogTransition.TOP);
         newDialog.setDialogContainer(root);
         getPlayerNameDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
@@ -221,9 +224,9 @@ public class HardModeViewController implements Initializable {
                 winnerDialog.close();
                 //reMatch
                 //playerOneScoreLbl.setText("" + score);
-               //playerTwoScoreLbl.setText("" + computerScore);
+                //playerTwoScoreLbl.setText("" + computerScore);
                 navigator.navigateTo(event, Navigation.HARD_MODE);
-            
+
             } catch (IOException ex) {
                 Logger.getLogger(HardModeViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -231,8 +234,8 @@ public class HardModeViewController implements Initializable {
         CancelBtn.setOnAction((e) -> {
             try {
                 navigator.navigateTo(e, Navigation.MAIN_SCREEN);
-                Common.PLAYER_ONE_SCORE=0;
-                Common.PLAYER_TWO_SCORE=0;
+                Common.PLAYER_ONE_SCORE = 0;
+                Common.PLAYER_TWO_SCORE = 0;
                 newDialog.close();
             } catch (IOException ex) {
                 Logger.getLogger(MainGridPaneController.class.getName()).log(Level.SEVERE, null, ex);
@@ -534,7 +537,7 @@ public class HardModeViewController implements Initializable {
             gamePane.setDisable(true);
 
             GameRecorder rec = new GameRecorder();
-            //rec.writer(gameSession);
+            rec.writer(gameSession);
 
         } else if (secondWinner) {
 
@@ -551,9 +554,6 @@ public class HardModeViewController implements Initializable {
                 gamePane.setDisable(true);
 
                 winnerName.setText("****Draw****");
-
-                winnerImage.setImage(new Image("Gallary/white_background.jpg"));
-
                 winnerDialog.show();
                 System.out.println("It's a Draw");
 
