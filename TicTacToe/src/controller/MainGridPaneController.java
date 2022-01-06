@@ -31,6 +31,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import models.Common;
+import static models.Common.PREV_SESSION;
 import models.GameSession;
 import models.Player;
 
@@ -160,6 +161,8 @@ public class MainGridPaneController implements Initializable {
     public static boolean isItPrev;
     private Player player1;
     private Player player2;
+    @FXML
+    private ImageView editIcon1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -177,13 +180,19 @@ public class MainGridPaneController implements Initializable {
         playerEditText.setFocusTraversable(false);
         arrayLine = new ArrayList<>();
         if (isItPrev) {
+            playerOneNameLbl.setText(PREV_SESSION.getPlayerOne().getUserName());
+            playerTwoNameLbl.setText(PREV_SESSION.getPlayerTwo().getUserName());
+            editIcon1.setVisible(false);
+            editBtn2.setVisible(false);
+            player2HBox.setDisable(true);
+            player1HBox.setDisable(true);
             thread.start();
         }
         LeaveBtn.setOnAction((event) -> {
             if (isItPrev) {
                 try {
                     isItPrev = false;
-                    Common.PREV_SESSION = null;
+                    PREV_SESSION = null;
                     navigator.navigateTo(event, Navigation.RECORDERS_SCREEN);
                     newDialog.close();
                 } catch (IOException ex) {
