@@ -5,21 +5,37 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Mahmoud
  */
-public class Player {
+public class Player implements Serializable{
+    
+    private static final long serialVersionUID = 6529682930267757690L;
     private String userName;
     private String password;
     private int status;
     private int win;
     private int lose;
     private int draw;
+
+    public Player(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
   
+    
 
 
     public Player(){}
+
+    public Player(String userName) {
+        this.userName = userName;
+    }
+    
+    
 
     public Player(String username, String password, int status, int win, int lose, int draw) {
         this.userName = username;

@@ -5,16 +5,13 @@
  */
 package model;
 
-import controller.ServerMainViewController;
 import java.io.Serializable;
 
 /**
  *
  * @author Mahmoud
  */
-public class RequestGame implements Serializable {
-
-    ;
+public class RequestGameOnlineMode implements Serializable {
 
     private int requesterPlayerId;
     private int recieverPlayerId;
@@ -22,24 +19,21 @@ public class RequestGame implements Serializable {
     private boolean accepted;
     private boolean sent;
 
-    private GameSession gameSession;
+    private GameSessionOnlineMode gameSession;
+
     private static final long serialVersionUID = 6529685098267757690L;
 
-    public RequestGame(int requesterPlayerId, int recieverPlayerId) {
+    public RequestGameOnlineMode(int requesterPlayerId, int recieverPlayerId) {
         this.requesterPlayerId = requesterPlayerId;
         this.recieverPlayerId = recieverPlayerId;
         this.accepted = false;
-        if (accepted) {
-            gameSession = new GameSession(ServerMainViewController.clients.get(requesterPlayerId - 1), ServerMainViewController.clients.get(recieverPlayerId - 1));
-            System.out.println("GameSession Created");
-        }
+        this.sent = false;
     }
 
-    public RequestGame(int requesterPlayerId, int recieverPlayerId, boolean accetpance) {
+    public RequestGameOnlineMode(int requesterPlayerId, int recieverPlayerId, boolean accetpance) {
         this.requesterPlayerId = requesterPlayerId;
         this.recieverPlayerId = recieverPlayerId;
         this.accepted = accetpance;
-
     }
 
     public void setAccepted(boolean accepted) {

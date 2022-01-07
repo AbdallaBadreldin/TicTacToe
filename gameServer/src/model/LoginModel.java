@@ -3,22 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package model;
 
 import java.io.Serializable;
 
 /**
  *
- * @author Bossm
+ * @author Mahmoud
  */
-public class LoginRequest implements Serializable {
-    
-    private static final long serialVersionUID = 6521234598267757690L;
+public class LoginModel implements Serializable{
+    private static final long serialVersionUID = 6529682930267677690L;
     private String username;
     private String password;
-    private String token;
 
-    public LoginRequest(String username, String password) {
+    public LoginModel(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -27,16 +25,17 @@ public class LoginRequest implements Serializable {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
     }
 
-    public String getToken() {
-        return token;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
+    
     
 }

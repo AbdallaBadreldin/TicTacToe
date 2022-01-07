@@ -29,7 +29,7 @@ public class PlayerVsAiController extends MainGridPaneController implements Init
         try {
             mainPane.getChildren().add(loader.load());
             mainnGridPaneController = loader.getController();
-            mainnGridPaneController.setPlayerOneName("Mahmoud");
+            mainnGridPaneController.setPlayerOneName("Player 1");
             mainnGridPaneController.setPlayerTwoName("Comp");
             mainnGridPaneController.setPlayerTwoImage("/Gallary/ai-avatar.png");
             mainnGridPaneController.setPlayerOneImage("/Gallary/player-one-avatar.jpg");

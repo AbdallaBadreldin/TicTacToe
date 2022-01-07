@@ -195,6 +195,7 @@
 
                 <ImageView fx:id="winnerImage" fitHeight="200" fitWidth="314" layoutX="210" layoutY="21" pickOnBounds="true" preserveRatio="true">
                     <image>
+                        
                     </image>
                 </ImageView>
                     <Label>Do you want play again?</Label>

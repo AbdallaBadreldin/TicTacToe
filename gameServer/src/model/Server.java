@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.ServerMainViewController;
 import database.Database;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -14,7 +15,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Player;
 
 /**
  *
@@ -25,16 +25,13 @@ public class Server {
     private static Server server;
     public Database databaseInstance;
 
-    private Socket socket;
-    private Thread listener;
-    Player player;
-    public static Vector<ClientHandler> clients;
     static ServerSocket serverSocket;
     static Thread socketAccpetListener;
+    //public static Vector<ClientHandler> clients;
 //    public ResultSet rs ;
 
     private Server() {
-        //server = new Server();
+
     }
 
     public static Server getServer() {
@@ -56,7 +53,7 @@ public class Server {
     public void disableConnections() {
         try {
             databaseInstance.disableConnection();
-            listener.stop();
+            //listener.stop();
             serverSocket.close();
         } catch (IOException ex) {
             System.out.print("disable connection server");
@@ -68,24 +65,50 @@ public class Server {
     }
 
     private void initServer() {
-        clients = new Vector<ClientHandler>();
+        ServerMainViewController.clients = new Vector<ClientHandler>();
         try {
             serverSocket = new ServerSocket(5006);
             System.out.println("ServerStarted");
             socketAccpetListener = new Thread(() -> {
                 while (true) {
+                    System.out.println("Socket Listener Thread");
                     try {
                         Socket s = serverSocket.accept();
-                        clients.add(new ClientHandler(s));
-                        System.out.println("Clients number : " + clients.size());
+                        ServerMainViewController.clients.add(new ClientHandler(s));
+                        System.out.println("Clients number : " + ServerMainViewController.clients.size());
+                        for (int i = 0; i < ServerMainViewController.clients.size(); i++) {
+                            System.out.println(ServerMainViewController.clients.get(i).toString());
+                        }
                     } catch (IOException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ServerMainViewController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
+            socketAccpetListener.setDaemon(true);
             socketAccpetListener.start();
         } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+    }
+
+    public void stopServer() {
+        try {
+            for(int i=0; i<ServerMainViewController.clients.size();i++){
+               
+                ServerMainViewController.clients.get(i).closeConnection();
+                ServerMainViewController.clients.remove(this);
+            }
+            ServerMainViewController.clients.clear();
+            socketAccpetListener.stop();
+            serverSocket.close();
+
+            System.out.println("ServerStopped");
+        } catch (IOException ex) {
+            try {
+                serverSocket.close();
+            } catch (IOException ex1) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
 
@@ -109,7 +132,7 @@ public class Server {
         return databaseInstance.getScore(userName);
     }
 
-    public Player getUserName(String username) {
+    public Player getPlayer(String username) {
         return databaseInstance.getPlayer(username);
     }
 

@@ -38,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Chart;
 import model.ClientHandler;
+
 import model.Server;
 
 /**
@@ -198,6 +199,7 @@ public class ServerMainViewController implements Initializable {
                 server.disableConnections();
                 emptyList();
                 disableBtn();
+                server.stopServer();
             }
         }
     }
@@ -208,14 +210,14 @@ public class ServerMainViewController implements Initializable {
             System.out.println("list off");
             scrollpane.setContent(null);
             onlineOrOfflineFlag = false;
-            listPlayers(false);
+            listPlayers(true);
             listOnlinebtn.setText("List Online Players");
 
         } else {
             System.out.println("list on");
             scrollpane.setContent(null);
             onlineOrOfflineFlag = true;
-            listPlayers(true);
+            listPlayers(false);
             listOnlinebtn.setText("List Offline Players");
 
         }
@@ -224,7 +226,7 @@ public class ServerMainViewController implements Initializable {
     @FXML
     private void chartHandle(ActionEvent event) {
 
-        countOffline = server.databaseInstance.getCountOfOfflineUserse();
+        countOffline = server.databaseInstance.getCountOfOfflineUsers();
         showingChart = true;
         chart.setFlag(false);
         chart = Chart.getChartObj();
@@ -257,7 +259,7 @@ public class ServerMainViewController implements Initializable {
         scrollpane.setContent(null);
     }
 
-    private synchronized void listPlayers(Boolean state) {
+    private synchronized void listPlayers(boolean state) {
 
         server.databaseInstance.updateResultSet();
         scrollpane.setContent(null);
@@ -269,10 +271,11 @@ public class ServerMainViewController implements Initializable {
             countOnline = 0;
 
             while (server.databaseInstance.getResultSet().next()) {
-                if (server.databaseInstance.getResultSet().getString("ISACTIVE").equals(state + "")) {
+                if (server.databaseInstance.getResultSet().getString("status").equals(1)) {
                     //System.out.println("platform check action action");
 
                     ImageView view, view2;
+                    view2 = null;
                     // avatar view
                     view = new ImageView(new Image(this.getClass().getResourceAsStream("/resources/avatar.png")));
                     view.setFitHeight(30);

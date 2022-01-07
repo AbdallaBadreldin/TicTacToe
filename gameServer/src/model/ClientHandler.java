@@ -13,7 +13,6 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author Mahmoud
@@ -22,72 +21,133 @@ public class ClientHandler extends Thread {
 
     ObjectInputStream objectInputStream;
     ObjectOutputStream objectOutputStream;
+    Socket socket;
+    GameSession gameSession;
+    Server server;
 
     public ClientHandler(Socket s) {
 
         try {
             if (s.isConnected()) {
-                objectInputStream = new ObjectInputStream(s.getInputStream());
+                socket = s;
+
                 objectOutputStream = new ObjectOutputStream(s.getOutputStream());
+                objectOutputStream.flush();
+                objectInputStream = new ObjectInputStream(socket.getInputStream());
+
+                server = Server.getServer();
             }
             start();
         } catch (IOException ex) {
+
             ex.printStackTrace();
         }
     }
 
     @Override
     public void run() {
-        GameSession game = null;
-
         while (true) {
+            System.out.println("Client handler Thread");
             try {
+
                 if (objectInputStream != null) {
                     Object recievedObject = objectInputStream.readObject();
-                    System.out.println("Object in ClientHandler\t" + recievedObject.toString());
                     if (recievedObject instanceof RequestGame) {
-                        System.out.println(recievedObject.toString());
                         RequestGame request = (RequestGame) recievedObject;
-                        game = new GameSession(
-                                ServerMainViewController.clients.get(request.getRequesterPlayerId() - 1),
-                                ServerMainViewController.clients.get(request.getRecieverPlayerId() - 1)
-                        );
-                    } else if (recievedObject instanceof PlayerMove) {
-                        if (recievedObject instanceof PlayerMove) {
-                            System.out.println(recievedObject.toString());
-                            game.playerTwo.objectOutputStream.writeObject(recievedObject);
-                            game.playerTwo.objectOutputStream.flush();
-                            game.playersMoves[game.counter] = (PlayerMove) recievedObject;
-                            game.counter++;
-                            for (int i = 0; i < game.counter; i++) {
-                                System.out.println(game.playersMoves[i].toString());
+                        if (!request.isSent()) {
+                            ClientHandler client = ServerMainViewController.clients.get(request.getRecieverPlayerId() - 1);
+                            request.setSent(true);
+                            client.objectOutputStream.writeObject(request);
+                        } else {
+                            //already sent
+                            if (request.isAccepted()) {
+                                gameSession = new GameSession(
+                                        ServerMainViewController.clients.get(request.getRequesterPlayerId() - 1),
+                                        ServerMainViewController.clients.get(request.getRecieverPlayerId() - 1)
+                                );
+
+                                ServerMainViewController.clients.get(request.getRecieverPlayerId() - 1).objectOutputStream.writeObject(gameSession.game);
+                                ServerMainViewController.clients.get(request.getRequesterPlayerId() - 1).objectOutputStream.writeObject(gameSession.game);
+                                ServerMainViewController.clients.get(request.getRequesterPlayerId() - 1).gameSession = gameSession;
                             }
                         }
-                    }
-                } else {
-                    closeConnection();
-                    Server.clients.remove(this);
-                    this.stop();
-                }
-            } catch (IOException ex) {
-                closeConnection();
-                Server.clients.remove(this);
-                this.stop();
-                System.out.println("Exception");
-                //ex.printStackTrace();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+                    } else if (recievedObject instanceof PlayerMove) {
 
+//                        ((PlayerMove) recievedObject).setIsX(gameSession.turn);
+//                        gameSession.playerOne.objectOutputStream.writeObject(recievedObject);
+//                        gameSession.playerTwo.objectOutputStream.writeObject(recievedObject);
+//
+//                        gameSession.game.playersMoves[gameSession.game.counter] = (PlayerMove) recievedObject;
+//                        gameSession.game.counter++;
+//
+//                        gameSession.turn = !gameSession.turn;
+                    } else if (recievedObject instanceof RegistrationModel) {
+                        RegistrationModel register = (RegistrationModel) recievedObject;
+                        if (server.checkRegister(register.getUsername()).equals("already signed-up")) {
+                            String msg = "Already registered";
+                            System.out.println(register.getUsername());
+                            objectOutputStream.writeObject(msg);
+                            objectOutputStream.flush();
+
+                        } else {
+                            server.SignUp(register.getUsername(), register.getPassword());
+                            System.out.println("added to database");
+                        }
+                        System.out.println("player recieved " + register.getUsername());
+                    } else if (recievedObject instanceof LoginModel) {
+                        LoginModel signIn = (LoginModel) recievedObject;
+                        if (server.getPlayer(signIn.getUsername()) == null) {
+                            server.login(signIn.getUsername(), signIn.getPassword());
+                        } else {
+                            String msg = "Already signned";
+                            objectOutputStream.writeObject(msg);
+                            objectOutputStream.flush();
+                        }
+                    }
+
+                }
+
+            } catch (Exception ex) {
+                //ex.printStackTrace();
+                closeConnection();
+
+                try {
+                    closeConnection();
+                    socket.close();
+
+//                    if (gameSession.playerOne.socket.isClosed()) {
+//                        gameSession.playerTwo.objectOutputStream.writeObject("Player disconnected");
+//                    }
+//
+//                    if (gameSession.playerTwo.socket.isClosed()) {
+//                        gameSession.playerOne.objectOutputStream.writeObject("Player disconnected");
+//                    }
+                    this.stop();
+                    ServerMainViewController.clients.remove(this);
+
+                } catch (IOException exe) {
+                    ex.printStackTrace();
+                }
+            }
+
+        }
     }
 
-    void closeConnection() {
+    public void closeConnection() {
         try {
+            ServerMainViewController.clients.remove(this);
+            this.stop();
             this.objectInputStream.close();
+            this.objectOutputStream.close();
+
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ClientHandler{" + "objectInputStream=" + objectInputStream + ", objectOutputStream=" + objectOutputStream + '}';
     }
 
 }

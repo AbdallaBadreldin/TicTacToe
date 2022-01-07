@@ -11,8 +11,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.GameSession;
-import models.ListOfRecorders;
+import model.GameSession;
+import model.ListOfRecorders;
 
 /**
  *

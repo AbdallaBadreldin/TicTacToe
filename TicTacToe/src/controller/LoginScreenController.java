@@ -1,6 +1,5 @@
 package controller;
 
-import client.GameClient;
 import helpers.Navigation;
 import java.io.IOException;
 import java.net.URL;
@@ -15,21 +14,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import models.Common;
-import models.LoginRequest;
-import models.Player;
-import client.interfaces.SignInInterface;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import helpers.ReusableDialog;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import model.LoginModel;
+import model.Player;
 
 /**
  * FXML Controller class
  *
  * @author Radwa
  */
-public class LoginScreenController implements Initializable, SignInInterface {
+public class LoginScreenController implements Initializable {
 
     @FXML
     private ImageView backImage;
@@ -54,80 +53,47 @@ public class LoginScreenController implements Initializable, SignInInterface {
     @FXML
     private JFXButton signInBtn;
 
-    private GameClient gameClient;
-    private final Navigation nav = new Navigation();
-    
+    private final Navigation navigator = new Navigation();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loginImage.setImage(new Image("/Gallary/loginImage.png"));
+        //loginImage.setImage(new Image("/Gallary/loginImage.png"));
         passwordText.setFocusTraversable(false);
         feedbackDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         feedbackDialog.setDialogContainer(root);
-        okBnt.setOnAction((e)-> {
+        okBnt.setOnAction((e) -> {
             feedbackDialog.close();
             passwordText.setText("");
             emailText.setText("");
         });
-        
-        try {
-            gameClient = GameClient.getInstactance(Common.IP, Common.PORT);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
     @FXML
     private void passwordText(MouseEvent event) {
-        passwordText.clear();
+
     }
 
     @FXML
     private void emailText(MouseEvent event) {
-        emailText.clear();
+
     }
 
     @FXML
     private void rememberCheckBox(ActionEvent event) {
     }
 
-    private void signInBtn(ActionEvent event) {
-        gameClient.setSignInInterface(this);
-        try {
-            gameClient.sendRequest(new LoginRequest(emailText.getText(), passwordText.getText()));
-            gameClient.startReading();
-        } catch (IOException | InterruptedException ex) {
-            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     @FXML
     private void signUp(MouseEvent event) {
         try {
-            nav.navigateTo(event, Navigation.REGISTER_SCREEN);
+            navigator.navigateTo(event, Navigation.REGISTER_SCREEN);
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
-
-
-    @Override
-    public void onPlayerRevice(Player player) {
-        if (player.getUserName() == null) {
-            lab.setText("data is not vailed.");
-            feedbackDialog.show();
-        } else {
-            ///TODO: navigate to inGameSreacn;
-            try {
-                gameClient.stopReading();
-                //nav.navigateTo(, Navigation.ONLINE_PLAYER);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     @FXML
@@ -136,7 +102,75 @@ public class LoginScreenController implements Initializable, SignInInterface {
 
     @FXML
     private void onSignInBtn(ActionEvent event) {
-        ///TODO: send sigin in request to the server and if it is valied, navigate to online board.
+        try {
+            ///TODO: send sigin in request to the server and if it is valied, navigate to online board.
+            changeSceneToOnlineGame(event);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void signInBtn() {
+        LoginModel obj;
+        obj = new LoginModel(emailText.getText(), passwordText.getText());
+        System.out.println("Object output" + IPOfServerController.objOutputStream.toString());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (IPOfServerController.objOutputStream != null) {
+                    try {
+                        IPOfServerController.objOutputStream.writeObject(obj);
+                        System.out.println("Data Sent " + obj.toString());
+                        if (IPOfServerController.objInputStream != null) {
+                            try {
+                                Object objToRead = IPOfServerController.objInputStream.readObject();
+                                if (objToRead instanceof String) {
+                                    ReusableDialog dialog = new ReusableDialog();
+                                    dialog.inValidIp((String) objToRead);
+                                } else {
+
+                                }
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                    } catch (IOException ex) {
+                        closeConnection();
+                    }
+                } else {
+                    ReusableDialog dialog = new ReusableDialog();
+                    dialog.showErrorDialog("Cannot send request to the server!\nPlease check your connection.","Connection test");
+                    closeConnection();
+                }
+
+            }
+        }).start();
+
+        
+    }
+
+    public void changeSceneToOnlineGame(ActionEvent event) throws IOException {
+
+        signInBtn();
+
+        try {
+            navigator.navigateTo(event, Navigation.PLAYER_ONLINE);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void closeConnection() {
+        try {
+            IPOfServerController.listener.stop();
+            IPOfServerController.objInputStream.close();
+            IPOfServerController.objOutputStream.close();
+            IPOfServerController.socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
