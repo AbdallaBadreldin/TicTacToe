@@ -151,7 +151,7 @@ public class MainGridPaneController implements Initializable {
     private boolean isXSymbol = true;
     private boolean winner;
     private String symbol;
-    private boolean isAIMode = false;
+    private boolean isAIMode;
     private boolean isItOnlineGame;
     private Label[] labelArr = new Label[9];
     private boolean isGameEnded;
@@ -290,7 +290,6 @@ public class MainGridPaneController implements Initializable {
         if (!isAIMode) {
             gameSession.addMove(returnMove((Label) mouseEvent.getSource()));
             ((Label) mouseEvent.getSource()).setText(returnSymbol());
-
         } else if (isItOnlineGame) {
             //TODO: handel the online game logic
         } else {
@@ -299,21 +298,21 @@ public class MainGridPaneController implements Initializable {
             if (isGameEnded == false && clickedButton.getText().equals("")) {
                 XOCounter++;
                 isPlayerTurn = true;
-
                 clickedButton.setText("X");
-
+                gameSession.addMove(returnMove(labelArr[randomNumber], isXSymbol));
+                System.out.println("comp with x move saved");
                 if (isGameEnded == false) {
 
                     XOCounter++;
-                    isPlayerTurn = false;
+                    isPlayerTurn = !isPlayerTurn;
 
                     for (int i = 0; i < 9; i++) {
                         randomNumber = random.nextInt(9);
                         if (labelArr[randomNumber].getText().equals("")) {
-
                             labelArr[randomNumber].setText("O");
+                            System.out.println("comp with o move saved");
                             labelArr[randomNumber].setDisable(true);
-
+                            gameSession.addMove(returnMove(labelArr[randomNumber], isXSymbol));
                             break;
                         }
                     }
@@ -353,7 +352,7 @@ public class MainGridPaneController implements Initializable {
         label7.setText("");
         label8.setText("");
         label9.setText("");
-        gameSession.resetMove();
+        gameSession = new GameSession(player1, player2);
         removeLine();
         setLabelState(false);
         firstWinner = false;
@@ -387,6 +386,30 @@ public class MainGridPaneController implements Initializable {
         }
         isXSymbol = !isXSymbol;
         return symbol;
+    }
+
+    private PlayerMove returnMove(Label label, boolean comp) {
+        PlayerMove move = new PlayerMove();
+        if (label == label1) {
+            move = new PlayerMove(0, 0, comp);
+        } else if (label == label2) {
+            move = new PlayerMove(0, 1, comp);
+        } else if (label == label3) {
+            move = new PlayerMove(0, 2, comp);
+        } else if (label == label4) {
+            move = new PlayerMove(1, 0, comp);
+        } else if (label == label5) {
+            move = new PlayerMove(1, 1, comp);
+        } else if (label == label6) {
+            move = new PlayerMove(1, 2, comp);
+        } else if (label == label7) {
+            move = new PlayerMove(2, 0, comp);
+        } else if (label == label8) {
+            move = new PlayerMove(2, 1, comp);
+        } else if (label == label9) {
+            move = new PlayerMove(2, 2, comp);
+        }
+        return move;
     }
 
     private PlayerMove returnMove(Label label) {
@@ -573,12 +596,13 @@ public class MainGridPaneController implements Initializable {
             winnerImage.setImage(new Image("Gallary/congrats.gif"));
             winnerName.setText(playerOneNameLbl.getText());
             gamePane.setDisable(true);
-            if (!isItPrev) {
+            if (!isItPrev && !isAIMode) {
                 gameSession.createGameName();
-                winnerDialog.show();
                 GameRecorder rec = new GameRecorder();
                 rec.writer(gameSession);
             }
+            winnerDialog.show();
+
         } else if (secondWinner) {
             if (isAIMode) {
                 playerTwoScore++;
@@ -588,12 +612,13 @@ public class MainGridPaneController implements Initializable {
                 winnerName.setText("YOU LOST");
                 winnerImage.setImage(new Image("Gallary/loser.gif"));
                 gamePane.setDisable(true);
-                if (!isItPrev) {
+                if (!isItPrev && !isAIMode) {
                     gameSession.createGameName();
-                    winnerDialog.show();
                     GameRecorder rec = new GameRecorder();
                     rec.writer(gameSession);
                 }
+                winnerDialog.show();
+
             } else {
                 playerTwoScore++;
                 playerTwoScoreLbl.setText("" + playerTwoScore);
@@ -602,12 +627,13 @@ public class MainGridPaneController implements Initializable {
                 winnerImage.setImage(new Image("Gallary/congrats.gif"));
                 winnerName.setText(playerTwoNameLbl.getText());
                 gamePane.setDisable(true);
-                if (!isItPrev) {
+                if (!isItPrev && !isAIMode) {
                     gameSession.createGameName();
-                    winnerDialog.show();
                     GameRecorder rec = new GameRecorder();
                     rec.writer(gameSession);
                 }
+                winnerDialog.show();
+
             }
         } else {
             if ((isFullGrid())) {
@@ -615,12 +641,13 @@ public class MainGridPaneController implements Initializable {
                 winnerName.setText("****Draw****");
                 System.out.println("It's a Draw");
                 isGameActive = !isGameActive;
-                if (!isItPrev) {
+                if (!isItPrev && !isAIMode) {
                     gameSession.createGameName();
-                    winnerDialog.show();
                     GameRecorder rec = new GameRecorder();
                     rec.writer(gameSession);
                 }
+                winnerDialog.show();
+
             }
         }
     }
@@ -664,6 +691,7 @@ public class MainGridPaneController implements Initializable {
 
     public void setIsAIMode(boolean isAIMode) {
         this.isAIMode = isAIMode;
+        gameSession = new GameSession(player1, new Player("AI"));
         editBtn2.setVisible(false);
         player2HBox.setDisable(true);
     }
