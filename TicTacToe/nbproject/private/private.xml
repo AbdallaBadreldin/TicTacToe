@@ -2,6 +2,21 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+
+            <file>file:/H:/ITI/ITIProjects/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
+            <file>file:/H:/ITI/ITIProjects/TicTacToe/TicTacToe/src/controller/PlayersListItemsController.java</file>
+            <file>file:/H:/ITI/ITIProjects/TicTacToe/TicTacToe/src/controller/MainScreenController.java</file>
+            <file>file:/H:/ITI/ITIProjects/TicTacToe/TicTacToe/src/helpers/Navigation.java</file>
+            <file>file:/H:/ITI/ITIProjects/TicTacToe/TicTacToe/src/client/GameClient.java</file>
+            <file>file:/H:/ITI/ITIProjects/TicTacToe/TicTacToe/src/controller/PlayerVsAiController.java</file>
+            <file>file:/H:/ITI/ITIProjects/TicTacToe/TicTacToe/src/controller/PlayerVsPlayerOnlineController.java</file>
+            <file>file:/H:/ITI/ITIProjects/TicTacToe/TicTacToe/src/controller/MainGridPaneController.java</file>
+
+        </group>
+>>>>>>> 170b60eb00e580e4cf75f8e99914d27d292baf3d
     </open-files>
 </project-private>

@@ -32,8 +32,9 @@ public class GameServer extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ServerMainView.fxml"));
+Parent root = FXMLLoader.load(getClass().getResource("/gameserver/FXMLDocument.fxml"));     
+        
+        //Parent root = FXMLLoader.load(getClass().getResource("/view/ServerMainView.fxml"));     
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Tic Tac Toe Server");
