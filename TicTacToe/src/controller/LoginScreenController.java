@@ -17,10 +17,11 @@ import javafx.scene.layout.AnchorPane;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import helpers.ReusableDialog;
+import helpers.SocketSingleton;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import model.LoginModel;
+import javafx.stage.Stage;
 import model.Player;
 
 /**
@@ -54,6 +55,7 @@ public class LoginScreenController implements Initializable {
     private JFXButton signInBtn;
 
     private final Navigation navigator = new Navigation();
+    Thread listener;
 
     /**
      * Initializes the controller class.
@@ -70,6 +72,75 @@ public class LoginScreenController implements Initializable {
             emailText.setText("");
         });
 
+        ReusableDialog dialog = new ReusableDialog();
+
+        listener = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Object object = SocketSingleton.getObjectInputStream().readObject();
+                        if (object != null) {
+                            if (object instanceof String) {
+                                String loginResultString = (String) object;
+                                switch (loginResultString) {
+                                    case "Password is incorrect":
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                dialog.showErrorDialog(loginResultString, "Signned In Failed");
+                                            }
+                                        });
+
+                                        break;
+                                    case "Username is incorrect":
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                dialog.showErrorDialog(loginResultString, "Signned In Failed");
+                                            }
+                                        });
+                                        break;
+                                    case "Logged in successfully":
+                                        //Player player = (Player) object;
+                                        //System.out.println(player.toString());
+                                        Stage stage = (Stage) signInBtn.getScene().getWindow();
+                                        navigator.navigateTo(stage, Navigation.PLAYER_ONLINE);
+                                        break;
+                                    case "This username is alreay sign-in":
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                dialog.showErrorDialog(loginResultString, "Signned In Failed");
+                                            }
+                                        });
+                                        break;
+                                    case "Connection issue, please try again later":
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                dialog.showErrorDialog(loginResultString, "Signned In Failed");
+                                            }
+                                        });
+                                        break;
+
+                                }
+
+                            }
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    }
+                }
+            }
+        });
     }
 
     @FXML
@@ -103,74 +174,14 @@ public class LoginScreenController implements Initializable {
     @FXML
     private void onSignInBtn(ActionEvent event) {
         try {
-            ///TODO: send sigin in request to the server and if it is valied, navigate to online board.
-            changeSceneToOnlineGame(event);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void signInBtn() {
-        LoginModel obj;
-        obj = new LoginModel(emailText.getText(), passwordText.getText());
-        System.out.println("Object output" + IPOfServerController.objOutputStream.toString());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (IPOfServerController.objOutputStream != null) {
-                    try {
-                        IPOfServerController.objOutputStream.writeObject(obj);
-                        System.out.println("Data Sent " + obj.toString());
-                        if (IPOfServerController.objInputStream != null) {
-                            try {
-                                Object objToRead = IPOfServerController.objInputStream.readObject();
-                                if (objToRead instanceof String) {
-                                    ReusableDialog dialog = new ReusableDialog();
-                                    dialog.inValidIp((String) objToRead);
-                                } else {
-
-                                }
-                            } catch (ClassNotFoundException ex) {
-                                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-
-                        }
-                    } catch (IOException ex) {
-                        closeConnection();
-                    }
-                } else {
-                    ReusableDialog dialog = new ReusableDialog();
-                    dialog.showErrorDialog("Cannot send request to the server!\nPlease check your connection.","Connection test");
-                    closeConnection();
-                }
-
+            Player player = new Player(emailText.getText(), passwordText.getText());
+            SocketSingleton.getObjectOutputStream().writeObject(player);
+            if (!listener.isAlive()) {
+                listener.start();
             }
-        }).start();
 
-        
-    }
-
-    public void changeSceneToOnlineGame(ActionEvent event) throws IOException {
-
-        signInBtn();
-
-        try {
-            navigator.navigateTo(event, Navigation.PLAYER_ONLINE);
         } catch (IOException ex) {
             Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-
-    private void closeConnection() {
-        try {
-            IPOfServerController.listener.stop();
-            IPOfServerController.objInputStream.close();
-            IPOfServerController.objOutputStream.close();
-            IPOfServerController.socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

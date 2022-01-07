@@ -3,9 +3,10 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import static controller.IPOfServerController.objInputStream;
+import controller.LoginScreenController;
 import helpers.Navigation;
 import helpers.ReusableDialog;
+import helpers.SocketSingleton;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
@@ -21,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.Player;
 import model.PlayerMove;
 import model.RegistrationModel;
@@ -36,8 +38,6 @@ public class RegisterScreenController implements Initializable {
     @FXML
     private ImageView backImage;
     @FXML
-    private ImageView registerImage;
-    @FXML
     private JFXTextField usernameTxt;
     @FXML
     private JFXButton imgBtn;
@@ -47,7 +47,8 @@ public class RegisterScreenController implements Initializable {
     private JFXPasswordField confirmPasswordTxt;
 
     private final Navigation navigator = new Navigation();
-    private Player player;
+    //private Player player;
+    Thread listener;
     @FXML
     private JFXButton signUpBtn;
 
@@ -56,6 +57,46 @@ public class RegisterScreenController implements Initializable {
         //registerImage.setImage(new Image("/Gallary/loginImage.png"));
         confirmPasswordTxt.setFocusTraversable(false);
         passwordTxt.setFocusTraversable(false);
+
+        ReusableDialog dialog = new ReusableDialog();
+
+        listener = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Object object = SocketSingleton.getObjectInputStream().readObject();
+                        if (object != null) {
+                            if (object instanceof String) {
+                                String registerRequest = (String) object;
+                                if (registerRequest.equals("Already registered")) {
+                                    //player not found
+                                    Platform.runLater(new Runnable() { 
+                                        @Override
+                                        public void run() {
+                                            dialog.showErrorDialog(registerRequest, "Registeration Failed");
+                                        }
+                                    });
+                                } else if (registerRequest.equals("Registered Successfully")) {
+                                    Stage stage = (Stage) signUpBtn.getScene().getWindow();
+                                    navigator.navigateTo(stage, Navigation.PLAYER_ONLINE);
+                                }
+                            }
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    }
+                }
+            }
+        });
+
     }
 
     private void passwordText(MouseEvent event) {
@@ -102,146 +143,27 @@ public class RegisterScreenController implements Initializable {
 
     @FXML
     private void onSignUp(ActionEvent event) {
+        System.out.println("signup tapped");
         ReusableDialog dialog = new ReusableDialog();
-        //System.out.println(IPOfServerController.objInputStream.toString());
         if (passwordTxt.getText().equals(confirmPasswordTxt.getText())) {
-            
+            try {
+                RegistrationModel playerToRegister = new RegistrationModel(usernameTxt.getText(), passwordTxt.getText());
+                SocketSingleton.getObjectOutputStream().writeObject(playerToRegister);
+                if (!listener.isAlive()) {
+                    listener.start();
+                }
 
+            } catch (IOException ex) {
+                Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
-
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     dialog.inValidIp("Please enter the same password");
                 }
             });
-
         }
 
     }
 }
-
-    /*
-    private void signUpBtn() {
-
-        RegistrationModel obj;
-        ReusableDialog dialog = new ReusableDialog();
-
-        obj = new RegistrationModel(usernameTxt.getText(), passwordTxt.getText());
-        //System.out.println("Object output" + IPOfServerController.objOutputStream.toString());
-
-        if (IPOfServerController.objOutputStream != null) {
-            try {
-                IPOfServerController.objOutputStream.writeObject(obj);
-                System.out.println("Data Sent " + obj.toString());
-
-            } catch (IOException ex) {
-                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            dialog.showErrorDialog("Cannot send request to the server!\nPlease check your connection.", "Connection Test");
-            closeConnection();
-        }
-
-    }
-
-    private void checkRegister(ActionEvent event) {
-        ReusableDialog dialog = new ReusableDialog();
-        IPOfServerController.listener = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-
-                    if (IPOfServerController.objInputStream != null) {
-                        try {
-                            Object objToRead = IPOfServerController.objInputStream.readObject();
-                            if (objToRead instanceof String) {
-                                String objectToCheck = (String) objToRead;
-                                if (objectToCheck.equals("Already registered")) {
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            dialog.showErrorDialog((String) objToRead, "Registration failed");
-                                        }
-                                    });
-                                } else {
-                                    try {
-                                        navigator.navigateTo(event, Navigation.PLAYER_ONLINE);
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                }
-
-                                System.out.println(objToRead);
-                            } else {
-
-                            }
-                        } catch (ClassNotFoundException | IOException ex) {
-                            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                    }
-                }
-
-            }
-        };
-
-        IPOfServerController.listener.setDaemon(true);
-        IPOfServerController.listener.start();
-
-    }
-
-    private void closeConnection() {
-        try {
-            //IPOfServerController.listener.stop();
-            IPOfServerController.objInputStream.close();
-            IPOfServerController.objOutputStream.close();
-            IPOfServerController.socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-}
-
-/*
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.showErrorDialog((String) objToRead);
-                            
-                        }
-                    });
-
-        IPOfServerController.listener = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    if (IPOfServerController.objOutputStream != null) {
-                        try {
-                            IPOfServerController.objOutputStream.writeObject(obj);
-                            System.out.println("Object Recieved");
-                            if (obj instanceof Player) {
-                                Player player = (Player) obj;
-                                player.setUserName(usernameTxt.getText());
-                                player.setPassword(passwordTxt.getText());
-                            } else if (obj instanceof String) {
-                                showErrorDialog((String) obj);
-                                this.stop();
-                            }
-
-                        } catch (IOException | ClassNotFoundException ex) {
-
-                            showErrorDialog("Server disconnected");
-                            closeConnection();
-                            ex.printStackTrace();
-                        }
-                    } else {
-                        System.out.println("ObjectStream is null");
-                    }
-                }
-            }
-        };
-        IPOfServerController.listener.setDaemon(true);
-        IPOfServerController.listener.start();
- */

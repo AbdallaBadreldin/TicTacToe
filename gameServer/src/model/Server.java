@@ -87,14 +87,14 @@ public class Server {
             socketAccpetListener.setDaemon(true);
             socketAccpetListener.start();
         } catch (IOException ex) {
-            
+
         }
     }
 
     public void stopServer() {
         try {
-            for(int i=0; i<ServerMainViewController.clients.size();i++){
-               
+            for (int i = 0; i < ServerMainViewController.clients.size(); i++) {
+
                 ServerMainViewController.clients.get(i).closeConnection();
                 ServerMainViewController.clients.remove(this);
             }
@@ -112,27 +112,27 @@ public class Server {
         }
     }
 
-    public void setActive(int status, String userName) {
-        databaseInstance.setActive(0, userName);
+    public void setActive(Boolean state, String mail) {
+        databaseInstance.setActive(false, mail);
     }
 
-    public void setNotPlaying(String userName) {
-        databaseInstance.setNotPlaying(userName);
+    public void setNotPlaying(String email) {
+        databaseInstance.setNotPlaying(email);
     }
 
     public void getActivePlayers1() {
         databaseInstance.getActivePlayers();
     }
 
-    public String checkSignIn(String userName, String password) {
-        return databaseInstance.checkSignIn(userName, password);
+    public String checkSignIn(String username, String password) {
+        return databaseInstance.checkSignIn(username, password);
     }
 
-    public int getScore(String userName) {
-        return databaseInstance.getScore(userName);
+    public int getScore(String username) {
+        return databaseInstance.getScore(username);
     }
 
-    public Player getPlayer(String username) {
+    public Player getPlayer(String username) {  
         return databaseInstance.getPlayer(username);
     }
 
@@ -152,13 +152,15 @@ public class Server {
         return databaseInstance.getActivePlayers();
     }
 
-    public void makePlaying(Player player1, Player player2) {
-        databaseInstance.makePlaying(player1, player2);
+    public void updateScore(String mail, int score) {
+        databaseInstance.updateScore(mail, score);
     }
+
 
     public ResultSet getResultSet() {
         return databaseInstance.getResultSet();
     }
+
 
     public int getWinScore(String userName) {
         return databaseInstance.getWinScore(userName);

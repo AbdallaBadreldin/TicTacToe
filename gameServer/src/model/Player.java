@@ -12,11 +12,13 @@ import java.io.Serializable;
  * @author Mahmoud
  */
 public class Player implements Serializable{
-    
+
     private static final long serialVersionUID = 6529682930267757690L;
     private String userName;
     private String password;
-    private int status;
+    private int score;
+    private boolean isActive;
+    private boolean isPlayong;
     private int win;
     private int lose;
     private int draw;
@@ -34,13 +36,13 @@ public class Player implements Serializable{
     public Player(String userName) {
         this.userName = userName;
     }
-    
-    
 
-    public Player(String username, String password, int status, int win, int lose, int draw) {
-        this.userName = username;
+    public Player(String userName, String password, int score, boolean isActive, boolean isPlayong, int win, int lose, int draw) {
+        this.userName = userName;
         this.password = password;
-        this.status = status;
+        this.score = score;
+        this.isActive = isActive;
+        this.isPlayong = isPlayong;
         this.win = win;
         this.lose = lose;
         this.draw = draw;
@@ -62,12 +64,28 @@ public class Player implements Serializable{
         this.password = password;
     }
 
-    public int getStatus() {
-        return status;
+    public int getScore() {
+        return score;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public boolean isIsPlayong() {
+        return isPlayong;
+    }
+
+    public void setIsPlayong(boolean isPlayong) {
+        this.isPlayong = isPlayong;
     }
 
     public int getWin() {
@@ -92,5 +110,6 @@ public class Player implements Serializable{
 
     public void setDraw(int draw) {
         this.draw = draw;
-    }    
+    }
+    
 }

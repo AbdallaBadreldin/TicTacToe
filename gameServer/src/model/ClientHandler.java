@@ -83,23 +83,27 @@ public class ClientHandler extends Thread {
 //                        gameSession.turn = !gameSession.turn;
                     } else if (recievedObject instanceof RegistrationModel) {
                         RegistrationModel register = (RegistrationModel) recievedObject;
-                        if (server.checkRegister(register.getUsername()).equals("already signed-up")) {
+                        String registerResult = server.checkRegister(register.getUsername());
+                        if (registerResult.equals("already signed-up")) {
                             String msg = "Already registered";
                             System.out.println(register.getUsername());
                             objectOutputStream.writeObject(msg);
                             objectOutputStream.flush();
-
-                        } else {
+                        } else if (registerResult.equals("Registered Successfully")) {
                             server.SignUp(register.getUsername(), register.getPassword());
                             System.out.println("added to database");
+                            objectOutputStream.writeObject("Registered Successfully");
                         }
                         System.out.println("player recieved " + register.getUsername());
-                    } else if (recievedObject instanceof LoginModel) {
-                        LoginModel signIn = (LoginModel) recievedObject;
-                        if (server.getPlayer(signIn.getUsername()) == null) {
-                            server.login(signIn.getUsername(), signIn.getPassword());
+                    } else if (recievedObject instanceof Player) {
+                        Player playerSignIn = (Player) recievedObject;
+                        String signInResult = server.checkSignIn(playerSignIn.getUserName(),playerSignIn.getPassword());
+                        if (signInResult != null) {
+                            this.objectOutputStream.writeObject(signInResult);
+                            objectOutputStream.flush();
+
                         } else {
-                            String msg = "Already signned";
+                            String msg = "Please Register";
                             objectOutputStream.writeObject(msg);
                             objectOutputStream.flush();
                         }

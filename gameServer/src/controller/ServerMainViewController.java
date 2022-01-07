@@ -165,7 +165,7 @@ public class ServerMainViewController implements Initializable {
     }
 
     @FXML
-    private void toggleServer(ActionEvent event) {   
+    private void toggleServer(ActionEvent event) {
         serverState = !serverState;
         if (serverState) {
             try {
@@ -259,7 +259,7 @@ public class ServerMainViewController implements Initializable {
         scrollpane.setContent(null);
     }
 
-    private synchronized void listPlayers(boolean state) {
+    private synchronized void listPlayers(Boolean state) {
 
         server.databaseInstance.updateResultSet();
         scrollpane.setContent(null);
@@ -271,11 +271,10 @@ public class ServerMainViewController implements Initializable {
             countOnline = 0;
 
             while (server.databaseInstance.getResultSet().next()) {
-                if (server.databaseInstance.getResultSet().getString("status").equals(1)) {
+                if (server.databaseInstance.getResultSet().getString("ISACTIVE").equals(state + "")) {
                     //System.out.println("platform check action action");
 
                     ImageView view, view2;
-                    view2 = null;
                     // avatar view
                     view = new ImageView(new Image(this.getClass().getResourceAsStream("/resources/avatar.png")));
                     view.setFitHeight(30);
@@ -313,5 +312,4 @@ public class ServerMainViewController implements Initializable {
         }
 
     }
-
 }

@@ -1,7 +1,11 @@
 package helpers;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -37,20 +41,44 @@ public class Navigation {
         stage.show();
     }
 
-    public void navigateTo(MouseEvent event, String destination) throws IOException {
-        root = FXMLLoader.load(getClass().getResource(destination));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void navigateTo(Event event, String destination) throws IOException {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    root = FXMLLoader.load(getClass().getResource(destination));
+                    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(Navigation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
     }
 
     public void navigateTo(Stage stage, String destination) throws IOException {
-        root = FXMLLoader.load(getClass().getResource(destination));
-        this.stage = stage;
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+           Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    root = FXMLLoader.load(getClass().getResource(destination));
+                    //stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(Navigation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+//        root = FXMLLoader.load(getClass().getResource(destination));
+//        this.stage = stage;
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
     }
 
 }

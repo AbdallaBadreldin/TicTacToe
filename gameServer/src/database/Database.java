@@ -25,6 +25,7 @@ public class Database {
     private Connection con;
     private ResultSet rs;
     private PreparedStatement pst;
+    Player player;
 
     public synchronized ResultSet getResultSet() {
         return rs;
@@ -32,7 +33,7 @@ public class Database {
 
     private Database() throws SQLException {
         DriverManager.registerDriver(new ClientDriver());
-        con = DriverManager.getConnection("jdbc:derby://localhost:1527/tictactoee", "root", "root");
+        con = DriverManager.getConnection("jdbc:derby://localhost:1527/tictactooe", "root", "root");
     }
 
     public synchronized static Database getDataBase() throws SQLException {
@@ -45,7 +46,7 @@ public class Database {
     public synchronized void updateResultSet() {
 
         try {
-            this.pst = con.prepareStatement("Select * from playerdata", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            this.pst = con.prepareStatement("Select * from player", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             this.rs = pst.executeQuery(); // rs has all data
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,7 +55,7 @@ public class Database {
 
     public synchronized int getCountOfOfflineUsers() {
         try {
-            this.pst = con.prepareStatement("select count(*) from player where status = 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            this.pst = con.prepareStatement("select count(*) from player where isactive = false", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet r = pst.executeQuery(); // rs has all data            System.out.println("has next"+r.next());
 
             return r.next() ? r.getInt(1) : -1;
@@ -65,10 +66,10 @@ public class Database {
         return -1;
     }
 
-    public synchronized void setActive(int status, String username) {
+    public synchronized void setActive(boolean state, String username) {
         try {
-            pst = con.prepareStatement("update playerdata set status = ? where username = ?");
-            pst.setInt(1, status);
+            pst = con.prepareStatement("update player set isActive = ? where username = ?");
+            pst.setString(1, state + "");
             pst.setString(2, username);
             System.out.println("db mail active:" + username);
             pst.executeUpdate(); // rs has all data
@@ -81,7 +82,7 @@ public class Database {
 
     public synchronized void setNotPlaying(String username) {
         try {
-            pst = con.prepareStatement("update playerdata set status = 1 where username = ?");
+            pst = con.prepareStatement("update player set isPlaying = false where username = ?");
             pst.setString(1, username);
             pst.executeUpdate();
             updateResultSet();
@@ -94,7 +95,7 @@ public class Database {
     public synchronized ResultSet getActivePlayers() {
 
         try {
-            this.pst = con.prepareStatement("Select * from playerdata where status = 1 ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            this.pst = con.prepareStatement("Select * from player where isactive = true ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             return pst.executeQuery(); // rs has all data
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,8 +117,8 @@ public class Database {
 
     public synchronized void changeStateToNotPlaying() {
         try {
-            pst = con.prepareStatement("update playerdata set status = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            pst.setInt(1, 1);
+            pst = con.prepareStatement("update player set isPlaying = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pst.setString(1, "false");
             pst.executeUpdate(); // rs has all data
             updateResultSet();
         } catch (SQLException ex) {
@@ -128,8 +129,8 @@ public class Database {
 
     public synchronized void changeStateToOffline() {
         try {
-            pst = con.prepareStatement("update playerdata set status = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            pst.setInt(1, 0);
+            pst = con.prepareStatement("update player set isActive = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pst.setString(1, "false");
             pst.executeUpdate(); // rs has all data
             updateResultSet();
         } catch (SQLException ex) {
@@ -141,8 +142,8 @@ public class Database {
 
     public synchronized void login(String username, String password) throws SQLException {
 
-        pst = con.prepareStatement("update playerdata set status = ?  where username = ? and password = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        pst.setInt(1, 1);
+        pst = con.prepareStatement("update player set isActive = ?  where username = ? and password = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setString(1, "true");
         pst.setString(2, username);
         pst.setString(3, password);
         pst.executeUpdate(); // rs has all data
@@ -151,7 +152,7 @@ public class Database {
 
     public synchronized void SignUp(String username, String password) throws SQLException {
 
-        pst = con.prepareStatement("insert into playerdata(username,password) values(?,?)");
+        pst = con.prepareStatement("insert into player(username,password) values(?,?)");
         pst.setString(1, username);
         pst.setString(2, password);
         pst.executeUpdate(); // rs has all data
@@ -164,15 +165,13 @@ public class Database {
         PreparedStatement pstCheck;
 
         try {
-            //        String queryString= new String("select username from player where username = ?");
-            pstCheck = con.prepareStatement("select * from playerdata where username = ?");
+            pstCheck = con.prepareStatement("select * from player where username = ?");
             pstCheck.setString(1, username);
             checkRs = pstCheck.executeQuery();
             if (checkRs.next()) {
                 return "already signed-up";
             }
         } catch (SQLException ex) {
-            System.out.println("here ");
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "Registered Successfully";
@@ -183,10 +182,10 @@ public class Database {
         PreparedStatement pstCheck;
         String check;
         System.out.println("checkSignIn " + checkIsActive(username));
-        if (checkIsActive(username) == 1) {
+        if (!checkIsActive(username)) {
             System.out.println(" checkSignIn: " + checkIsActive(username));
             try {
-                pstCheck = con.prepareStatement("select * from playerdata where username = ? ");
+                pstCheck = con.prepareStatement("select * from player where username = ? ");
                 pstCheck.setString(1, username);
                 checkRs = pstCheck.executeQuery();
                 if (checkRs.next()) {
@@ -195,14 +194,14 @@ public class Database {
                     }
                     return "Password is incorrect";
                 }
-                return "Email is incorrect";
+                return "Username is incorrect";
             } catch (SQLException ex) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
                 return "Connection issue, please try again later";
             }
         } else {
-            System.out.println("This Email alreay sign-in " + checkIsActive(username));
-            return "This Email is alreay sign-in";
+            System.out.println("This username alreay sign-in " + checkIsActive(username));
+            return "This username is alreay sign-in";
         }
 
     }
@@ -213,22 +212,111 @@ public class Database {
         PreparedStatement pstCheck;
 
         try {
-            pstCheck = con.prepareStatement("select * from playerdata where username = ?");
+            pstCheck = con.prepareStatement("select * from player where username = ?");
             pstCheck.setString(1, username);
             checkRs = pstCheck.executeQuery();
             checkRs.next();
-            score = checkRs.getInt("win");
-
-            return score * 5;
+            score = checkRs.getInt(5);
+            return score;
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
 
+    public synchronized void updateScore(String username, int score) {
+        try {
+            pst = con.prepareStatement("update player set score = ?  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pst.setInt(1, score);
+            pst.setString(2, username);
+            pst.executeUpdate();
+            updateResultSet();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * getPlayer get user name to pass it to login method
+     *
+     * @param username
+     * @return
+     */
+    public synchronized Player getPlayer(String username) {
+        try {
+            pst = con.prepareStatement("SELECT * FROM player WHERE username = ?");
+            pst.setString(1, username);
+            pst.executeQuery();
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                player = new Player(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getBoolean(4),
+                        rs.getBoolean(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getInt(8)
+                );
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return player;
+    }
+
+
+
+    /**
+     * checkIsActive check if player login or not
+     *
+     * @param username
+     * @return
+     */
+    public Boolean checkIsActive(String username) {
+        ResultSet checkRs;
+        PreparedStatement pstCheck;
+        Boolean isActive;
+        try {
+            pstCheck = con.prepareStatement("select isactive from player where username = ?");
+            pstCheck.setString(1, username);
+            checkRs = pstCheck.executeQuery();
+            checkRs.next();
+            System.out.println("checkIsActive true ");
+            isActive = checkRs.getBoolean("isactive");
+            System.out.println("checkIsActive " + isActive);
+            return isActive;
+        } catch (SQLException ex) {
+           
+            //Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+
+    public synchronized boolean checkPlaying(String player) {
+
+        boolean available;
+        ResultSet checkAv;
+        PreparedStatement pstCheckAv;
+        try {
+            pstCheckAv = con.prepareStatement("select * from player where username = ?");
+            pstCheckAv.setString(1, player);
+            checkAv = pstCheckAv.executeQuery();
+            checkAv.next();
+            available = checkAv.getBoolean("isPlaying");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+
     public synchronized void updateWin(String username) {
         try {
-            pst = con.prepareStatement("update playerdata set win = win +1  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pst = con.prepareStatement("update player set win = win +1  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             //  pst.setInt(1, win);
             pst.setString(1, username);
             pst.executeUpdate();
@@ -240,7 +328,7 @@ public class Database {
 
     public synchronized void updateLose(String username) {
         try {
-            pst = con.prepareStatement("update playerdata set lose = lose +1  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pst = con.prepareStatement("update player set lose = lose +1  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             //  pst.setInt(1, win);
             pst.setString(1, username);
             pst.executeUpdate();
@@ -252,7 +340,7 @@ public class Database {
 
     public synchronized void updateDraw(String username) {
         try {
-            pst = con.prepareStatement("update playerdata set draw = draw +1  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pst = con.prepareStatement("update player set draw = draw +1  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             //  pst.setInt(1, win);
             pst.setString(1, username);
             pst.executeUpdate();
@@ -262,86 +350,6 @@ public class Database {
         }
     }
 
-    public synchronized Player getPlayer(String username) {
-        Player player = null;
-        ResultSet checkRs;
-        PreparedStatement pstCheck;
-        try {
-            pstCheck = con.prepareStatement("select * from playerdata where username = ?");
-            pstCheck.setString(1, username);
-            checkRs = pstCheck.executeQuery();
-            while (checkRs.next()) {
-                player = new Player(
-                        checkRs.getString("username"),
-                        checkRs.getString("password"),
-                        checkRs.getInt("status"),
-                        checkRs.getInt("win"),
-                        checkRs.getInt("lose"),
-                        checkRs.getInt("draw")
-                        //checkRs.getInt("totalscore")
-                );
-            }
-
-            return player;
-        } catch (SQLException ex) {
-            System.out.println("Invalid Username");
-        }
-        return player;
-    }
-
-    public synchronized void makePlaying(Player player1, Player player2) {
-        try {
-            pst = con.prepareStatement("update playerdata set status = 2  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            pst.setString(1, player1.getUserName());
-            pst.executeUpdate(); // rs has all data
-            pst = con.prepareStatement("update playerdata set status = 2  where username = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            pst.setString(1, player2.getUserName());
-            pst.executeUpdate();
-            updateResultSet();
-        } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public int checkIsActive(String username) {
-        ResultSet checkRs;
-        PreparedStatement pstCheck;
-        int status;
-        try {
-            pstCheck = con.prepareStatement("select status from playerdata where username = ?");
-            pstCheck.setString(1, username);
-            checkRs = pstCheck.executeQuery();
-            checkRs.next();
-            System.out.println("checkIsActive true ");
-            status = checkRs.getInt("status");
-            System.out.println("checkIsActive " + status);
-            return status;
-        } catch (SQLException ex) {
-            System.out.println("Invalod Email address");
-            //Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized boolean checkPlaying(String player) {
-
-        boolean available;
-        ResultSet checkAv;
-        PreparedStatement pstCheckAv;
-        try {
-            pstCheckAv = con.prepareStatement("select * from playerdata where username = ?");
-            pstCheckAv.setString(1, player);
-            checkAv = pstCheckAv.executeQuery();
-            checkAv.next();
-            available = checkAv.getBoolean(4);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-
-    }
-
     public synchronized int getWinScore(String userName) {
 
         int win;
@@ -349,7 +357,7 @@ public class Database {
         PreparedStatement pstCheck;
 
         try {
-            pstCheck = con.prepareStatement("select * from playerdata where username = ?");
+            pstCheck = con.prepareStatement("select * from player where username = ?");
             pstCheck.setString(1, userName);
             checkRs = pstCheck.executeQuery();
             checkRs.next();
@@ -370,7 +378,7 @@ public class Database {
         PreparedStatement pstCheck;
 
         try {
-            pstCheck = con.prepareStatement("select * from playerdata where username = ?");
+            pstCheck = con.prepareStatement("select * from player where username = ?");
             pstCheck.setString(1, userName);
             checkRs = pstCheck.executeQuery();
             checkRs.next();
@@ -391,7 +399,7 @@ public class Database {
         PreparedStatement pstCheck;
 
         try {
-            pstCheck = con.prepareStatement("select * from playerdata where username = ?");
+            pstCheck = con.prepareStatement("select * from player where username = ?");
             pstCheck.setString(1, userName);
             checkRs = pstCheck.executeQuery();
             checkRs.next();
