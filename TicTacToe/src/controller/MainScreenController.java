@@ -68,15 +68,14 @@ public class MainScreenController implements Initializable {
 
         levelDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         levelDialog.setDialogContainer(root);
-        Easy.setOnAction((event) -> {
+       Easy.setOnAction((event) -> {
             try {
                 levelDialog.close();
                 navigator.navigateTo(event, Navigation.PLAYER_VS_AI);
             } catch (IOException ex) {
                 Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        });
+       });
         Hard.setOnAction((e) -> {
             try {
                 levelDialog.close();
