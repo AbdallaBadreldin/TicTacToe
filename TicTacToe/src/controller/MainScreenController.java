@@ -1,5 +1,7 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 /**
  * FXML Controller class
@@ -43,6 +46,16 @@ public class MainScreenController implements Initializable {
     @FXML
     private ImageView img1;
 
+    @FXML
+    private JFXDialog levelDialog;
+
+    @FXML
+    private JFXButton Hard;
+    @FXML
+    private StackPane root;
+    @FXML
+    private JFXButton Easy;
+
     /**
      * Initializes the controller class.
      */
@@ -53,7 +66,25 @@ public class MainScreenController implements Initializable {
         img3.setImage(new Image("/Gallary/img3.png"));
         
 
+        levelDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        levelDialog.setDialogContainer(root);
+       Easy.setOnAction((event) -> {
+            try {
+                levelDialog.close();
+                navigator.navigateTo(event, Navigation.PLAYER_VS_AI);
+            } catch (IOException ex) {
+                Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       });
+        Hard.setOnAction((e) -> {
+            try {
+                levelDialog.close();
+                navigator.navigateTo(e, Navigation.HARD_MODE);
+            } catch (IOException ex) {
+                Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
+        });
 
     }
 
@@ -64,11 +95,8 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void playerVsAIBtnAction(ActionEvent event) {
-        try {
-            navigator.navigateTo(event, Navigation.HARD_Mode_SCREEN);
-        } catch (IOException ex) {
-            Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        levelDialog.show();
 
     }
 

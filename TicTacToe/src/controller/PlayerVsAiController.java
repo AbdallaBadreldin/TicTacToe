@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import helpers.Navigation;
@@ -33,10 +29,10 @@ public class PlayerVsAiController extends MainGridPaneController implements Init
         try {
             mainPane.getChildren().add(loader.load());
             mainnGridPaneController = loader.getController();
-            mainnGridPaneController.setPlayerOneName("Mahmoud");
+            mainnGridPaneController.setPlayerOneName("Player 1");
             mainnGridPaneController.setPlayerTwoName("Comp");
-            mainnGridPaneController.setPlayerTwoImage("/resources/ai-avatar.png");
-            mainnGridPaneController.setPlayerOneImage("/resources/player-one-avatar.jpg");
+            mainnGridPaneController.setPlayerTwoImage("/Gallary/ai-avatar.png");
+            mainnGridPaneController.setPlayerOneImage("/Gallary/player-one-avatar.jpg");
             mainnGridPaneController.setIsAIMode(true);
         } catch (IOException ex) {
             Logger.getLogger(PlayerVsAiController.class.getName()).log(Level.SEVERE, null, ex);

@@ -30,8 +30,11 @@ public class ClientHandler extends Thread {
         try {
             if (s.isConnected()) {
                 socket = s;
-                objectInputStream = new ObjectInputStream(s.getInputStream());
+
                 objectOutputStream = new ObjectOutputStream(s.getOutputStream());
+                objectOutputStream.flush();
+                objectInputStream = new ObjectInputStream(socket.getInputStream());
+
                 server = Server.getServer();
             }
             start();
@@ -46,6 +49,7 @@ public class ClientHandler extends Thread {
         while (true) {
             System.out.println("Client handler Thread");
             try {
+
                 if (objectInputStream != null) {
                     Object recievedObject = objectInputStream.readObject();
                     if (recievedObject instanceof RequestGame) {
@@ -83,11 +87,11 @@ public class ClientHandler extends Thread {
                             String msg = "Already registered";
                             System.out.println(register.getUsername());
                             objectOutputStream.writeObject(msg);
-                            System.err.println("object sent to client");
                             objectOutputStream.flush();
 
                         } else {
                             server.SignUp(register.getUsername(), register.getPassword());
+                            System.out.println("added to database");
                         }
                         System.out.println("player recieved " + register.getUsername());
                     } else if (recievedObject instanceof LoginModel) {

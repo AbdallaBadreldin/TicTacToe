@@ -3,9 +3,11 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import static controller.IPOfServerController.objInputStream;
 import helpers.Navigation;
 import helpers.ReusableDialog;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -51,7 +53,7 @@ public class RegisterScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        registerImage.setImage(new Image("/Gallary/loginImage.png"));
+        //registerImage.setImage(new Image("/Gallary/loginImage.png"));
         confirmPasswordTxt.setFocusTraversable(false);
         passwordTxt.setFocusTraversable(false);
     }
@@ -101,16 +103,9 @@ public class RegisterScreenController implements Initializable {
     @FXML
     private void onSignUp(ActionEvent event) {
         ReusableDialog dialog = new ReusableDialog();
+        //System.out.println(IPOfServerController.objInputStream.toString());
         if (passwordTxt.getText().equals(confirmPasswordTxt.getText())) {
-            boolean registered = checkRegister();
-            if (registered) {
-                signUpBtn();
-                try {
-                    navigator.navigateTo(event, Navigation.PLAYER_ONLINE);
-                } catch (IOException ex) {
-                    Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            
 
         } else {
 
@@ -124,57 +119,81 @@ public class RegisterScreenController implements Initializable {
         }
 
     }
+}
 
+    /*
     private void signUpBtn() {
+
         RegistrationModel obj;
         ReusableDialog dialog = new ReusableDialog();
 
         obj = new RegistrationModel(usernameTxt.getText(), passwordTxt.getText());
-        System.out.println("Object output" + IPOfServerController.objOutputStream.toString());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (IPOfServerController.objOutputStream != null) {
-                    try {
-                        IPOfServerController.objOutputStream.writeObject(obj);
-                        System.out.println("Data Sent " + obj.toString());
+        //System.out.println("Object output" + IPOfServerController.objOutputStream.toString());
 
-                    } catch (IOException ex) {
-                        Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else {
-                    dialog.showErrorDialog("Cannot send request to the server!\nPlease check your connection.","Connection Test");
-                    closeConnection();
-                }
+        if (IPOfServerController.objOutputStream != null) {
+            try {
+                IPOfServerController.objOutputStream.writeObject(obj);
+                System.out.println("Data Sent " + obj.toString());
 
+            } catch (IOException ex) {
+                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }).start();
+        } else {
+            dialog.showErrorDialog("Cannot send request to the server!\nPlease check your connection.", "Connection Test");
+            closeConnection();
+        }
 
     }
 
-    private boolean checkRegister() {
+    private void checkRegister(ActionEvent event) {
         ReusableDialog dialog = new ReusableDialog();
-        boolean registered = false;
-        if (IPOfServerController.objInputStream != null) {
-            try {
-                Object objToRead = IPOfServerController.objInputStream.readObject();
-                if (objToRead instanceof String) {
-                    dialog.showErrorDialog((String) objToRead,"Registation Failed");
-                    registered = false;
-                } else {
-                    registered = true;
-                }
-            } catch (ClassNotFoundException | IOException ex) {
-                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        IPOfServerController.listener = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
 
-        }
-        return registered;
+                    if (IPOfServerController.objInputStream != null) {
+                        try {
+                            Object objToRead = IPOfServerController.objInputStream.readObject();
+                            if (objToRead instanceof String) {
+                                String objectToCheck = (String) objToRead;
+                                if (objectToCheck.equals("Already registered")) {
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dialog.showErrorDialog((String) objToRead, "Registration failed");
+                                        }
+                                    });
+                                } else {
+                                    try {
+                                        navigator.navigateTo(event, Navigation.PLAYER_ONLINE);
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+
+                                System.out.println(objToRead);
+                            } else {
+
+                            }
+                        } catch (ClassNotFoundException | IOException ex) {
+                            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
+                }
+
+            }
+        };
+
+        IPOfServerController.listener.setDaemon(true);
+        IPOfServerController.listener.start();
+
     }
 
     private void closeConnection() {
         try {
-            IPOfServerController.listener.stop();
+            //IPOfServerController.listener.stop();
             IPOfServerController.objInputStream.close();
             IPOfServerController.objOutputStream.close();
             IPOfServerController.socket.close();

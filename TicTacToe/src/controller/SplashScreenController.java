@@ -66,10 +66,10 @@ public class SplashScreenController extends Thread implements Initializable, Run
 
     public void run() {
         try {
-            thread.sleep(6000);
+            thread.sleep(5500);
             Platform.runLater(stage::close);
         } catch (InterruptedException ex) {
-            Logger.getLogger(SplashScrennController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SplashScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -84,7 +84,7 @@ public class SplashScreenController extends Thread implements Initializable, Run
             stage.setScene(scene);
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(SplashScrennController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SplashScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

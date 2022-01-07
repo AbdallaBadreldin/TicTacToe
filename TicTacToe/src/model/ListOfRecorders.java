@@ -20,13 +20,10 @@ public class ListOfRecorders {
         gameSession = new ArrayList<>();
     }
 
-    
     public ListOfRecorders(List<GameSession> gameSession) {
         this.gameSession = gameSession;
     }
 
-    
-    
     public List<GameSession> getGameSession() {
         return gameSession;
     }

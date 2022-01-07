@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="root" minHeight="700.0" minWidth="1000.0" style="-fx-background-color: #D2691E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HardModeViewController">
+<StackPane fx:id="root" minHeight="700.0" minWidth="1000.0" style="-fx-background-color: #B1E693;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HardModeViewController">
     <children>
          <AnchorPane fx:id="mainPane" maxHeight="6000.0" maxWidth="1000.0" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" StackPane.alignment="CENTER">
             <children>
@@ -44,81 +44,81 @@
                             <children>
                                 <Pane fx:id="grid00" prefHeight="200.0" prefWidth="200.0">
                                     <children>
-                                        <Label fx:id="label1" alignment="CENTER" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="140.0">
+                                        <Label fx:id="label1" alignment="CENTER" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="140.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </Pane>
                                 <Pane fx:id="grid01" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                     <children>
-                                        <Label fx:id="label2" alignment="CENTER" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="146.0">
+                                        <Label fx:id="label2" alignment="CENTER" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="146.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </Pane>
                                 <Pane fx:id="grid02" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                     <children>
-                                        <Label fx:id="label3" alignment="CENTER" layoutX="8.0" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="138.0">
+                                        <Label fx:id="label3" alignment="CENTER" layoutX="8.0" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="138.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </Pane>
                                 <Pane fx:id="grid10" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                     <children>
-                                        <Label fx:id="label4" alignment="CENTER" layoutX="4.0" onMouseClicked="#handleLabels" prefHeight="94.0" prefWidth="138.0">
+                                        <Label fx:id="label4" alignment="CENTER" layoutX="4.0" onMouseClicked="#handleLabels" prefHeight="94.0" prefWidth="138.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </Pane>
                                 <Pane fx:id="grid11" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <children>
-                                        <Label fx:id="label5" alignment="CENTER" layoutX="6.0" onMouseClicked="#handleLabels" prefHeight="94.0" prefWidth="140.0">
+                                        <Label fx:id="label5" alignment="CENTER" layoutX="6.0" onMouseClicked="#handleLabels" prefHeight="94.0" prefWidth="140.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </Pane>
                                 <Pane fx:id="grid12" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                     <children>
-                                        <Label fx:id="label6" alignment="CENTER" layoutX="8.0" onMouseClicked="#handleLabels" prefHeight="94.0" prefWidth="138.0">
+                                        <Label fx:id="label6" alignment="CENTER" layoutX="8.0" onMouseClicked="#handleLabels" prefHeight="94.0" prefWidth="138.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </Pane>
                                 <Pane fx:id="grid20" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                     <children>
-                                        <Label fx:id="label7" alignment="CENTER" layoutX="4.0" layoutY="13.0" onMouseClicked="#handleLabels" prefHeight="75.0" prefWidth="138.0">
+                                        <Label fx:id="label7" alignment="CENTER" layoutX="4.0" layoutY="13.0" onMouseClicked="#handleLabels" prefHeight="75.0" prefWidth="138.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </Pane>
                                 <Pane fx:id="grid21" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                     <children>
-                                        <Label fx:id="label8" alignment="CENTER" layoutX="6.0" layoutY="12.0" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="140.0">
+                                        <Label fx:id="label8" alignment="CENTER" layoutX="6.0" layoutY="12.0" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="140.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </Pane>
                                 <Pane fx:id="grid22" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                     <children>
-                                        <Label fx:id="label9" alignment="CENTER" layoutX="8.0" layoutY="12.0" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="138.0">
+                                        <Label fx:id="label9" alignment="CENTER" layoutX="8.0" layoutY="12.0" onMouseClicked="#handleLabels" prefHeight="82.0" prefWidth="138.0" textFill="#ff6701">
                                             <font>
-                                                <Font size="36.0" />
+                                                <Font size="64.0" />
                                             </font>
                                         </Label>
                                     </children>
@@ -173,29 +173,42 @@
             </children>
         </AnchorPane>
         <JFXDialog fx:id="newDialog">
-            <JFXDialogLayout>
+            <JFXDialogLayout style="-fx-background-color:  #FFFFCC;"  >
                 <body>
                     <Label>do you really want to surrender!!</Label>
                 </body>
                 <actions>
-                    <JFXButton fx:id="LeaveBtn">Leave</JFXButton>
-                    <JFXButton fx:id="cancelBtn">Cancel</JFXButton>
+                    <JFXButton fx:id="LeaveBtn" style="-fx-background-color:#B1E693;">Leave</JFXButton>
+                    <JFXButton fx:id="cancelBtn" style="-fx-background-color:#B1E693;">Cancel</JFXButton>
                 </actions>
             </JFXDialogLayout>
         </JFXDialog>
          <JFXDialog fx:id="winnerDialog">
-            <JFXDialogLayout>
-                <VBox alignment="CENTER">
-                    <Label fx:id="winnerName">name</Label>
+            <JFXDialogLayout style="-fx-background-color:  #FFFFCC;" >
+                <VBox alignment="CENTER" >
+                    <Text fx:id="winnerName" strokeType="OUTSIDE" strokeWidth="0.0" text="Player name">
+                                <font>
+                                    <Font size="36.0" />
+                                </font>
+                            </Text>
 
-                <ImageView fx:id="winnerImage" fitHeight="248" fitWidth="314" layoutX="210" layoutY="21" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="winnerImage" fitHeight="200" fitWidth="314" layoutX="210" layoutY="21" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Gallary/congrats.gif" />
+                        
                     </image>
                 </ImageView>
                     <Label>Do you want play again?</Label>
-                    <JFXButton fx:id="RematchBtn">Rematch</JFXButton>
-                    <JFXButton fx:id="CancelBtn">Cancel</JFXButton>
+                    <JFXButton fx:id="RematchBtn" style="-fx-background-color:#B1E693;" text="Rematch">
+                         <VBox.margin>
+                     <Insets top="15.0" />
+                  </VBox.margin>
+                    </JFXButton>
+                    
+                    <JFXButton fx:id="CancelBtn" style="-fx-background-color:#B1E693;" text=" Cancel ">
+                        <VBox.margin>
+                     <Insets top="15.0" bottom="15.0" />
+                  </VBox.margin>
+                    </JFXButton>
 
                 </VBox>
               
@@ -204,7 +217,7 @@
 
         
         <JFXDialog fx:id="getPlayerNameDialog" >
-            <JFXDialogLayout>
+            <JFXDialogLayout style="-fx-background-color:  #FFFFCC;">
                 <body>
                     <VBox layoutX="29.0" layoutY="426.0" prefHeight="82.0" prefWidth="223.0">
                         <children>
@@ -225,8 +238,8 @@
                     </VBox>
                 </body>
                 <actions>
-                    <JFXButton fx:id="confirm">Confirm</JFXButton>
-                    <JFXButton fx:id="cancel">Cancel</JFXButton>
+                    <JFXButton fx:id="confirm" style="-fx-background-color:#B1E693;">Confirm</JFXButton>
+                    <JFXButton fx:id="cancel" style="-fx-background-color:#B1E693;">Cancel</JFXButton>
                 </actions>
             </JFXDialogLayout>
         </JFXDialog>

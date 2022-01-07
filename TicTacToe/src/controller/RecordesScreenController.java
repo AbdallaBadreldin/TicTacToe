@@ -65,6 +65,7 @@ public class RecordesScreenController implements Initializable {
             }
         }
         try {
+            MainGridPaneController.isItPrev = true ;
             nav.navigateTo(event, Navigation.MAIN_GRID_PAIN);
         } catch (IOException ex) {
             Logger.getLogger(RecordesScreenController.class.getName()).log(Level.SEVERE, null, ex);

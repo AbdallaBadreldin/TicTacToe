@@ -60,7 +60,7 @@ public class LoginScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loginImage.setImage(new Image("/Gallary/loginImage.png"));
+        //loginImage.setImage(new Image("/Gallary/loginImage.png"));
         passwordText.setFocusTraversable(false);
         feedbackDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         feedbackDialog.setDialogContainer(root);
